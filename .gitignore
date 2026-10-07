@@ -1,0 +1,117 @@
+# Upload policy: RTL, Python, PDF and Markdown only.
+# Ignore everything first, but traverse directories to find allowed files.
+*
+!*/
+
+# Repository rules and source/document whitelist.
+!/.gitignore
+!/.gitattributes
+!*.v
+!*.sv
+!*.vh
+!*.svh
+!*.vhd
+!*.vhdl
+!*.py
+!*.pdf
+!*.md
+
+# Exclusions below override the whitelist, including allowed extensions.
+# All simulation files stay local, including testbench RTL/Python.
+sim/
+simulation/
+simulations/
+testbench/
+Testbench/
+TestBench/
+SimSOC/
+*_sim/
+*_sim_*/
+modelsim/
+questa/
+xsim/
+isim/
+vcs/
+ncsim/
+incisive/
+xcelium/
+riviera/
+activehdl/
+activehdl*/
+active-hdl/
+*_tb.v
+*_tb.sv
+*_tb.vhd
+*_tb.vhdl
+tb_*.v
+tb_*.sv
+tb_*.vhd
+tb_*.vhdl
+
+# Vivado/ISE generated project directories. Keep authored RTL in *.srcs.
+*.runs/
+*.cache/
+*.gen/
+*.hw/
+*.sim/
+*.ip_user_files/
+ip_user_files/
+ipstatic/
+.Xil/
+.ipcache/
+.sdk/
+_x/
+
+# Efinity synthesis, place/route, debug and generated outputs.
+outflow/
+work_*/
+work/
+
+# Generated vendor IP and netlist trees in the supplied example libraries.
+# Future hand-written IP outside these library paths is still eligible.
+/xilinx/xc7k325tffg资料/**/ip/
+/elinx/elinxdemo/**/ip/
+netlist/
+netlists/
+debug_top.v
+debug_top.stub.v
+debug_TEMPLATE.v
+debug_TEMPLATE.vhd
+debug_template.v
+debug_template.vhd
+*.map.v
+*_template.v
+*_stub.v
+*_stub.vhdl
+*_sim_netlist.v
+*_sim_netlist.vhdl
+*_funcsim.v
+*_timesim.v
+
+# Python environments, caches and build output (even if they contain *.py).
+__pycache__/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+site-packages/
+*.egg-info/
+build/
+dist/
+
+# Local editor/agent state and installer bundles.
+.vscode/
+.idea/
+.metadata/
+.settings/
+.codex/
+.agents/
+软件安装包/
+
+# Everything not whitelisted remains ignored: FPGA project/configuration
+# files (*.xpr, *.xml, *.xci, *.xdc, *.sdc, *.tcl), bitstreams, reports,
+# waveforms, images, archives, installers, memory data and C/C++ sources.
+# Ignoring a file does not delete its local copy.
