@@ -18,6 +18,8 @@
 !*.MD
 !**/architecture.html
 !**/requirements.txt
+# Track placeholders for the RISC-V software directory only.
+!/elinx/projects/style_video/software/*/.gitkeep
 
 # Exclusions below override the whitelist, including allowed extensions.
 # Local learning material, including Python and Markdown lessons.
