@@ -1,0 +1,7 @@
+# Training baseline. Choose PyTorch wheels matching your CPU/CUDA environment.
+# The recorded training used torch/torchvision builds with CUDA 12.8.
+torch==2.11.0
+torchvision==0.26.0
+Pillow==12.3.0
+numpy==2.2.6
+requests==2.32.5

@@ -1,4 +1,4 @@
-# Upload policy: RTL, Python, PDF and Markdown only.
+# Upload policy: RTL, Python, PDF, Markdown, architecture.html and requirements.txt.
 # Ignore everything first, but traverse directories to find allowed files.
 *
 !*/
@@ -15,15 +15,32 @@
 !*.py
 !*.pdf
 !*.md
+!*.MD
+!**/architecture.html
+!**/requirements.txt
 
 # Exclusions below override the whitelist, including allowed extensions.
+# Local learning material, including Python and Markdown lessons.
+/study/
+
+# Training inputs/outputs stay local even when they contain source-like files.
+# Keep only the dataset placement instructions, not the dataset itself.
+/pycode/convertpic/*
+!/pycode/convertpic/README.md
+/pycode/styles/
+/pycode/runs/
+/pycode/results/
+
 # All simulation files stay local, including testbench RTL/Python.
 sim/
 simulation/
 simulations/
+sim_*/
 testbench/
 Testbench/
 TestBench/
+Sim/
+Simulation/
 SimSOC/
 *_sim/
 *_sim_*/
@@ -54,6 +71,8 @@ tb_*.vhdl
 *.gen/
 *.hw/
 *.sim/
+*.behav/
+*.synth/
 *.ip_user_files/
 ip_user_files/
 ipstatic/
@@ -70,6 +89,12 @@ work/
 # Generated vendor IP and netlist trees in the supplied example libraries.
 # Future hand-written IP outside these library paths is still eligible.
 /xilinx/xc7k325tffg资料/**/ip/
+/xilinx/xc7k325tffg_base/**/ip/
+# MIG-generated example project, including its traffic generator and DDR model.
+/xilinx/xc7k325tffg_base/18ddr3_axi_ip_example/
+# Independent projects: standard, fast and future Vivado build variants.
+# Authored RTL remains in projects/<name>/rtl/, outside these trees.
+/xilinx/projects/*/vivado*/
 /elinx/elinxdemo/**/ip/
 netlist/
 netlists/
@@ -97,6 +122,11 @@ env/
 .mypy_cache/
 .ruff_cache/
 .tox/
+.nox/
+__pypackages__/
+.ipynb_checkpoints/
+htmlcov/
+node_modules/
 site-packages/
 *.egg-info/
 build/

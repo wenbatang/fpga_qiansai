@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UART → DDR3 → 720p HDMI｜架构与工作原理</title>
+<style>
+:root{--bg:#f2f5fa;--paper:#fff;--ink:#1c2d44;--muted:#586a80;--line:#dbe3ee;--blue:#275eca;--green:#17785d;--amber:#99610e;--purple:#7151ac;--mono:Consolas,"Courier New",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:22px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.8 "Microsoft YaHei",system-ui,sans-serif}a{color:var(--blue);text-underline-offset:3px}a:hover{color:#16408d}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.45}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #8bb5ff;outline-offset:3px}
+.shell{max-width:1480px;margin:auto;padding:30px 26px 60px;display:grid;grid-template-columns:205px minmax(0,1fr);gap:28px}nav{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:13px}nav strong{display:block;font-size:15px;margin:0 0 10px}nav a{display:block;padding:7px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none}nav a:hover{border-color:var(--blue);background:#e8eef8;color:var(--blue)}nav .small{padding:12px 10px;color:var(--muted);font-size:12px}
+main{min-width:0}.eyebrow{font-size:13px;color:var(--muted);letter-spacing:.5px}h1{font-size:33px;line-height:1.45;margin:9px 0 15px}h2{font-size:23px;line-height:1.5;margin:0 0 15px}h3{font-size:17px;line-height:1.6;margin:16px 0 7px}h4{font-size:15px;margin:0 0 5px}p{margin:8px 0 12px}.lead{font-size:17px;max-width:900px}.muted,.caption{color:var(--muted)}.caption{font-size:13px;margin:8px 0 0}.badge{display:inline-block;font-size:12px;border-radius:6px;padding:3px 9px;margin:0 5px 7px 0;background:#e5f3ec;color:var(--green)}.badge.pending{background:#fff0d6;color:var(--amber)}.badge.info{background:#e8effd;color:var(--blue)}
+section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:27px;margin:22px 0;box-shadow:0 4px 16px #1e304605}.section-num{color:var(--blue);font:600 13px var(--mono);display:block;margin-bottom:7px}.two,.three{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{border:1px solid var(--line);border-radius:9px;padding:16px;background:#fafcff}.card h3{margin:0 0 7px}.card p:last-child{margin-bottom:0}.stat strong{display:block;font-size:24px;color:var(--blue);line-height:1.5}.stat span{font-size:13px;color:var(--muted)}.note{padding:13px 16px;border-left:4px solid var(--blue);background:#eef4ff;border-radius:0 7px 7px 0;margin:15px 0}.note.warn{border-color:#bf8529;background:#fff8e9}.note.good{border-color:var(--green);background:#edf8f2}.tag{display:inline-block;background:#eef2f8;padding:1px 6px;font-size:12px;border-radius:4px;color:var(--muted)}
+code{font:13px/1.65 var(--mono);background:#edf2f8;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef3fa;border-radius:8px;padding:16px;font:13px/1.8 var(--mono)}pre code{padding:0;background:none}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:10px 11px;vertical-align:top;text-align:left}th{background:#f2f6fc;font-weight:600}tr:last-child td{border-bottom:0}td:first-child{font-weight:500}ul,ol{padding-left:24px;margin:10px 0}li{margin:6px 0}details{border:1px solid var(--line);border-radius:8px;margin:12px 0;padding:12px 15px}summary{cursor:pointer;font-weight:600}details[open] summary{margin-bottom:10px}.diagram{overflow:auto;background:#f8faff;border:1px solid var(--line);border-radius:10px}.diagram svg{display:block;width:100%;height:auto;min-width:850px}.diagram.small svg{min-width:680px}svg text{font-family:"Microsoft YaHei",system-ui,sans-serif;fill:var(--ink)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin:10px 0;color:var(--muted)}.legend span:before{content:"";display:inline-block;width:23px;height:3px;margin-right:7px;vertical-align:middle;background:var(--blue)}.legend .control:before{background:var(--green)}.legend .clock:before{background:#c18d29}
+.timeline{counter-reset:step;display:grid;gap:13px}.step{position:relative;padding:16px 16px 16px 57px;border:1px solid var(--line);border-radius:9px}.step:before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;top:17px;left:15px;color:var(--blue);font:600 18px var(--mono)}.step h3{margin:0 0 5px}.step p{margin:5px 0}.mini-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:13px 0}.mini-flow span{border:1px solid #c8d7ef;background:#edf4ff;padding:7px 10px;border-radius:6px;font-size:13px}.mini-flow b{color:var(--blue)}.memory-slot{background:#eef4ff;border:1px solid #bcd0ef;border-radius:9px;padding:14px}.memory-slot strong{display:block}.memory-slot.back{background:#edf7f2;border-color:#bddbcf}
+.walk{border:1px solid #bdd0ef;background:#f7faff;border-radius:10px;padding:18px;margin:18px 0}.walk-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.walk-head h3{margin:0}.buttons{display:flex;gap:8px;flex-wrap:wrap}button{background:var(--blue);border:0;border-radius:6px;color:white;padding:7px 12px;font-size:13px}.secondary{background:#e5edf9;color:var(--blue)}.walk-progress{display:flex;gap:5px;margin:14px 0}.walk-progress span{height:5px;background:#dce5f3;flex:1;border-radius:2px}.walk-progress span.active{background:var(--blue)}.walk-status{font-weight:600;color:var(--blue);margin:12px 0}.walk .two{gap:10px}.walk-foot{font-size:13px;color:var(--muted);min-height:3.6em}.calc{padding:16px;background:#f5f8fd;border-radius:9px}.calc label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}.calc input,.calc select{width:100%;border:1px solid #bccce2;border-radius:6px;background:white;padding:8px;color:var(--ink)}.calc-output{padding:13px 0 0}.calc-output strong{color:var(--blue);font-size:20px}.module{border-left:3px solid #adc4ed}.module .meta{font:12px/1.8 var(--mono);color:var(--muted);margin:3px 0 10px;overflow-wrap:anywhere}.module h3 a{font-size:16px}.clock-chain{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}.clock-chain .card{flex:1;min-width:145px}.clock-chain .arrow{align-self:center;color:#a17317;font-weight:700}.footer{font-size:13px;color:var(--muted);padding:5px 0 20px}.sources{font-size:13px}.noscript{padding:10px;background:#fff3dc}.print-link{font-size:13px}
+@media(max-width:1050px){.shell{grid-template-columns:155px minmax(0,1fr);gap:18px;padding:24px 18px}.three{grid-template-columns:minmax(0,1fr)}h1{font-size:28px}section{padding:22px}.two{gap:12px}}
+@media(max-width:760px){.shell{display:block;padding:18px 12px}nav{position:static;max-height:none;display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px}nav strong{width:100%}nav a{padding:5px 8px;border:1px solid var(--line);border-radius:5px;background:white}nav .small{display:none}section{padding:18px;margin:16px 0}.two{grid-template-columns:minmax(0,1fr)}.card{min-width:0}h1{font-size:25px}h2{font-size:21px}.lead{font-size:16px}.walk-head{display:block}.buttons{margin-top:10px}.walk .two{grid-template-columns:minmax(0,1fr)}.step{padding-left:50px}th,td{min-width:120px}td code{font-size:12px}}
+@media print{body{background:white;font-size:11px}.shell{display:block;padding:0;max-width:none}nav,.buttons,.calc,.walk{display:none}h1{font-size:24px}h2{font-size:18px}section{box-shadow:none;border-radius:0;padding:16px;margin:14px 0;break-inside:auto}.card,.step,table tr{break-inside:avoid}.diagram{overflow:visible}.diagram svg,.diagram.small svg{min-width:0}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}a{color:inherit;text-decoration:none}details{display:block}summary{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav aria-label="章节目录">
+<strong>架构与工作原理</strong>
+<a href="#overview">01 系统总览</a>
+<a href="#uart">02 UART 基础</a>
+<a href="#pixels">03 像素与地址</a>
+<a href="#ddr">04 DDR3 与 AXI</a>
+<a href="#workflow">05 完整工作流程</a>
+<a href="#publish">06 双缓冲与换帧</a>
+<a href="#protocol">07 帧协议与应答</a>
+<a href="#display">08 720p 与 TMDS</a>
+<a href="#clocks">09 时钟、复位与 CDC</a>
+<a href="#modules">10 主要模块</a>
+<a href="#errors">11 异常与恢复</a>
+<a href="#performance">12 性能与提速</a>
+<a href="#board">13 板级接口</a>
+<a href="#validation">14 验证与使用入口</a>
+<a href="#references">15 术语与资料</a>
+<div class="small">独立 HTML · 可离线阅读<br>图表、交互均在本文件内<br>源文件链接需保留目录结构</div>
+</nav>
+<main>
+<header>
+<div class="eyebrow">XILINX 辅助验证工程 / Kindex Base7 FMC版 / xc7k325tffg676-2</div>
+<h1>一张图片，如何从电脑<br>经过 UART 和 DDR3，走到 HDMI 屏幕？</h1>
+<p class="lead">电脑把图片转成 RGB565 原始像素，通过串口送入 FPGA。FPGA 将完整图片存入 DDR3 的后台缓冲，校验成功后在安全的显示边界发布；显示通路持续从前台读取像素，产生标准 720p60 视频时序。</p>
+<div><span class="badge">相关仿真已通过</span><span class="badge">提速版综合、实现、bitstream 已完成</span><span class="badge info">最新配置 2Mbps / 16KB</span><span class="badge pending">实板传输、DDR、HDMI 尚待验证</span></div>
+<p class="caption">更新：2026-10-09 · 根据当前 RTL、PC 脚本及提速版构建凭据编写。这个工程验证静态图缓存和显示链路；最终易灵思摄像头与神经网络实时风格化系统仍是后续工作。</p>
+</header>
+
+<section id="overview">
+<span class="section-num">01 / OVERVIEW</span><h2>先看整条数据通路</h2>
+<div class="three">
+<div class="card stat"><strong>1280 × 720</strong><span>有效图像 · RGB565 · 每像素 2 字节</span></div>
+<div class="card stat"><strong>1,843,200 B</strong><span>一张原始图片 · 1.758 MiB · 无行填充</span></div>
+<div class="card stat"><strong>60 Hz</strong><span>HDMI 刷新率 · 与串口换图速度分开</span></div>
+</div>
+<div class="legend"><span>像素 / 数据</span><span class="control">应答 / 控制</span><span class="clock">时钟域边界</span></div>
+<div class="diagram">
+<svg viewBox="0 0 1120 650" role="img" aria-labelledby="system-title system-desc">
+<title id="system-title">PC、FPGA 接收存储、显示输出三部分架构</title>
+<desc id="system-desc">PC 解码和分包，经 UART 接收与协议校验后由写帧模块写入 DDR3 后台；读帧模块读取前台，通过异步 FIFO 跨到像素域，经视频时序、TMDS 编码及串化到 HDMI。应答沿 UART TX 返回 PC；显示刷新请求跨域到读帧模块。</desc>
+<defs><marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#275eca"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#17785d"/></marker></defs>
+<rect x="16" y="20" width="252" height="610" rx="12" fill="#edf3ff" stroke="#c9d9f0"/>
+<rect x="288" y="20" width="486" height="610" rx="12" fill="#f0f8f4" stroke="#c5dfd2"/>
+<rect x="794" y="20" width="310" height="610" rx="12" fill="#f7f2ff" stroke="#d8ccee"/>
+<text x="32" y="52" font-size="19" font-weight="700">PC 软件与 USB 串口</text>
+<text x="306" y="52" font-size="19" font-weight="700">FPGA · ui_clk 100MHz</text>
+<text x="812" y="52" font-size="18" font-weight="700">像素域 · 74.25MHz</text>
+<text x="812" y="77" font-size="13">串化时钟 371.25MHz</text>
+<g fill="white" stroke="#b4c8e6">
+<rect x="36" y="92" width="212" height="100" rx="8"/><rect x="36" y="230" width="212" height="100" rx="8"/><rect x="36" y="370" width="212" height="96" rx="8"/>
+<rect x="310" y="92" width="442" height="100" rx="8"/><rect x="310" y="230" width="242" height="102" rx="8"/><rect x="578" y="230" width="174" height="102" rx="8"/>
+<rect x="310" y="372" width="442" height="101" rx="8" fill="#e2edf9"/><rect x="310" y="521" width="442" height="80" rx="8"/>
+<rect x="816" y="230" width="266" height="102" rx="8"/><rect x="816" y="372" width="266" height="101" rx="8"/><rect x="816" y="521" width="266" height="80" rx="8"/>
+</g>
+<g font-size="15">
+<text x="51" y="119" font-weight="700">选图 / 预览 / 设置串口</text><text x="51" y="147">send_image_gui.py</text><text x="51" y="173">Tk 主线程 + 后台发送线程</text>
+<text x="51" y="257" font-weight="700">图片解码与像素打包</text><text x="51" y="285">Pillow → RGB565 小端</text><text x="51" y="311">整帧 CRC32 / 分块</text>
+<text x="51" y="397" font-weight="700">停等协议 / USB → UART</text><text x="51" y="424">send_image.py / CH340</text><text x="51" y="450">TX 数据；RX 等待应答</text>
+<text x="326" y="119" font-weight="700">uart_rx_8n1 → packet_rx</text><text x="326" y="147">8N1 字节接收 → 转义还原 → 单包缓存</text><text x="326" y="174">完整包 CRC 通过后，才交给写帧模块</text>
+<text x="326" y="257" font-weight="700">frame_writer</text><text x="326" y="285">顺序 / 帧 CRC / 后台写入</text><text x="326" y="311">每 16 字节等 AXI B 响应</text>
+<text x="590" y="257" font-weight="700">packet_reply</text><text x="590" y="285">生成 ACK / NACK</text><text x="590" y="311">→ uart_tx_8n1</text>
+<text x="326" y="400" font-weight="700">MIG AXI4 控制器 + PHY → 外部 DDR3</text><text x="326" y="428">帧缓冲 0：0x00000000　帧缓冲 1：0x00200000</text><text x="326" y="455">前台只读 / 后台只写；完整帧在安全窗口交换角色</text>
+<text x="326" y="549" font-weight="700">frame_reader · 前台读取与预取</text><text x="326" y="577">16 拍 / 256B 突发；水位控制；换帧与 FIFO 复位</text>
+<text x="832" y="257" font-weight="700">XPM 异步 FIFO · 16KiB</text><text x="832" y="285">100MHz 写 128bit / 8 像素</text><text x="832" y="311">74.25MHz 读 16bit / 1 像素</text>
+<text x="832" y="399" font-weight="700">video_720p</text><text x="832" y="427">RGB565 → RGB888；HS / VS / DE</text><text x="832" y="455">帧首请求刷新；欠载标记洋红</text>
+<text x="832" y="549" font-weight="700">TMDS 编码 → 10:1 串化</text><text x="832" y="577">OSERDESE2 / OBUFDS → HDMI1</text>
+</g>
+<g fill="none" stroke="#275eca" stroke-width="2.5" marker-end="url(#arrow-blue)">
+<path d="M142 192V228"/><path d="M142 330V368"/><path d="M248 398H277V142H308"/><path d="M429 192V228"/><path d="M429 332V370"/><path d="M531 473V519"/><path d="M752 560H784V280H814"/><path d="M949 332V370"/><path d="M949 473V519"/>
+</g>
+<g fill="none" stroke="#17785d" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-green)">
+<path d="M552 279H576"/><path d="M665 230V210H277V487H142V468"/><path d="M816 443H789V615H720V603"/>
+</g>
+<text x="44" y="516" font-size="13" fill="#17785d">应答：命令 / 帧号 / 已接收偏移</text>
+<text x="44" y="548" font-size="13">一包发送完，再发送下一包</text>
+<text x="44" y="575" font-size="13">PC 负责 PNG / JPEG 解码</text>
+<text x="44" y="601" font-size="13">FPGA 接收原始像素字节</text>
+<text x="800" y="641" font-size="12">绿色虚线：refresh_request / 安全窗口 / 应答</text>
+</svg></div>
+<p class="caption">图中的方框对应实际软件、RTL 或 IP。DDR3 写入和显示读取可同时进行，由 MIG 服务读写通道；前后台的地址所有权由本项目逻辑管理。</p>
+<div class="note"><strong>三个不同的时间尺度：</strong>UART 大约数秒到数分钟更新一张图；DDR3 连续提供像素；HDMI 每 16.67ms 扫描一次屏幕。即使没有新图，HDMI 也要重复读取当前前台帧。</div>
+</section>
+
+<section id="uart">
+<span class="section-num">02 / UART</span><h2>串口基础：线上实际发送的是什么？</h2>
+<p>UART 是异步串行通信。双方约定波特率，发送端在 TX 上逐位输出，接收端从 RX 的起始位判断采样时刻。这里不传独立时钟，电脑经过板上的 CH340 USB-UART 桥连接 FPGA；发送图片和接收应答分别使用两根方向相反的数据线。</p>
+<div class="two">
+<div class="card"><h3>8N1：一个字节占 10 个线上的 bit</h3><p><strong>8</strong> 个数据位、<strong>N</strong> 表示无奇偶校验、<strong>1</strong> 个停止位，另外还有 1 个起始位。空闲为高；起始位拉低；数据按最低位先发；停止位回到高电平。</p><p>2,000,000 baud 时每位 0.5µs，每个字节至少 5µs，最大原始字节速率约 200,000B/s。115200 baud 时最大约 11,520B/s。</p></div>
+<div class="card"><h3>波特率、分包大小是两种设置</h3><p>波特率决定每个位有多快，必须与 FPGA 的 <code>UART_BAUD</code> 相同。分包大小决定一次停等事务里放多少像素，必须不超过 FPGA 的 <code>UART_PAYLOAD_BYTES</code>。</p><p>GUI 改参数只会改变电脑端；不会自动修改已经烧入 FPGA 的 bitstream。标准版 115200 / 1KB，提速版 2Mbps / 16KB。</p></div>
+</div>
+<h3>示例：发送 0xA5，数据位按 1、0、1、0、0、1、0、1 顺序走</h3>
+<div class="diagram small"><svg viewBox="0 0 1000 155" role="img" aria-labelledby="uart-title"><title id="uart-title">UART 8N1 发送 0xA5 的位序示意图</title>
+<g stroke="#d4deeb" stroke-dasharray="3 4"><path d="M100 40V118M180 40V118M260 40V118M340 40V118M420 40V118M500 40V118M580 40V118M660 40V118M740 40V118M820 40V118M900 40V118"/></g>
+<path d="M20 55H100V100H180V55H260V100H340V55H420V100H580V55H660V100H740V55H980" fill="none" stroke="#275eca" stroke-width="3"/>
+<g font-size="13" text-anchor="middle"><text x="60" y="28">空闲</text><text x="140" y="28">START</text><text x="220" y="28">D0 = 1</text><text x="300" y="28">D1 = 0</text><text x="380" y="28">D2 = 1</text><text x="460" y="28">D3 = 0</text><text x="540" y="28">D4 = 0</text><text x="620" y="28">D5 = 1</text><text x="700" y="28">D6 = 0</text><text x="780" y="28">D7 = 1</text><text x="860" y="28">STOP</text><text x="940" y="28">空闲</text><text x="140" y="134">0</text><text x="860" y="134">1</text><text x="500" y="134">一个字节：起始位 + 8 个数据位 + 停止位</text></g>
+</svg></div>
+<p>本项目接收器运行在 100MHz：RX 先经过 3 级同步，检测起始位后到位中心确认，再按分频间隔采样 8 位。2Mbps 恰好每位 50 个 UI 时钟；115200 的整数分频为 868。停止位不是高电平就判帧错误，丢弃未完成包并等待恢复。</p>
+<div class="note warn"><strong>串口电气接口：</strong>这里是板上 3.3V UART，经板载 USB 桥连接电脑。B20 是 FPGA RX，C22 是 FPGA TX。UART 电平接口与 RS-232 的正负电压接口不同，接线依据板级原理图。<strong>COM29“拒绝访问”通常发生在 PC 打开端口时</strong>：Windows 串口要求独占，一个进程占用时另一个不能打开。见 <a href="https://learn.microsoft.com/en-us/windows/win32/devio/communications-resource-handles" target="_blank" rel="noopener">Microsoft 串口句柄说明</a>。</div>
+<p class="caption">使用板上的 UART Type-C 接口 P2。P1 是 FT232/JTAG 路线。端口号可能随插拔变化，先在 GUI 中刷新端口列表；已有串口终端或另一个发送 GUI 需要先释放同一个端口。</p>
+</section>
+
+<section id="pixels">
+<span class="section-num">03 / PIXELS &amp; ADDRESS</span><h2>图片文件、原始像素与 DDR 地址</h2>
+<p>PNG/JPEG 文件大小不能直接用来估算传输时间：文件先由电脑解压成像素，再发送固定大小的 RGB565 数据。图片按<strong>从上到下逐行、每行从左到右</strong>排列，不传文件头，不在 FPGA 上做压缩格式解码。</p>
+<div class="two">
+<div class="card"><h3>RGB565 的含义</h3><pre><code>16bit 像素： RRRRR GGGGGG BBBBB
+位位置：      15..11 10..5 4..0
+p = (R8 &gt;&gt; 3) &lt;&lt; 11
+  | (G8 &gt;&gt; 2) &lt;&lt; 5
+  | (B8 &gt;&gt; 3)</code></pre><p>红、蓝各保留 5 位，绿保留 6 位，共 65,536 种编码。显示端用高位复制扩展到 RGB888；这只是把数值展开，不能恢复被丢掉的颜色精度。</p></div>
+<div class="card"><h3>小端字节序与位序要分开理解</h3><div class="table-wrap"><table><thead><tr><th>颜色</th><th>像素值</th><th>发送字节</th></tr></thead><tbody><tr><td>纯红</td><td><code>0xF800</code></td><td><code>00 F8</code></td></tr><tr><td>纯绿</td><td><code>0x07E0</code></td><td><code>E0 07</code></td></tr><tr><td>纯蓝</td><td><code>0x001F</code></td><td><code>1F 00</code></td></tr></tbody></table></div><p>小端指多字节数值低字节先放；UART 的“最低位先发”则发生在每一个字节内部。两者共同决定线上顺序。</p></div>
+</div>
+<h3>从坐标算地址</h3>
+<pre><code>stride = 1280 × 2 = 2560 字节 / 行，没有行 padding
+frame_bytes = 2560 × 720 = 1,843,200 = 0x001C2000
+address(x, y) = frame_base + y × 2560 + x × 2
+
+128bit AXI 数据拍 = 16 字节 = 8 个 RGB565 像素
+最低 16bit 对应较早的像素；低字节对应该像素低 8bit。</code></pre>
+<div class="two"><div class="memory-slot"><strong>帧缓冲 0 · 2MiB 地址槽</strong><code>base = 0x00000000</code><p>图像有效范围：<code>0x00000000–0x001C1FFF</code><br>余下空间不用于本帧像素。</p></div><div class="memory-slot back"><strong>帧缓冲 1 · 2MiB 地址槽</strong><code>base = 0x00200000</code><p>图像有效范围：<code>0x00200000–0x003C1FFF</code><br>两槽总计预留 4MiB 地址空间。</p></div></div>
+<p class="caption">“帧缓冲 0/1”是两块软件可理解的连续地址区域；哪一块是前台会随换帧变化。代码中的 <code>front_bank</code> / <code>commit_bank</code> 在本页都指这个帧缓冲编号。</p>
+</section>
+
+<section id="ddr">
+<span class="section-num">04 / DDR3 &amp; AXI</span><h2>DDR3 基础：为什么有了内存，还需要控制器和 FIFO？</h2>
+<div class="three">
+<div class="card"><h3>DDR：一个时钟的两个边沿传数据</h3><p>DDR3 是动态存储器，数据在时钟上升沿和下降沿传输。当前配置物理 CK 为 400MHz，因此是 800MT/s。板上两颗 x16 器件并联，组成 32bit 数据总线。</p><p>因此理论 DQ 峰值为 <code>800M × 32 / 8 = 3.2GB/s</code>；实际效率还受到读写切换、刷新、行命中、命令调度等影响。</p></div>
+<div class="card"><h3>内部 bank、行与列</h3><p>DDR3 内部有多个存储 bank，每个包含很多行与列。访问可能需要打开一行、执行读写、关闭或切换行；动态单元还需要周期性刷新，上电后需要初始化和校准。</p><p>这些物理存储 bank 与前面的“图像帧缓冲 0/1”不同。线性字节地址如何映射到行、列、bank，由 MIG 配置决定。</p></div>
+<div class="card"><h3>MIG 把复杂外设变成总线接口</h3><p>MIG 是 Xilinx Memory Interface Generator 生成的控制器和 PHY。控制器处理命令、调度和刷新；PHY 处理 DQ/DQS、时钟及采样校准。项目逻辑通过 AXI4 发地址和数据，不直接手写 DDR 引脚时序。</p><p>本项目选择在 <code>init_calib_complete</code> 后释放数据通路复位。这个等待条件是本工程的启动策略。</p></div>
+</div>
+<p class="caption">DDR3/MIG 背景资料：<a href="https://docs.amd.com/r/en-US/ug586_7Series_MIS/DDR3-SDRAM" target="_blank" rel="noopener">AMD UG586 DDR3 SDRAM</a>；校准完成信号见 <a href="https://docs.amd.com/r/en-US/ug586_7Series_MIS/init_calib_complete" target="_blank" rel="noopener">init_calib_complete</a>。具体速率、位宽、地址槽和启动条件来自本地 <a href="ip/mig.prj">MIG 配置</a>与 RTL。</p>
+<h3>AXI4：读写分成五条独立通道</h3>
+<p>每条通道都有 <code>VALID</code> 和 <code>READY</code>。同一时钟沿上两者同时为 1，才完成这一拍传输；一旦 VALID 拉高而对方未 READY，地址、数据及相关控制必须保持稳定。<strong>AW 地址和 W 数据分别握手，不能假定它们同一周期接收。</strong>见 <a href="https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/IHI0022H_amba_axi_protocol_spec.pdf" target="_blank" rel="noopener">Arm AXI 协议规范</a>。</p>
+<div class="table-wrap"><table><thead><tr><th>通道</th><th>发送方向</th><th>本项目用途</th><th>关键点</th></tr></thead><tbody>
+<tr><td>AW · Write Address</td><td>frame_writer → MIG</td><td>指定后台地址，每次 16 字节</td><td><code>AWLEN=0</code> 表示 1 拍；<code>AWSIZE=4</code> 表示 2⁴ 字节/拍。</td></tr>
+<tr><td>W · Write Data</td><td>frame_writer → MIG</td><td>128bit 数据；全部字节有效</td><td><code>WSTRB=FFFF</code>；<code>WLAST=1</code>；与 AW 独立记录完成状态。</td></tr>
+<tr><td>B · Write Response</td><td>MIG → frame_writer</td><td>确认这一写事务的结果</td><td><code>BRESP=OKAY</code> 才继续；整个 DATA 包的 B 响应成功后才回分包 ACK。</td></tr>
+<tr><td>AR · Read Address</td><td>frame_reader → MIG</td><td>指定前台读取地址，每次 256 字节</td><td><code>ARLEN=15</code> 表示 16 拍；<code>ARSIZE=4</code>；地址递增。</td></tr>
+<tr><td>R · Read Data</td><td>MIG → frame_reader</td><td>连续接收 16 个 128bit 数据拍</td><td>逐拍检查 RRESP；RLAST 必须与最后一拍相符。FIFO 满时可背压。</td></tr>
+</tbody></table></div>
+<div class="two">
+<div class="card"><h3>写路径：小流量，重在确认</h3><p>UART 最快每秒约 20 万原始字节，相比显示带宽很低。写模块把 16 字节装成一拍，等待 AW、W 都握手，再等待 B；一个事务结束才开始下一拍。这样容易明确后台哪些字节已经成功写入。</p><p>提速版一包 16KiB，会拆成 1024 个单拍写事务；协议数据包大小与 AXI burst 长度没有直接等号。</p></div>
+<div class="card"><h3>读路径：用突发和预取喂显示</h3><p>读模块每次发出一个 16 拍 / 256B 突发，同方向只保留一个未完成事务。地址 256B 对齐，完整突发不跨 4KB 边界。</p><p>FIFO 写端有 1024 个 128bit 字。水位 ≤992 时才启动新突发，留下至少 32 个字的余量；不把平均带宽充足等同于永远不会欠载。</p></div>
+</div>
+<h3>FIFO 是跨域的“蓄水池”，DDR3 是存整张图的“仓库”</h3>
+<p>DDR 返回数据有间隔，HDMI 有效区却必须每个像素时钟拿出一个像素。异步 FIFO 暂存已经读出的数据，吸收短暂停顿，并把 100MHz、128bit 的输入转换成 74.25MHz、16bit 的输出。</p>
+<pre><code>FIFO 容量 = 1024 × 128bit = 16KiB = 8192 像素
+若持续按 74.25MHz 消耗：可提供约 110.3µs 的像素
+整张图 = 921,600 像素，因此 FIFO 不是整帧缓存。</code></pre>
+<p>FIFO 使用 FWFT（First Word Fall Through）：非空时最前面的字已出现在输出端，读使能表示消费它。清 FIFO 或复位时，两个时钟域各自的 busy 未结束前不能恢复读写。接口细节见 <a href="https://docs.amd.com/r/2021.2-English/ug953-vivado-7series-libraries/XPM_FIFO_ASYNC" target="_blank" rel="noopener">AMD XPM_FIFO_ASYNC 文档</a>。</p>
+</section>
+
+<section id="workflow">
+<span class="section-num">05 / WORK FLOW</span><h2>一次完整传图，按什么顺序发生？</h2>
+<div class="timeline">
+<div class="step"><h3>上电：建立时钟与 DDR3 工作条件</h3><p>50MHz 晶振经时钟 IP 产生 200MHz，MIG 建立 DDR 工作时钟和 100MHz UI 时钟。视频 MMCM 从 UI 时钟生成 74.25 / 371.25MHz。相关锁定、复位和 DDR 校准满足后，各域同步释放复位。</p><p class="caption">尚无已发布图片时，<code>front_valid=0</code>，显示有效区输出黑色；此时不会把“没有图片”计成 FIFO 欠载。</p></div>
+<div class="step"><h3>GUI 选图：冻结本次发送参数</h3><p>用户在 <code>images/</code> 选择自己的图片，确认串口、波特率和分包大小。默认要求 1280×720；显式启用 resize 时由 PC 保持比例缩放并补黑边。GUI 主线程负责界面，后台线程负责转换和串口 I/O。</p><p class="caption">发送开始才打开串口；完成、停止或异常后关闭。后台经事件队列向界面报告进度，避免等待 ACK 时冻结窗口。</p></div>
+<div class="step"><h3>PC 解码：生成唯一的像素字节流</h3><p>Pillow 解码、处理 EXIF 方向并转换 RGB，再按 RGB565 小端打包成 1,843,200 字节。可选 NumPy 加速与原方法逐字节一致。PC 在这串原始字节上计算整帧 CRC32，并产生本次帧编号。</p></div>
+<div class="step"><h3>ABORT → BEGIN：开启后台接收会话</h3><p>PC 先发 ABORT 清掉可能残留的接收会话，等待应答；再发 BEGIN，携带整帧预期 CRC。写模块选 <code>writer_bank = ~front_bank</code>，清空已确认偏移和帧 CRC 状态。已显示的前台图片保持不变。</p></div>
+<div class="step"><h3>DATA：UART 把一包完整送到单包缓存</h3><p>PC 将原始像素分包，给每包写入命令、序号、帧号、字节偏移等字段，附包 CRC32，进行 7E/7D 转义。FPGA 先收字节、还原转义，在结束分隔符处校验包 CRC。校验通过后才置 <code>packet_valid</code>。</p><p class="caption">提速版是 112 个 16384B 满包 + 1 个 8192B 尾包，共 113 个 DATA。每包都等待应答，接收器只缓存一个待处理包。</p></div>
+<div class="step"><h3>后台写入：16 字节组一拍，每拍等写响应</h3><p>写模块检查尺寸、格式、包长、帧号和偏移。逐字节读包缓存，更新整帧 CRC；每 16 字节装成一个 128bit 字，向后台地址发 AW 和 W。二者都接收后等待 B，成功才继续下一拍。</p><p class="caption">接收结束不等于已经写入 DDR；AW/W 接收也不等于事务结果成功。数据路径以 B 响应作为写事务完成依据。</p></div>
+<div class="step"><h3>分包 ACK：告诉 PC 可继续的偏移</h3><p>整个 DATA 包的写响应全部成功后，写模块增加 <code>next_offset</code>；应答模块生成带已确认偏移的 ACK，通过 UART TX 返回。PC 检查命令、序号、帧号、应答 CRC、状态和偏移，才发下一包。</p><p class="caption">ACK 丢失时 PC 重发相同包。FPGA 识别上一次成功请求的命令、序号、帧号和包 CRC，不重复写入或重复发布。</p></div>
+<div class="step"><h3>END：把完整后台帧变成待发布帧</h3><p>全部像素得到确认后，PC 发 END。FPGA 要求 <code>next_offset=FRAME_BYTES</code> 且整帧 CRC 与 BEGIN 一致。通过后保持 <code>commit_valid / commit_bank / commit_frame</code>，等待读帧模块接受；此时不会立刻回成功 END ACK。</p></div>
+<div class="step"><h3>帧首安全窗口：排空旧读事务，交换前台</h3><p>每次视频扫描回到帧首，像素域发刷新 toggle 和安全窗口。UI 域看到请求后停止新增旧帧读取；已经拉高的 AR 必须完成握手，已经发出的读事务必须排空。回到空闲状态且窗口仍开放时，读模块接受待发布帧并更新前台。</p><p class="caption">如果 DDR 背压拖到窗口结束，延迟到下一次安全窗口。保持前台不变，不在有效像素区强行换图。</p></div>
+<div class="step"><h3>清 FIFO → 重新预取 → 连续输出</h3><p>换前台时给写模块 <code>commit_ack</code>，它据此回成功 END ACK。同时读模块拉高 FIFO 复位 16 个 UI 周期，再等 XPM 复位 busy 结束，更新 <code>refresh_ack</code>，从新前台偏移 0 预取。</p><p class="caption"><strong>这两个应答的时刻不同：</strong>commit_ack 确认前台所有权已交换；refresh_ack 确认这一轮 FIFO 刷新握手完成。END ACK 不是光学测量，也不代表收到 ACK 时屏幕所有行已扫描完。</p></div>
+<div class="step"><h3>HDMI 显示：一个像素时钟输出一个像素</h3><p>有效区逐个消费 FIFO 的 16bit 像素，扩展 RGB888，并与 HS、VS、DE 一起寄存。TMDS 将三种颜色分别编码为 10bit 符号，再经串化器、差分输出到 HDMI1。消隐时发送控制符，不消费图像像素。</p></div>
+<div class="step"><h3>下一轮刷新：有新图换图，没有新图重读原图</h3><p>显示读地址和 FIFO 每轮重新对齐。没有新的完整后台帧时，前台编号不变，再次从偏移 0 读同一张图。下一次上传写另一个地址槽；因而屏幕可以持续刷新，上传尚未完成的半帧不会曝光。</p></div>
+</div>
+</section>
+
+<section id="publish">
+<span class="section-num">06 / OWNERSHIP &amp; PUBLISH</span><h2>双缓冲与换帧：如何避免撕裂和混帧？</h2>
+<p>单缓冲若边读边改，屏幕上部可能属于旧图、下部属于新图。这里用两个独立地址槽：前台供显示读取，后台供接收写入。写模块不会修改当前前台；后台也不会因为“收到一部分”就被显示。</p>
+<div class="walk" id="walkthrough" hidden>
+<div class="walk-head"><h3>交互演示：从图片 A 换到图片 B</h3><div class="buttons"><button class="secondary" id="walk-prev" type="button">上一步</button><button id="walk-next" type="button">下一步</button><button class="secondary" id="walk-reset" type="button">重置</button></div></div>
+<div class="walk-progress" id="walk-progress" aria-hidden="true"></div>
+<div class="walk-status" id="walk-status" aria-live="polite"></div>
+<div class="two"><div class="memory-slot"><strong>帧缓冲 0 · 0x00000000</strong><p id="walk-bank0"></p></div><div class="memory-slot back"><strong>帧缓冲 1 · 0x00200000</strong><p id="walk-bank1"></p></div></div>
+<p id="walk-fifo"></p><p class="walk-foot" id="walk-note"></p>
+<p class="caption">流程演示说明所有权变化，不是硬件时序仿真。假设 A 在缓冲 0；初次上电没有 A 时，第一张完整图会先写入缓冲 1。</p>
+</div>
+<noscript><p class="noscript">浏览器未启用 JavaScript，仍可阅读下面完整的换帧说明；仅交互演示和时间计算器不可操作。</p></noscript>
+<h3>发布的三个门槛</h3>
+<div class="three"><div class="card"><h3>① 数据完整</h3><p>全部 DATA 按偏移连续接受，字节数达到一帧；每个写事务的 B 响应成功；整帧 CRC 匹配。</p></div><div class="card"><h3>② 读事务安全</h3><p>旧 AR/R 事务已经排空，读模块回到 RUN；不能留下以后才返回、却已经被重新写入的旧帧数据。</p></div><div class="card"><h3>③ 显示边界安全</h3><p>当前存在刷新请求，且跨域后的帧首窗口仍开放。满足条件后才交换角色、清 FIFO。</p></div></div>
+<h3>换帧过程与应答顺序</h3>
+<div class="mini-flow"><span>END 校验通过</span><b>→</b><span>commit_valid 保持</span><b>→</b><span>帧首 request</span><b>→</b><span>排空 AR / R</span><b>→</b><span>窗口内交换前台</span><b>→</b><span>commit_ack / END ACK</span><b>→</b><span>FIFO reset / busy</span><b>→</b><span>refresh_ack</span><b>→</b><span>新帧预取</span></div>
+<div class="table-wrap"><table><thead><tr><th>信号 / 事件</th><th>产生与接收</th><th>实际含义</th></tr></thead><tbody>
+<tr><td><code>commit_valid</code></td><td>frame_writer → frame_reader，均在 UI 域</td><td>后台帧完整，请发布。缓冲编号、帧号持续保持到接受。</td></tr>
+<tr><td><code>refresh_request</code></td><td>video → reader，像素域到 UI 域</td><td>toggle 变化表示新一轮显示刷新请求；与 ACK 不同表示未完成。</td></tr>
+<tr><td><code>refresh_window</code></td><td>video → reader，像素域到 UI 域</td><td>允许进行 FIFO 重置与角色交换的帧首消隐窗口；提前一整行关闭。</td></tr>
+<tr><td><code>commit_ack</code></td><td>reader → writer，UI 域内</td><td>前台角色已经交换；写模块结束会话，增加 accepted_frames 并发 END ACK。</td></tr>
+<tr><td><code>refresh_ack</code></td><td>reader → video，UI 域到像素域</td><td>FIFO 重置与 busy 等待完成。像素域还需检查 front_valid、FIFO busy 和 empty。</td></tr>
+</tbody></table></div>
+<div class="note good"><strong>为什么先排空再交换？</strong>交换后旧前台会成为下一次上传的后台。如果仍有旧读事务挂着，下一次写入可能与旧事务冲突；排空旧事务也确保 FIFO 不混入上一轮尾部像素。只是改变地址指针不能代替这些步骤。</div>
+<p>每个显示帧都执行刷新握手，包括重复显示同一张图片。若换帧窗口错过，读模块等待下一次窗口；视频域如果进入有效区还拿不到对齐后的像素，本帧标记欠载并用洋红提示，避免把错位的数据继续当成正常图片。</p>
+</section>
+
+<section id="protocol">
+<span class="section-num">07 / FRAME PROTOCOL</span><h2>串口帧协议：让原始字节可定位、可校验、可重传</h2>
+<p>UART 只保证按位发送，不知道哪几个字节属于一张图。项目在 UART 字节上加了一层帧协议：分隔符找包边界，长度找 payload，偏移找图片位置，序号与 CRC 支持错误检测和重传。</p>
+<pre><code>线上包： 7E | 转义后的 [20B 包头 + payload + 4B 包 CRC32] | 7E
+转义规则：原字节 7E → 7D 5E；原字节 7D → 7D 5D
+包 CRC：覆盖未转义的包头 + payload，不包含分隔符和 CRC 自身
+整帧 CRC：只覆盖全部 RGB565 原始像素；BEGIN 携带该预期值
+CRC32 与 Python zlib.crc32 一致；CRC 数值以小端发送。</code></pre>
+<details><summary>展开 20 字节包头字段（偏移均指未转义后的包）</summary>
+<div class="table-wrap"><table><thead><tr><th>字节偏移</th><th>字段</th><th>长度</th><th>约定</th></tr></thead><tbody>
+<tr><td>0</td><td>version</td><td>1B</td><td>固定 1。</td></tr><tr><td>1</td><td>command</td><td>1B</td><td>BEGIN=1，DATA=2，END=3，ABORT=4，QUERY=5。</td></tr><tr><td>2–3</td><td>sequence</td><td>2B</td><td>16bit 请求序号；重传复用同一值；成功请求后递增。</td></tr><tr><td>4–7</td><td>frame</td><td>4B</td><td>32bit 帧编号，与本次会话保持一致。</td></tr><tr><td>8–11</td><td>offset</td><td>4B</td><td>原始图像字节偏移；ACK 中表示下一可接收位置。</td></tr><tr><td>12–13</td><td>length</td><td>2B</td><td>payload 字节数；不含包头与 CRC。</td></tr><tr><td>14–15 / 16–17</td><td>width / height</td><td>各 2B</td><td>固定 1280 / 720。</td></tr><tr><td>18 / 19</td><td>format / reserved</td><td>各 1B</td><td>format=1：RGB565-LE；reserved=0。</td></tr>
+</tbody></table></div><p class="caption">多字节字段全部小端。PC 的结构定义是 <code>&lt;BBHIIHHHBB</code>。未转义包最大大小是 payload 上限 + 24 字节。</p></details>
+<div class="table-wrap"><table><thead><tr><th>命令</th><th>payload 与 offset</th><th>成功应答的含义</th></tr></thead><tbody>
+<tr><td>ABORT</td><td>PC 发送空 payload；offset=0</td><td>清接收会话，偏移归零；保持已发布前台不变。</td></tr>
+<tr><td>BEGIN</td><td>4B 整帧预期 CRC；offset=0</td><td>已选定后台槽，开始一个新帧会话。</td></tr>
+<tr><td>DATA</td><td>正数且为 16B 倍数；offset 必须等于 next_offset</td><td>本包所有 AXI 写响应成功；返回新的已确认偏移。</td></tr>
+<tr><td>END</td><td>空 payload；offset=1,843,200</td><td>完整帧已被读模块接受为前台；不是刚收到包就应答。</td></tr>
+<tr><td>QUERY</td><td>空 payload</td><td>报告当前已确认偏移，不改变会话；正常 GUI 传图不需要它。</td></tr>
+</tbody></table></div>
+<h3>ACK / NACK 如何返回？</h3>
+<p>应答仍使用同样的包头、转义和包 CRC。命令为请求命令 <code>OR 0x80</code>；payload 是 1 字节状态，0 为成功，其余为错误。正常应答回带请求序号和帧号；无法关联具体请求的包错误/超时使用通用命令 <code>0x80</code>、序号 <code>0xFFFF</code>。</p>
+<div class="two"><div class="card"><h3>停等与重试</h3><p>电脑只保留一个在途请求。默认一次请求最多发送 4 次，重试使用完全相同的编码包。等应答的预算包含请求线速时间及额外 2 秒；状态 2、4、8 可以进入重试，其他错误通常终止本次发送。</p><p>FPGA 保存最近一次成功命令的去重信息；相同成功包再来时直接回成功，避免 DATA 重复写、END 重复发布。</p></div><div class="card"><h3>两种 CRC 分别挡住什么错误？</h3><p>包 CRC 在任何写入前检查，挡住这一包字节损坏；整帧 CRC 在 END 检查，确认完整像素流与 PC 一致。偏移和帧号检查则挡住漏包、乱序及混用其他会话。</p><p>这些检查保护发布结果；DDR 部分写入失败后可残留后台数据，但后台不会因此被切成前台。</p></div></div>
+<p class="caption">标准 payload 1024B：1800 个 DATA；提速 payload 16384B：113 个 DATA。GUI 进度依据成功 DATA ACK，不依据已写进操作系统缓冲区的字节数；100% 后仍要等待 END 发布应答。</p>
+</section>
+
+<section id="display">
+<span class="section-num">08 / 720p &amp; TMDS</span><h2>HDMI 基础：720 行图像之外，还需要什么？</h2>
+<p>显示器需要稳定的扫描节奏。每行包含有效像素和水平消隐，每帧包含有效行和垂直消隐。HS/VS 告诉接收端行、帧同步位置；DE=1 表示当前 RGB 是有效画面。消隐也占用像素时钟，因此时钟频率不能只按 1280×720×60 计算。</p>
+<div class="table-wrap"><table><thead><tr><th>方向</th><th>有效区</th><th>前肩 Front</th><th>同步 Sync</th><th>后肩 Back</th><th>总计</th></tr></thead><tbody><tr><td>水平 · 像素时钟数</td><td>1280</td><td>110</td><td>40</td><td>220</td><td>1650</td></tr><tr><td>垂直 · 行数</td><td>720</td><td>5</td><td>5</td><td>20</td><td>750</td></tr></tbody></table></div>
+<pre><code>像素时钟 = 1650 × 750 × 60 = 74,250,000Hz = 74.25MHz
+一行时长 ≈ 22.22µs；一帧时长 ≈ 16.67ms
+HS / VS：正极性；有效画面每帧恰好消费 1280 × 720 个像素。</code></pre>
+<div class="two"><div class="card"><h3>本代码的计数原点在同步区起点</h3><p>扫描顺序按 <strong>Sync → Back → Active → Front</strong> 循环。H 有效区从计数 260 开始；V 有效区从行 25 开始。它与“Active → Front → Sync → Back”的画法只是原点不同。</p><p>刷新 request 在 h=0、v=0 产生；<code>refresh_window</code> 按 <code>v &lt; 24</code> 注册，在有效区开始前留出一整行关闭裕量。它是帧首窗口，不是整个消隐期都允许换图。</p></div><div class="card"><h3>RGB 与控制信号要对齐</h3><p>FWFT FIFO 给出当前待消费像素。视频模块在同一像素时钟寄存 RGB、HS、VS、DE，以免颜色晚一拍而 DE 提前一拍。只有有效区、刷新就绪、FIFO 非空且本帧未欠载时才消费像素。</p><p>无前台图片输出黑色；已有前台但像素未就绪时，该帧余下有效区显示 <code>FF00FF</code> 洋红，下一帧重新同步。</p></div></div>
+<h3>从 RGB888 到 HDMI 差分线</h3>
+<div class="mini-flow"><span>每像素 R/G/B 各 8bit</span><b>→</b><span>3 个 TMDS 编码器，各出 10bit</span><b>→</b><span>OSERDESE2 主从 10:1</span><b>→</b><span>OBUFDS / TMDS_33</span><b>→</b><span>3 对数据 + 1 对时钟</span></div>
+<p>TMDS 编码控制转换次数和直流偏置；消隐时发送控制符，蓝色通道携带 HS/VS。每像素每数据通道要发 10bit：串化器用 371.25MHz 时钟的双边沿输出，得到 <code>742.5Mbps</code> 每通道。时钟通道输出对应 74.25MHz 的差分像素时钟。</p>
+<div class="note"><strong>当前输出范围：</strong>固定 720p60 视频经 HDMI 接口输出，属于 DVI 兼容的 TMDS 视频通路。没有音频、HDCP、EDID/DDC 读取或 HPD 配置流程。显示器对当前固定模式的实际兼容性仍需要上板确认。</div>
+</section>
+
+<section id="clocks">
+<span class="section-num">09 / CLOCKS, RESET &amp; CDC</span><h2>时钟域和跨域握手：不同节奏如何协同？</h2>
+<div class="clock-chain"><div class="card"><h4>板载晶振</h4><strong>50MHz</strong><p>sys_clk · G22</p></div><span class="arrow">→</span><div class="card"><h4>Clock Wizard</h4><strong>200MHz</strong><p>MIG sys / ref</p></div><span class="arrow">→</span><div class="card"><h4>MIG</h4><strong>DDR CK 400MHz</strong><p>UI 100MHz</p></div><span class="arrow">→</span><div class="card"><h4>视频 MMCM</h4><strong>74.25 / 371.25MHz</strong><p>像素 / 串化</p></div></div>
+<p>视频时钟从 MIG UI 级联产生，避免两组并行 PLL/MMCM 的未知相位关系。视频 MMCM 在 100MHz 输入下采用 <code>DIVCLK=5</code>、<code>MULT=37.125</code>，VCO 为 742.5MHz，再分别 ÷10 和 ÷2。</p>
+<div class="table-wrap"><table><thead><tr><th>跨域内容</th><th>处理方式</th><th>为什么这样做</th></tr></thead><tbody>
+<tr><td>外部 UART RX → UI</td><td>3 级输入同步，再进行位采样</td><td>异步输入可能接近采样边沿；同步链降低亚稳态传播风险。</td></tr>
+<tr><td>UI 像素 → pixel</td><td>XPM 异步 FIFO；128bit 写 / 16bit 读</td><td>多位像素必须保持完整、顺序一致，不能逐位同步后拼起来。</td></tr>
+<tr><td>pixel request → UI / UI ACK → pixel</td><td>toggle 状态保持；目标域两级同步</td><td>窄脉冲可能被较慢或不同相位时钟漏掉，保持状态直到应答更可靠。</td></tr>
+<tr><td>pixel refresh_window → UI</td><td>注册窗口后两级同步；提前一行关闭</td><td>读模块在目标域判断安全期，并为跨域延迟留出边界裕量。</td></tr>
+<tr><td>UI front_valid → pixel</td><td>两级同步；配合刷新 ACK 使用</td><td>告诉视频模块是否有完整图片；不跨域采样整个地址或帧号。</td></tr>
+<tr><td>复位、锁定、校准</td><td>各时钟域 reset_sync，异步置位、同步释放</td><td>允许及时停止，但恢复运行必须对齐各域时钟边沿。</td></tr>
+</tbody></table></div>
+<p><code>front_bank</code>、<code>commit_bank</code> 和帧号保持在 UI 域，由 UI 读写模块协作；像素域只接收 FIFO 像素及少量同步后的控制状态。FIFO 使用两级内部 CDC，同步指针与 full/empty 信息。</p>
+<div class="note warn"><strong>复位是流程的一部分：</strong>DDR 校准、视频锁定丢失或系统复位时，数据通路重新进入等待状态。正常帧刷新则只重置显示 FIFO 和读偏移。XPM 的 busy 握手必须完成才能读写；本工程利用 XPM 写端 busy 的内部复位握手，未重复把同一个读端 busy 再跨回 UI 形成重汇聚。</div>
+</section>
+
+<section id="modules">
+<span class="section-num">10 / MODULE RESPONSIBILITIES</span><h2>主要模块分别干了什么？</h2>
+<p>下面按数据流分工列出源码入口。阅读代码时，建议先看 top 的连接，再顺着接收、写帧、读帧、显示四段理解状态机。</p>
+<div class="two">
+<div class="card module"><h3><a href="pc/send_image_gui.py">send_image_gui.py</a> · 人机界面</h3><div class="meta">PC / Tk 主线程 + worker / 事件队列</div><p>枚举串口、选择图片和参数、显示预览/进度/日志，提供标准与提速预设。发送线程持有本次参数快照；界面不直接阻塞等待串口。停止时取消等待读写并释放端口。</p><p><strong>边界：</strong>界面进度按 ACK 更新；已经发布的图不会被“停止”撤回。</p></div>
+<div class="card module"><h3><a href="pc/send_image.py">send_image.py</a> · PC 端协议引擎</h3><div class="meta">图片 → RGB565-LE → Packet → Serial → ACK</div><p>负责选图/解码/缩放、RGB565 打包、整帧和包 CRC、SLIP 转义、序号、停等、重传和应答匹配。GUI 与命令行共用这一份实现。</p><p><strong>边界：</strong>DATA ACK 偏移必须与预期一致；图片尺寸/格式由 PC 校验后发送。</p></div>
+<div class="card module"><h3><a href="rtl/uart_8n1.sv">uart_rx_8n1 / uart_tx_8n1</a> · 位与字节</h3><div class="meta">ui_clk 100MHz / RX 输入同步 / TX valid-ready</div><p>RX 检测起始位、居中采样、检查停止位，输出 data/valid/framing_error。TX 在可接受时锁存字节，输出起始、8 位数据、停止位，空闲保持高。</p><p><strong>边界：</strong>只知道字节，不知道图片、分包或 DDR。波特率由综合参数决定。</p></div>
+<div class="card module"><h3><a href="rtl/packet_rx.sv">packet_rx</a> · 单包接收与校验</h3><div class="meta">ui_clk / 字节输入 → packet_valid + 缓存读口</div><p>识别 7E 边界、还原 7D 转义、统计长度、积累 CRC。合法完整包保留在缓存，供 frame_writer 一字节一字节读取，consume 后释放。</p><p><strong>边界：</strong>缓存满、CRC 错、悬空转义、帧错误和字节间超时要恢复；valid 待消费期间不能接受第二个包。</p></div>
+<div class="card module"><h3><a href="rtl/frame_writer.sv">frame_writer</a> · 接收会话与后台写帧</h3><div class="meta">ui_clk / 包缓存 → AXI AW/W/B → commit</div><p>解析 20B 头，检查尺寸/格式/长度/帧号/偏移，选择后台；组 128bit 数据并逐拍等待写响应，更新帧 CRC 和已确认偏移。保存最近成功请求以处理重复包。</p><p><strong>状态主线：</strong>IDLE → HEADER → CHECK → LOAD → WRITE → RESPONSE；END 进入 PUBLISH 等 commit_ack，最后 REPLY。</p><p><strong>边界：</strong>没有完整字节数、正确帧 CRC 和成功 B 响应，就不发布。</p></div>
+<div class="card module"><h3><a href="rtl/packet_reply.sv">packet_reply</a> · 应答封装</h3><div class="meta">ui_clk / reply valid-ready → UART TX 字节流</div><p>锁存命令、状态、序号、帧号、已确认偏移，生成 20B 头 + 1B 状态 + CRC；补分隔符、转义并按 UART TX 的 ready 节奏逐字节发送。</p><p><strong>边界：</strong>转义后两个线上字节仍只对应一个原始 CRC 字节；应答不能因 TX 背压被截断。</p></div>
+<div class="card module"><h3>MIG · <a href="ip/mig.prj">uart_mig 配置</a></h3><div class="meta">200MHz sys/ref / DDR CK 400MHz / UI 100MHz</div><p>由 Vivado 生成的 DDR3 控制器和 PHY，连接板上 DQ、DQS、地址和控制引脚。向业务逻辑提供 30bit 字节地址、128bit AXI 数据、响应和校准状态。</p><p><strong>边界：</strong>FPGA 工具/IP、器件、电压、引脚和内存型号必须匹配；业务逻辑不把它当作通用可移植 RTL。</p></div>
+<div class="card module"><h3><a href="rtl/frame_reader.sv">frame_reader</a> · 前台读出与发布仲裁</h3><div class="meta">ui_clk / AXI AR/R → FIFO 写端 / front ownership</div><p>按 FIFO 水位预取 256B 突发，检查 RRESP、RLAST 和拍数；收到刷新请求后排空旧事务，在安全窗口内接受新前台，重置 FIFO、读偏移并完成刷新握手。</p><p><strong>状态：</strong>RUN → ADDRESS → DATA → RUN；刷新时 RUN → RESET_FIFO → WAIT_FIFO → RUN。</p><p><strong>边界：</strong>AR 已拉高就必须等握手，不能因窗口关闭撤销；未排空不交换。</p></div>
+<div class="card module"><h3>XPM FIFO · <a href="rtl/uart_hdmi_top.sv">top 中实例</a></h3><div class="meta">UI 写 128bit / pixel 读 16bit / 16KiB / FWFT</div><p>承担跨时钟域、位宽转换与短时数据缓冲。内部同步读写指针；输出 full/empty、写端水位和两端 reset busy。</p><p><strong>边界：</strong>它不负责图像帧号与所有权，换帧时必须显式重置；读空、写满和 busy 期间不能操作。</p></div>
+<div class="card module"><h3><a href="rtl/video_720p.sv">video_720p</a> · 扫描时序与取像素</h3><div class="meta">pixel_clk 74.25MHz / FIFO → RGB + HS + VS + DE</div><p>维护水平/垂直计数，生成刷新 request/窗口，按有效区消费像素并扩展颜色。同步前台有效状态和刷新 ACK；RGB 与控制一起寄存。</p><p><strong>边界：</strong>每帧一次欠载计数；本帧一旦欠载，余下像素用洋红，避免重新消费后错行。</p></div>
+<div class="card module"><h3><a href="rtl/tmds_output.sv">tmds_output</a> · 视频物理输出</h3><div class="meta">pixel 74.25MHz + serial 371.25MHz / 差分输出</div><p>连接三个 <a href="rtl/hdmi_encoder.sv">hdmi_encoder</a> 和四个 <a href="rtl/hdmi_serializer10to1.sv">hdmi_serializer10to1</a>，包括时钟通道。编码有效像素/消隐控制符，10:1 串化后经 OBUFDS 输出。</p><p><strong>边界：</strong>复用了厂商参考代码，保留原版权；需要 Xilinx 原语和仿真库。</p></div>
+<div class="card module"><h3><a href="rtl/video_clocks.sv">video_clocks</a> / <a href="rtl/reset_sync.sv">reset_sync</a></h3><div class="meta">视频时钟生成 / 各域复位同步释放</div><p>video_clocks 用 MMCM 从 UI 派生两路视频时钟和 locked。reset_sync 在目的时钟域安全释放复位；像素域分别处理独立复位来源再组合。</p><p><strong>边界：</strong>调整分辨率必须同时核对时序、像素时钟、5×串化时钟和约束，不能只改有效宽高。</p></div>
+<div class="card module"><h3><a href="rtl/uart_hdmi_top.sv">uart_hdmi_top</a> · 系统装配</h3><div class="meta">顶层引脚 / 参数 / 时钟复位 / AXI 与 FIFO 连接</div><p>实例化所有业务模块及 MIG、Clock Wizard、XPM；设置 UART 参数、包缓存长度、会话超时和 AXI 固定属性。保留内部统计信号，控制显示输出使能。</p><p><strong>边界：</strong>当前没有 OSD FPS、神经网络、摄像头或 RISC-V；内部计数也没有被全部导出到 GUI。</p></div>
+<div class="card module"><h3><a href="create_project.py">create_project.py</a> / <a href="pc/estimate_transfer.py">estimate_transfer.py</a></h3><div class="meta">构建工具 / 性能预算工具，不参与板上数据流</div><p>前者生成独立 Tcl/XDC/MIG 配置并启动构建、记录输入指纹；后者按实际图片统计 payload、转义、包头和成功应答的线速时间。</p><p><strong>边界：</strong>时间估算不包含 USB 调度、DDR 等待、失败重传或实际上板显示延迟。</p></div>
+</div>
+<details><summary>核心计数与可观测性</summary><div class="table-wrap"><table><thead><tr><th>信号</th><th>位置</th><th>计数意义</th></tr></thead><tbody><tr><td>packet_errors</td><td>packet_rx → top</td><td>接收包错误次数。</td></tr><tr><td>rejected_packets</td><td>frame_writer → top</td><td>写帧引擎拒绝请求或产生错误应答的次数。</td></tr><tr><td>accepted_frames</td><td>frame_writer → top</td><td>收到 commit_ack、成功发布的新帧数量。</td></tr><tr><td>read_errors</td><td>frame_reader → top</td><td>AXI 读响应或 RLAST 异常事件。</td></tr><tr><td>underflow_frames</td><td>video_720p → top</td><td>有效画面开始后缺像素的显示帧数量，每帧最多加一次。</td></tr><tr><td>front_frame / front_valid</td><td>frame_reader → top</td><td>当前已发布源帧编号及是否存在完整图片。</td></tr></tbody></table></div><p>这些信号当前主要用于仿真与调试；不会自动出现在串口 GUI。QUERY 只报告已确认偏移，不是完整统计接口。</p></details>
+</section>
+
+<section id="errors">
+<span class="section-num">11 / RECOVERY</span><h2>错误发生时，系统如何保住当前画面？</h2>
+<div class="table-wrap"><table><thead><tr><th>情况</th><th>逻辑行为</th><th>恢复 / 用户可见结果</th></tr></thead><tbody>
+<tr><td>COM 端口无法打开</td><td>PC 打开端口即失败，还未发图片。</td><td>检查当前端口与占用程序；关闭占用串口的终端或另一 GUI 后重试。改 FPGA 波特率不能解除端口占用。</td></tr>
+<tr><td>波特率不匹配 / 停止位错误</td><td>UART framing_error 清未完成包；接收器等待空闲恢复。</td><td>PC 超时或收到包错误；选择与 bitstream 对应的波特率。</td></tr>
+<tr><td>包 CRC 错 / 转义不完整 / 超长包</td><td>packet_rx 不置合法 packet_valid，丢弃该包，不写 DDR。</td><td>错误应答或超时后，PC 重发相同包；分隔符重新建立边界。</td></tr>
+<tr><td>中途断线，半个包残留</td><td>顶层配置 1s 字节间空闲超时，清未完成包。</td><td>不是“整个包必须 1s 内传完”；收到连续字节会刷新计时。</td></tr>
+<tr><td>BEGIN 后长期没有新请求</td><td>写引擎处于 IDLE、会话仍活动且无 RX 活动 5s，清会话。</td><td>前台不变；下一次发送从 ABORT / BEGIN 重新开始。不是“整帧传输最多 5s”。</td></tr>
+<tr><td>尺寸、格式、长度、偏移不正确</td><td>状态 1 或 3 拒绝请求，不能把字节写到错误位置。</td><td>终止本次发送，检查软硬件配置，重新开启会话。</td></tr>
+<tr><td>成功 ACK 丢失</td><td>同一成功请求重发时用缓存去重，不重复写/发布。</td><td>返回同一成功结果；PC 检查偏移后继续。</td></tr>
+<tr><td>AXI 写 BRESP 错 / 整帧 CRC 错</td><td>状态 5 / 6；接收会话终止，后台不发布。</td><td>当前前台图片保留；重新传图并排查 DDR/协议问题。</td></tr>
+<tr><td>读 RRESP 错 / RLAST 不符合拍数</td><td>异常拍不进入 FIFO；标记 frame_fault，停止继续正常预取，排空当前响应。</td><td>本轮可能出现洋红欠载标记；下一轮显示刷新重新对齐，并记录 read_errors。</td></tr>
+<tr><td>DDR 背压拖过换帧窗口</td><td>保留已经拉高的 AR，排空响应；窗口结束后不强行换帧。</td><td>新图延后发布，直到下一次安全窗口。</td></tr>
+<tr><td>FIFO 不足 / 刷新尚未完成</td><td>已有前台时有效区第一次缺像素，本帧锁定 frame_bad。</td><td>本帧剩余有效区洋红；下一帧清标记并重新同步。没有前台时黑屏。</td></tr>
+<tr><td>AXI 从设备永久不回应</td><td>当前没有强行取消在途 AXI 事务的机制。</td><td>PC 超时不等于总线恢复；若控制器永久挂住或永远不返回 RLAST，需要系统复位及进一步定位。</td></tr>
+</tbody></table></div>
+<details><summary>应答状态码对照</summary><p><code>0 OK</code>；<code>1 头部/尺寸/长度错误</code>；<code>2 包 CRC/帧错误</code>；<code>3 帧号/偏移顺序错误</code>；<code>4 接收会话忙</code>；<code>5 DDR AXI 错误</code>；<code>6 整帧 CRC 不匹配</code>；<code>7 会话超时</code>；<code>8 DDR 未校准</code>。实际未校准时顶层通常仍保持协议通路复位，因此也可能表现为没有应答，而不是一定返回 8。</p></details>
+</section>
+
+<section id="performance">
+<span class="section-num">12 / PERFORMANCE</span><h2>为什么原来约 160 秒？2Mbps 能否进 10 秒？</h2>
+<pre><code>纯像素最低线速时间 = 图像字节数 × 10 / 波特率
+115200：1,843,200 × 10 / 115200 = 160.000s
+2Mbps： 1,843,200 × 10 / 2,000,000 = 9.216s</code></pre>
+<p>160 秒与 RGB565 原始像素在 115200 的纯线速下限相符。把 1KB 改成 16KB 主要减少停等次数和固定开销；真正大幅缩短像素发送时间的是提高双方波特率。当前仍传完整 720p RGB565，没有降低输入分辨率。</p>
+<div class="table-wrap"><table><thead><tr><th>配置</th><th>DATA 数量</th><th>纯像素线速下限</th><th>当前状态</th></tr></thead><tbody><tr><td>115200 / 1KB</td><td>1800</td><td>160.000s</td><td>保留标准历史构建产物；默认 RTL 参数。</td></tr><tr><td>921600 / 1KB</td><td>1800</td><td>20.000s</td><td>数学对照，不代表有对应已验证 bitstream。</td></tr><tr><td>1500000 / 16KB</td><td>113</td><td>12.288s</td><td>数学对照，仍不能满足纯线速 10s。</td></tr><tr><td>2000000 / 16KB</td><td>113</td><td>9.216s</td><td>独立提速工程/bitstream 已生成，实板待测。</td></tr></tbody></table></div>
+<div class="calc" id="calculator" hidden>
+<h3>线速下限计算器 · 当前固定 720p RGB565</h3>
+<div class="two"><div><label for="calc-baud">波特率 baud（只做计算）</label><input id="calc-baud" type="number" value="2000000" min="1" step="1"></div><div><label for="calc-chunk">每个 DATA 的像素字节</label><select id="calc-chunk"><option value="1024">1024B / 1KiB</option><option value="16384" selected>16384B / 16KiB</option></select></div></div>
+<div class="calc-output" id="calc-output" aria-live="polite"></div>
+<p class="caption">假设每个成功请求都有 ACK，不重传。固定协议下限还计入 ABORT、BEGIN、END、包头、CRC、分隔符和成功 ACK；不计依赖具体内容的 7D/7E 转义，以及 USB、DDR、软件、换帧等待。这里的数值不修改 GUI、FPGA 或串口。</p>
+</div>
+<div class="note warn"><strong>10 秒目标仍要实测：</strong>按目前 34 张图、指定帧号 0、2Mbps / 16KB 统计，包含实际转义、包头与成功 ACK 的线速预算为 <strong>9.2475–9.7876s</strong>。余量有限，USB 桥持续发送能力、包间等待、DDR、图像解码、换帧或重试还会增加总时间。不能把这个预算写成实际 10s 已通过。</div>
+<h3>显示通路需要的 DDR 带宽</h3>
+<div class="two"><div class="card stat"><strong>110.592 MB/s</strong><span>平均像素读取：1280 × 720 × 2 × 60</span><p>有效像素区内的瞬时消费速度为 <code>74.25M × 2 = 148.5MB/s</code>；消隐期可用于预取。</p></div><div class="card"><h3>峰值不能代替稳定性验证</h3><p>DDR3 DQ 理论 3.2GB/s 远高于平均需求，但本项目 UI、单在途读突发、控制开销及暂停会限制实际通路。需结合读响应间隔、FIFO 水位及 underflow_frames 判断持续供像素能力。</p></div></div>
+<p>GUI 最终耗时包含解码、打开端口、命令、像素和应答；成功 END ACK 表示发布确认。HDMI 60Hz 刷新、串口新图更新率和未来神经网络推理 FPS 必须分别报告，重复扫描同一图片不能算作新处理帧。</p>
+</section>
+
+<section id="board">
+<span class="section-num">13 / BOARD INTERFACE</span><h2>板级连接与电平依据</h2>
+<p>用户确认实板为「Kindex Base7 FMC版」。约束按本地 Kintex7_BaseC_FMC 原理图及可复现示例核对；详细引脚、复用来源与电气修复见 <a href="docs/electrical_logic_review.md">电气及逻辑复核</a>。本页用于理解接口，完整 DDR 引脚列表以 <a href="constraints/board.xdc">board.xdc</a> 和原理图为准。</p>
+<div class="table-wrap"><table><thead><tr><th>接口</th><th>引脚 / 来源</th><th>电平与配置</th></tr></thead><tbody>
+<tr><td>晶振 / 复位</td><td>G22 / D26</td><td>50MHz；低有效系统复位；LVCMOS33。</td></tr>
+<tr><td>UART</td><td>B20 RX / C22 TX；P2 Type-C、板载 CH340</td><td>Bank14/15 3.3V，LVCMOS33。FPGA RX 连桥接器 TX，FPGA TX 连桥接器 RX。</td></tr>
+<tr><td>HDMI1 / J5</td><td>CLK F17/E17；D0 J15/J16；D1 E15/E16；D2 G17/F18</td><td>Bank15 3.3V；TMDS_33 差分输出；每组按 P/N 顺序列出。</td></tr>
+<tr><td>HDMI 输出供电使能</td><td>E22 控制 Q1/U12</td><td>FPGA 侧 LVCMOS33 控制外部 HDMI 5V 开关，不是 GPIO 直接输出 5V。</td></tr>
+<tr><td>DDR3</td><td>Bank32/33；两颗 MT41K256M16、共 32bit DQ</td><td>VCCO 1.5V；外部 VREF；400MHz CK / 800MT/s，CL6 / CWL5。</td></tr>
+<tr><td>DDR 辅助 I/O 电源</td><td>VCCAUX_IO_G0 P8/R9/T8</td><td>原理图为 1.8V，当前 MIG 采用 NORMAL / 1.8V。已修正参考例程不匹配的 2.0V/HIGH 配置。</td></tr>
+<tr><td>配置 Bank0</td><td>配置电源规则</td><td>CONFIG_VOLTAGE=3.3；CFGBVS=VCCO。</td></tr>
+</tbody></table></div>
+<p class="caption">本工程未启用 FMC 可调电压 Bank12/13 输出。当前 84 个顶层引脚和目标时钟已有约束/实现核对记录；这不代替对实板供电、DDR 校准与 HDMI 信号质量的测量。</p>
+</section>
+
+<section id="validation">
+<span class="section-num">14 / VALIDATION &amp; ENTRY POINTS</span><h2>已验证什么，在哪里开始使用？</h2>
+<div class="two"><div class="card"><h3>最新提速版 · 2Mbps / 16KB</h3><p><a href="vivado_fast/uart_hdmi.xpr">Vivado 工程</a><br><a href="vivado_fast/uart_hdmi.runs/impl_1/uart_hdmi_top.bit">uart_hdmi_top.bit</a><br><a href="docs/transfer_speed.md">提速说明</a> / <a href="build/fast/final_signoff.json">构建签核记录</a></p><p>Vivado 2023.2，2026-10-09 17:46 构建完成；<code>UART_BAUD=2000000</code>、<code>UART_PAYLOAD_BYTES=16384</code>。未烧写实板。</p></div><div class="card"><h3>保留的标准版 · 115200 / 1KB</h3><p><a href="vivado/uart_hdmi.xpr">标准 Vivado 工程</a><br><a href="vivado/uart_hdmi.runs/impl_1/uart_hdmi_top.bit">标准 bitstream</a><br><a href="docs/build_validation.md">构建问题与验证记录</a></p><p>标准产物保留。共享源文件已为参数化提速更新，标准凭据属于当时的历史基线；默认参数行为回归通过，不把旧凭据当作当前源文件重新构建证明。</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>检查层级</th><th>结果 / 范围</th><th>边界</th></tr></thead><tbody>
+<tr><td>PC 软件与协议</td><td>34 张图片 RGB565 打包一致；完整 113 个 DATA、丢 ACK、尾包及相关 GUI/协议回归通过。</td><td>软件测试，不等于实际 USB-UART 稳定性。</td></tr>
+<tr><td>RTL / 联合仿真</td><td>通用模块、真实厂商模型、两帧完整 720p、背压/安全窗口、错误 RLAST；新增 16KB 边界与实际 2Mbps UART 联合仿真通过。</td><td>仿真条件见本地 sim 与构建记录。</td></tr>
+<tr><td>综合 / 实现 / bitstream</td><td>最新提速版全流程完成，WNS +0.893ns、WHS +0.054ns、WPWS +0.143ns，失败端点 0；LUT 13158、FF 9197、RAMB36 4。</td><td>内部实现时序通过；没有因此声明外部硬件验证通过。</td></tr>
+<tr><td>DRC / CDC</td><td>DRC 0 错误、5 条 MIG 警告；CDC 0 严重项、2 条 MIG 内部复位属性警告；方法学 0 严重项。</td><td>警告和 advisory 保留记录，不写成“所有报告零警告”。</td></tr>
+<tr><td>约束 / 时钟</td><td>84 顶层引脚及 200/400/100/74.25/371.25MHz 核对；无缺失时钟、未约束内部端点或组合环。</td><td>异步 UART/复位及部分输出仍有外部 delay 提示，未凭空补板级时延。</td></tr>
+<tr><td>实板 / 屏幕 / 10s</td><td><strong>未验证。</strong>需要加载对应 bitstream 后实测串口、DDR 校准、完整换图、欠载、颜色与端到端时间。</td><td>旧 bit 文件、工程 pass 状态或预算均不代表已上板。</td></tr>
+</tbody></table></div>
+<details><summary>最新提速 bitstream 指纹</summary><pre><code>文件大小：11,443,722 字节
+生成时间：2026-10-09 17:46:23
+SHA256：DEC993B588B3F9589B64392EB770535DF722B2DB9E04B6F653EB0596A4EC671B
+参数：UART_BAUD=2000000 UART_PAYLOAD_BYTES=16384</code></pre><p>构建输入、参数和 bit 指纹见 <a href="build/fast/build_receipt.json">build_receipt.json</a> 与 <a href="build/fast/final_signoff.json">final_signoff.json</a>。只更新本 HTML 和 README 不改变 RTL 或 bitstream。</p></details>
+<h3>PC 入口</h3>
+<pre><code># 图片放到：F:/fpga_qiansai/xilinx/projects/uart_hdmi/images/
+# 在 PowerShell 启动 GUI（已有项目环境）
+&amp; 'F:/fpga_qiansai/xilinx/projects/uart_hdmi/.venv/Scripts/python.exe' `
+  'F:/fpga_qiansai/xilinx/projects/uart_hdmi/pc/send_image_gui.py'</code></pre>
+<p>使用提速版时，先确认 FPGA 已配置对应提速 bitstream，再重启 GUI、刷新端口、选“提速 2Mbps / 16KB”和图片。标准 bitstream 要用标准波特率，发送 payload 不超过它的 1KB 上限。项目生成、构建和命令行参数详见 <a href="README.md">README</a>。</p>
+<p class="caption">项目仿真放在本项目 <code>sim/</code>，构建记录在 <code>build/</code>，Vivado 产物分别在 <code>vivado/</code> 和 <code>vivado_fast/</code>。本架构说明允许上传 Git；本地工程/IP/仿真产物仍遵守工作区忽略策略。</p>
+</section>
+
+<section id="references">
+<span class="section-num">15 / GLOSSARY &amp; REFERENCES</span><h2>术语速查与继续阅读</h2>
+<div class="table-wrap"><table><thead><tr><th>术语</th><th>在本工程中的意思</th></tr></thead><tbody>
+<tr><td>baud / bit / byte</td><td>UART 每秒符号速率 / 一个二进制位 / 8 个数据位；8N1 在线上传一个 byte 消耗 10 个 bit 时长。</td></tr>
+<tr><td>beat / burst</td><td>一次总线握手传的数据拍 / 多拍事务；这里 AXI 每拍 16B，显示一次读突发 16 拍。</td></tr>
+<tr><td>front / back</td><td>供显示读取的完整前台帧 / 接收写入的后台帧；两者角色可交换。</td></tr>
+<tr><td>CRC / ACK / NACK</td><td>检测数据错误的校验值 / 成功确认 / 错误应答；UART 自身不提供项目级帧完整性。</td></tr>
+<tr><td>UI / PHY / MIG</td><td>控制器向业务逻辑提供的用户时钟与接口 / DDR 物理时序层 / Xilinx 内存接口生成器及其生成模块。</td></tr>
+<tr><td>CDC / toggle / FWFT</td><td>跨时钟域 / 持续保持直到应答的翻转请求状态 / 非空时首字已经出现在 FIFO 输出端的读模式。</td></tr>
+<tr><td>HS / VS / DE / porch</td><td>行同步 / 帧同步 / 有效像素标识 / 同步与有效区间的前后消隐区。</td></tr>
+<tr><td>TMDS / serializer</td><td>视频编码与差分传输方式 / 把每像素 10bit 并行符号连续输出到线上。</td></tr>
+</tbody></table></div>
+<div class="two sources"><div><h3>本地实现与依据</h3><ul><li><a href="README.md">项目 README：构建与使用说明</a></li><li><a href="docs/electrical_logic_review.md">引脚电平与逻辑复核</a></li><li><a href="docs/build_validation.md">构建问题、修复与验证记录</a></li><li><a href="docs/transfer_speed.md">串口提速与实际图片预算</a></li><li><a href="ip/reference_manifest.json">复用参考来源与 SHA256</a></li></ul></div><div><h3>官方背景资料（点击时需要联网）</h3><ul><li><a href="https://docs.amd.com/r/en-US/ug586_7Series_MIS/DDR3-SDRAM" target="_blank" rel="noopener">AMD UG586：7 Series DDR3 / MIG</a></li><li><a href="https://developer.arm.com/-/media/Arm%20Developer%20Community/PDF/IHI0022H_amba_axi_protocol_spec.pdf" target="_blank" rel="noopener">Arm：AMBA AXI 协议规范</a></li><li><a href="https://docs.amd.com/r/2021.2-English/ug953-vivado-7series-libraries/XPM_FIFO_ASYNC" target="_blank" rel="noopener">AMD UG953：XPM_FIFO_ASYNC</a></li><li><a href="https://docs.amd.com/v/u/en-US/ds182_Kintex_7_Data_Sheet" target="_blank" rel="noopener">AMD DS182：Kintex-7 电气与速度规格</a></li><li><a href="https://learn.microsoft.com/en-us/windows/win32/devio/communications-resource-handles" target="_blank" rel="noopener">Microsoft：Windows 串口独占句柄</a></li></ul></div></div>
+</section>
+<footer class="footer">本文件自带样式、SVG 图和 JavaScript，无 CDN、在线字体或第三方运行依赖，可直接双击离线打开。源码、构建和参考文件为相对链接，需保留项目目录结构。功能改变时同步更新本页及 README，验证状态以实际记录为准。</footer>
+</main>
+</div>
+<script>
+(() => {
+  'use strict';
+  const stages = [
+    {title:'1 / 8 · 图片 A 正在显示',b0:'前台：完整图片 A，只允许显示读取。',b1:'后台：可接收下一张图。',fifo:'FIFO：缓存 A 的后续像素。',note:'前台/后台是角色。图例假设前台为缓冲 0；初次上电还没有前台图片。'},
+    {title:'2 / 8 · BEGIN 开始接收 B',b0:'前台 A：持续显示，内容不被修改。',b1:'后台 B：新会话，已确认偏移 0。',fifo:'FIFO：显示通路继续预取 A。',note:'BEGIN 记录 B 的预期整帧 CRC。后续 DATA 只能写后台，并严格按偏移前进。'},
+    {title:'3 / 8 · DATA 包陆续写入',b0:'前台 A：仍然只读。',b1:'后台 B：只有一部分像素，不能发布。',fifo:'FIFO：仍是 A 的像素，不混入 B。',note:'每个 DATA 的全部 AXI B 响应成功，才确认该包偏移。PC 等 ACK 后再发下一包。'},
+    {title:'4 / 8 · END 校验 B 完整，等待发布',b0:'前台 A：保持所有权。',b1:'后台 B：全部写入、整帧 CRC 正确，commit_valid 保持。',fifo:'FIFO：仍可能有 A 的像素。',note:'END 校验成功不立刻回成功。要等待显示刷新请求、旧读事务排空和安全窗口。'},
+    {title:'5 / 8 · 帧首请求，排空旧读事务',b0:'前台 A：直到旧事务排空仍不释放。',b1:'后台 B：完整待发布，禁止被提前读取。',fifo:'FIFO：旧读返回数据在刷新挂起期间被丢弃；等待清空。',note:'已拉高的 AR 必须完成握手，之后排空 R；错过安全窗口就继续等待下一次窗口。'},
+    {title:'6 / 8 · 安全窗口内交换角色',b0:'新的后台：A 的地址槽已经释放，可供下一次接收。',b1:'新的前台：完整 B，front_frame 更新。',fifo:'FIFO：复位开始，禁止消费旧像素。',note:'此时产生 commit_ack，写模块回 END ACK。它确认发布，而 FIFO reset/busy 等待还未全部结束。'},
+    {title:'7 / 8 · FIFO 复位完成，从 B 的首像素预取',b0:'后台：暂时保留 A，但不再被显示读取。',b1:'前台 B：从地址 0x00200000 顺序读取。',fifo:'FIFO：等待 reset busy 完成 → refresh_ack → 重新填入 B。',note:'像素域仍检查 ACK 同步、front_valid、busy 和 empty。若有效区来临还缺数据，本帧用洋红标记欠载。'},
+    {title:'8 / 8 · B 持续显示，可在后台接收 C',b0:'后台：下一张 C 在这里接收，重复同样的流程。',b1:'前台 B：HDMI 每秒重复刷新 60 次。',fifo:'FIFO：提供 B 的像素；每轮显示刷新重新对齐。',note:'没有新图时重读 B。换图速度与 HDMI 刷新率不同，重复显示不能计为新的处理帧。'}
+  ];
+  let step = 0;
+  const $ = id => document.getElementById(id);
+  function paint() {
+    const s = stages[step];
+    $('walk-status').textContent=s.title; $('walk-bank0').textContent=s.b0; $('walk-bank1').textContent=s.b1;
+    $('walk-fifo').textContent=s.fifo; $('walk-note').textContent=s.note;
+    $('walk-prev').disabled=step===0; $('walk-next').disabled=step===stages.length-1;
+    Array.from($('walk-progress').children).forEach((bar,i)=>bar.classList.toggle('active',i<=step));
+  }
+  stages.forEach(()=> $('walk-progress').appendChild(document.createElement('span')));
+  $('walk-prev').addEventListener('click',()=>{if(step>0){step--;paint();}});
+  $('walk-next').addEventListener('click',()=>{if(step<stages.length-1){step++;paint();}});
+  $('walk-reset').addEventListener('click',()=>{step=0;paint();});
+  $('walkthrough').hidden=false; paint();
+  function calculate() {
+    const baud=Number($('calc-baud').value), chunk=Number($('calc-chunk').value), frame=1280*720*2;
+    if(!Number.isFinite(baud)||baud<=0||!Number.isInteger(baud)){ $('calc-output').textContent='请输入正整数波特率。'; return; }
+    const packets=Math.ceil(frame/chunk), requests=packets+3;
+    // Each request has 20B header + 4B CRC + 2 delimiters; BEGIN also carries 4B.
+    // Each successful response has 20B header + 1B status + 4B CRC + 2 delimiters.
+    const fixedBytes=frame+4+requests*(26+27);
+    $('calc-output').replaceChildren();
+    const out=document.createElement('strong'); out.textContent=(frame*10/baud).toFixed(3)+'s';
+    $('calc-output').append(out,document.createTextNode(' 纯像素下限；固定协议下限 '+(fixedBytes*10/baud).toFixed(3)+'s。DATA '+packets+' 包，总请求 '+requests+' 个；两者都不是实测用时。'));
+  }
+  $('calc-baud').addEventListener('input',calculate); $('calc-chunk').addEventListener('change',calculate);
+  $('calculator').hidden=false; calculate();
+})();
+</script>
+</body>
+</html>
