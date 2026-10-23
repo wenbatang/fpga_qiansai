@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ti60 · 摄像头与 RISC-V 风格视频架构</title>
+<style>
+:root{--bg:#101824;--card:#1b283a;--ink:#e6edf6;--muted:#a8bad0;--accent:#65dfc2;--border:#344861;--warn:#ffd08a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1200px;margin:auto;padding:36px 24px 64px}h1{font-size:clamp(27px,4vw,43px);line-height:1.25;margin:8px 0 20px}h2{margin:38px 0 14px;font-size:25px}h3{margin:0 0 6px;font-size:18px}p{margin:8px 0 14px}a{color:var(--accent)}code{font:14px/1.6 Consolas,monospace;overflow-wrap:anywhere;color:#a6e5ff}.eyebrow{color:var(--accent);letter-spacing:2px;font-size:13px}.muted,small{color:var(--muted)}.notice{border-left:4px solid var(--warn);padding:15px 20px;background:#302c29;border-radius:6px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--border);padding:20px;border-radius:12px}.metric{font-size:29px;color:var(--accent);display:block}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.flow .card{position:relative;border-top:3px solid var(--accent)}.step{font-size:13px;color:var(--accent)}.bus{margin:14px 0;padding:16px 20px;border:1px dashed var(--accent);border-radius:10px}.table{overflow-x:auto;border:1px solid var(--border);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:650px;background:var(--card)}th,td{padding:12px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{color:var(--accent);font-weight:600}details{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px 20px;margin:12px 0}summary{cursor:pointer;font-weight:600}ol,ul{padding-left:24px}li{margin:7px 0}.badge{display:inline-block;border:1px solid var(--border);padding:4px 12px;border-radius:24px;color:var(--muted);font-size:13px;margin:0 6px 10px 0}nav{margin:24px 0}nav a{margin-right:18px;white-space:nowrap}footer{margin-top:35px;border-top:1px solid var(--border);padding-top:20px;font-size:14px;color:var(--muted)}@media(max-width:850px){.flow,.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){main{padding:24px 16px}.flow,.grid{grid-template-columns:1fr}.card{padding:16px}h2{font-size:22px}}
+</style></head><body><main>
+<div class="eyebrow">TI60F225 I3 · DEMOBOARD V4 · SC431HAI</div>
+<section id="corrected-schematic" style="color:#20344c;background:#fff0d2;padding:16px;border:2px solid #b07a20;border-radius:10px"><h2 style="color:#20344c">2026-10-19 正确原理图修正已签核</h2><p><strong>KEY1=P14/GPIOR_22、KEY2=N14/GPIOR_21</strong>，KEY0=C4、KEY3=A3。旧P13/N13是LED0/1；请使用本页链接的最新bit，旧bit已保存快照。</p><p>camera_ppi：setup +0.302 ns / hold +0.026 ns。全部实际使用脚、电平、方向、Bank与当前源码指纹核对通过，未下载或固化。</p><p>J8不是UART：2=3.3V、4=CRESET_N、6=1.8V、8=VQPS、10=GND；使用板载USB串口R4 RX/R14 TX。<a style="color:#075184;text-decoration:underline" href="../../../docs/Ti60_correct_schematic_review.md">正确原理图复核、六套新bit与电气边界</a></p></section><h1>摄像头持续采集<br>RISC-V 控制四种学习风格</h1>
+<p class="muted">2026-10-17 · 独立项目 style_video · V7采集基线 / V9图像修复复查 · 离线说明，无外部脚本依赖</p>
+<span class="badge">星空 / 浮世绘 / 水墨 / 彩色油画</span><span class="badge">原权重保持</span><span class="badge">主机不参与逐帧转换</span>
+<div class="notice" id="build-status">新PPI工程已通过CAD签核并生成bit：RAM204/256、DSP148/160，最小setup +0.302ns / hold +0.026ns，79脚配置对照通过。没有下载或实板验收。当前支持一个CSI包/一次HS传输，需实测SC431HAI包模式、Bayer、供电跳线和真实FPS；不保证即插即用。旧CSI5.15候选继续保留且未放行。</div>
+<nav><a href="#flow">数据流</a><a href="#workflow">工作流程</a><a href="#modules">模块</a><a href="#memory">DDR所有权</a><a href="#clocks">时钟与电平</a><a href="#ppi">PPI替代实现</a><a href="#validation">验证</a></nav>
+<p><strong>V7 / V9参考复查：</strong>不使用demo10 V6，demo保持原样。V9修正Bayer行列相位、部分红蓝来源及数据与DE/坐标差一拍；当前独立2×2模块补测四相位、彩色边界和完整1080p逐坐标输出。V9还更换摄像头寄存器/裁剪链路，因此现有bit保留V7采集模式，没有直接替换整套V9。<a href="docs/demo_v7_v9_review.md">差异、测试与现有bit的适用范围</a>。</p>
+<p><strong>准备下载：</strong><a href="../../../docs/Ti60_programming_guide.md">两套Ti60 V4工程下载与使用</a>。本摄像头版选<code>build/camera_ppi/outflow/ti60_camera.bit</code>，以JTAG临时配置测试；Sapphire固件和权重已包含，不需串口传图。2026-10-17文件/CAD复核通过，未重新构建或下载。</p>
+<div class="notice"><strong>本轮安全复查：</strong>79个实际封装脚、I/O Bank电压配置、输入/输出方向与DDR数据/OE接线重新核对通过；新增实际顶层的开漏与失锁/停钟保护仿真通过，bit未更改。用户已确认摄像头接<strong>J4</strong>、<strong>J2/J3均2–3短接选择1.2V</strong>；实际电压、电流和温升尚未测量。<a href="docs/preflight_review_20261016.md">查看电气、时序、保护测试与实板边界</a>。</div>
+<p class="notice"><strong>上电配置仍需明确：</strong>用户不清楚当前Flash内容，新bit尚未下载。正常上电可能运行原Flash程序；新bit的安全复核不能覆盖那份未知配置。另补测8项摄像头初始化故障，当前固件均关闭采集、保持模组复位并释放I²C；这不代替实测供电或上电配置确认。</p>
+<div class="grid"><div class="card"><span class="metric">640 × 480</span>当前明确的 CNN 处理尺寸<br><small>1080p RAW先合成、再裁剪</small></div><div class="card"><span class="metric">720p30</span>HDMI 输出与刷新配置<br><small>74.25MHz，3300×750总周期</small></div><div class="card"><span class="metric">3 + 2</span>DDR原画bank + 风格bank<br><small>完整帧发布，推理原图锁定</small></div></div>
+<h2 id="flow">图像从哪里来，又到哪里去</h2>
+<div class="flow">
+<div class="card"><div class="step">01 · 模组</div><h3>SC431HAI</h3><p>demo10配套模组，排线直连。沿用V7的1920×1080 RAW10、四lane配置。</p><small>实际采集FPS与色彩待实测</small></div>
+<div class="card"><div class="step">02 · CSI</div><h3>接收与检查</h3><p>原厂D-PHY5.8公开PPI → 512×44异步FIFO → UI域CSI包头/ECC/CRC与RAW10解包。所有元数据与像素在同一记录中跨域。</p><small>UI内检查VC0 / RAW10 / 2400字节行长</small></div>
+<div class="card"><div class="step">03 · 预处理</div><h3>RAW → RGB565</h3><p>2×2 Bayer块合成RGB，得到960×540；中央裁剪640×480。像素对打包成128bit写入。</p><small>简化ISP，BGGR需色卡确认</small></div>
+<div class="card"><div class="step">04 · 原画DDR</div><h3>三bank完整帧</h3><p>EOF、像素数和最后写响应通过后才发布；同时保留采集、最新完整、推理锁定帧。</p><small>不能覆盖推理正在读取的原画</small></div>
+<div class="card"><div class="step">05 · CNN</div><h3>实际学习网络</h3><p>五层3×3、六通道，膨胀率1/1/2/4/8；int8、偏置、激活、折叠BN、饱和量化。</p><small>两条352列，中央320列+重叠</small></div>
+<div class="card"><div class="step">06 · 风格DDR</div><h3>两bank提交</h3><p>全条完成及最终B响应后待提交；垂直消隐安全窗口交换前台，错过窗口等下一帧。</p><small>同一作业锁住源帧ID</small></div>
+<div class="card"><div class="step">07 · 显示</div><h3>HDMI 720p30</h3><p>640×480居中，不放大伪装720p处理；读FIFO供像素，转换为TMDS串行输出。</p><small>显示重复帧不增加处理FPS</small></div>
+<div class="card"><div class="step">08 · 统计</div><h3>Cxx Ixx H30</h3><p>C=DDR完整采集帧率，I=CNN成功完成帧率，H30=配置刷新率。每秒快照，经握手跨域。</p><small>计数0–99，消隐更新文字</small></div>
+</div>
+<div class="bus"><strong>控制平面：</strong>四按键 → 消抖/最新请求 → Sapphire RISC-V C → APB寄存器 → I²C配置、动态权重、START、IRQ、显示叠加控制。<br><strong>像素平面：</strong>采集DMA / CNN DMA / HDMI读DMA → AXI128仲裁 → 外部DDR。CPU在片内RAM运行，不进行逐像素软件卷积。</div>
+<h2 id="workflow">从上电到连续画面的工作流程</h2>
+<ol>
+<li><strong>稳定上电：</strong>等待PLL与DDR校准，分域同步释放复位。任何关键PLL失锁重新复位整条链路，使旧缓存失效。</li>
+<li><strong>CPU识别模组：</strong>开漏I²C默认释放，按V7高有效模组RESET操作，释放后等待10ms，读0x3107/08，必须得到CD6B。</li>
+<li><strong>配置后才开流：</strong>写163条V7待机配置、读回输出尺寸和VTS，限制初始曝光，装入第一种真实权重，再启用采集并写0x0100=1。</li>
+<li><strong>持续收帧：</strong>CSI输出没有可用背压，采集FIFO持续服务。溢出、丢字、错误或半帧整帧作废，下帧重新同步；完整有效帧发布到最新bank。</li>
+<li><strong>CPU调度：</strong>只有最新完整原图且加速器空闲时发START，硬件claim并锁住原图。采集更快时跳过旧的待处理完整帧并计数。</li>
+<li><strong>硬件转换：</strong>逐条读取DDR，按全局坐标产生X/Y模4特征，每层对图像外边界清零。四风格使用同一算子和各自原学习参数。</li>
+<li><strong>提交画面：</strong>全部输出写完、最后B响应成功后释放源图；等待安全消隐提交风格帧，再向CPU报告完成中断。</li>
+<li><strong>按键换风格：</strong>KEY0–KEY3依次星空、浮世绘、水墨、彩色油画；忙时保留最新请求，空闲时CPU加载1436项配置并提交。KEY0+KEY3长按用于原有整机复位。</li>
+</ol>
+<h2 id="modules">主要模块分别负责什么</h2>
+<div class="table"><table><thead><tr><th>模块 / 文件</th><th>职责</th><th>必须保持的约束</th></tr></thead><tbody>
+<tr><td><code>ti60_camera_ppi_top.sv</code></td><td>接Sapphire、原厂DDR、CSI、PLL与板级接口</td><td>按V4脚位电平；I²C只拉低或释放</td></tr>
+<tr><td><code>csi_ppi_bridge</code></td><td>PPI原子FIFO、lane对齐、包头ECC、CRC16、RAW10与帧错误恢复</td><td>不跨域裸采样word count；溢出故障保持到复位</td></tr>
+<tr><td><code>camera_bayer_reduce / camera_pack</code></td><td>Bayer合成、裁剪、RGB565与帧记录</td><td>最早像素在低位，行优先，无padding</td></tr>
+<tr><td><code>camera_frame_writer / source_frame_pool</code></td><td>采集DMA、三原画缓存所有权</td><td>完整EOF+最终B才发布，锁定bank不可写</td></tr>
+<tr><td><code>axi_write_pair / style_read_arbiter</code></td><td>采集/CNN写仲裁、显示/CNN读仲裁</td><td>事务响应回原主机，显示读优先</td></tr>
+<tr><td><code>video_control_apb / firmware/main.c</code></td><td>真实RV32I C配置、模型加载、调度与IRQ</td><td>当前模型ID与最新按键请求分开保存</td></tr>
+<tr><td><code>video_tile_engine / video_cnn_tile5</code></td><td>两条分条调度、全图边界掩码、五层CNN</td><td>源bank作业内锁存，所有条合并提交</td></tr>
+<tr><td><code>video_conv3x3 / style_line_ram</code></td><td>可写int8系数、卷积MAC、膨胀行缓存</td><td>浅层权重用寄存器；行缓存用RAM</td></tr>
+<tr><td><code>video_job_control / frame_reader</code></td><td>源图claim、完成后换帧、显示读FIFO</td><td>等待消隐ACK时仍算忙，不复用待提交bank</td></tr>
+<tr><td><code>video_raster / fps_* / tmds_efx</code></td><td>720p30时序、独立FPS快照、字符与TMDS</td><td>同步/DE/RGB坐标一致，不把刷新计作推理</td></tr>
+</tbody></table></div>
+<h2 id="memory">DDR基础与缓冲所有权</h2>
+<p>DDR是外部帧存储，不是FPGA内部行缓存。DDR控制器将128bit系统总线请求转换为存储器读写；一次握手并不等于数据已可靠写完，必须等待B响应。读方向每个256字节突发还要校验RRESP与最后一拍RLAST。</p>
+<div class="table"><table><thead><tr><th>bank</th><th>起始地址</th><th>角色与尺寸</th></tr></thead><tbody>
+<tr><td>风格0 / 风格1</td><td><code>0x00000000 / 0x00200000</code></td><td>前台持续显示 / 后台写入，消隐交换</td></tr>
+<tr><td>原画0 / 原画1 / 原画2</td><td><code>0x00400000 / 0x00600000 / 0x00800000</code></td><td>采集、最新完整、CNN锁定三个角色动态分配</td></tr>
+<tr><td>每帧布局</td><td><code>640×480×2 = 614400 bytes</code></td><td>RGB565，低字节先，stride1280，低位像素先</td></tr>
+</tbody></table></div>
+<p class="muted">2MB bank间隔给地址和对齐留空间，不表示每帧占满2MB。三个原画bank避免正在采集的半帧阻挡最新完整帧；两个风格bank保障显示完整，但等待换帧可能限制吞吐。</p>
+<details><summary>为什么摄像头版本不需要UART传图片</summary><p>UART是逐位串行接口，8N1每个数据字节需要10个线位，适合控制和静态图调试。旧2Mbps上传一张720p RGB565，纯线速就约9.2秒，不能当摄像头实时视频。本工程图像由MIPI直达FPGA，UART输入未使用，原串口工程独立保留。</p></details>
+<h2 id="wide">为什么保留640×480，而非默认640×360</h2>
+<div class="table"><table><tr><th>配置</th><th>帧数据RGB565</th><th>适用边界</th></tr><tr><td>640×480 · 4:3</td><td>614400字节</td><td>符合赛题至少640×480，本完整工程默认配置</td></tr><tr><td>640×360 · 16:9</td><td>460800字节，少25%</td><td>参数化预处理已验证；未构建完整360工程或2倍放大显示</td></tr></table></div>
+<p>360高度可减少25%的像素运算与帧带宽，理想吞吐约提升至4/3；宽度仍是640，卷积行缓存不会同比减少。保留480高度用于基础验收，360可作宽屏/性能调试，不能把它算作已经完成原赛题分辨率要求。</p>
+<p><a href="docs/review_20261016.md">本轮串口、电平、真实CPU仿真和分辨率复查详情</a></p>
+<h2 id="clocks">时钟域与接口电平</h2>
+<div class="table"><table><thead><tr><th>域 / 接口</th><th>配置</th><th>边界</th></tr></thead><tbody>
+<tr><td>CSI byte</td><td>V7按70MHz预算，实际来自模组</td><td>数据+valid+sync+SoT错误作为44bit原子FIFO跨UI；频率待测</td></tr>
+<tr><td>UI / CPU / CNN / CSI包解析</td><td>100MHz</td><td>未提高DDR UI；控制与图像DMA同域</td></tr>
+<tr><td>DDR PHY</td><td>400MHz，原厂DDR参数</td><td>DDR脚1.5V，保留原厂保护IP与OE</td></tr>
+<tr><td>HDMI pixel / 串化</td><td>74.25 / 371.25MHz</td><td>3300×750，+HS/+VS，720p30</td></tr>
+<tr><td>MIPI Bank2A/2B</td><td>专用RX、1.2V配置</td><td>用户已确认J4与J2/J3的2–3选择；实际电压仍未测量</td></tr>
+<tr><td>模组SCL/SDA/RESET</td><td>TR3.3V；RESET高有效</td><td>用户确认配套模组；不适用于裸SC431HAI</td></tr>
+</tbody></table></div>
+<h2 id="cdc-investigation">旧CSI5.15跨域调查 · 历史记录</h2>
+<div class="grid"><div class="card"><h3>已独立复现</h3><p>仅CSI的11 RAM / 0 DSP工程仍出现byte↔core负裕量；普通跨域建立预算仅0.002ns，问题可脱离CNN、DDR、CPU复现。</p></div><div class="card"><h3>8条控制链已核实</h3><p>四lane的HS settle / StopState均为首级→第二级，无组合逻辑，整机级间最小setup +13.085ns。限定首级例外仅在诊断STA验证，未改生产约束。</p></div><div class="card"><h3>16个元数据端点待确认</h3><p>原始word_count直接影响pixel_bits_cnt。官方v3.3新增异步约束说明对应IP5.16；当前5.15的稳定采样窗口及追溯适用性仍需厂商确认。</p></div></div>
+<p>新增七组公共接口压力仿真：不同时钟相位、LP期间接收字节时钟实际停振、约60MHz像素时钟及中途复位，共325个小尺寸好帧、0坏帧。数字功能仿真不能证明亚稳态、物理HSIO FIFO或内部多比特采样窗口。该旧候选RTL/IP/SDC继续保留，未放宽约束或生成旧候选bit。<a href="docs/csi_cdc_investigation.md">查看调查依据、精确路径与复现步骤</a>。</p>
+<h2 id="ppi">新PPI实现怎样消除争议跨域</h2>
+<div class="grid"><div class="card"><h3>字节域只打包</h3><p>lane0–3的32bit数据、4bit valid、4bit sync、4bit SoT错误组成同一44bit记录。70MHz字节域写FIFO，100MHz UI持续读，Gray路径保留最大延迟检查。</p></div><div class="card"><h3>UI内完成CSI解析</h3><p>四lane对齐后检查VC0、ECC、RAW10与word count；每5字节还原4像素，CRC16校验行包。FS/FE产生帧边界，半帧与错误帧不发布DDR。</p></div><div class="card"><h3>保留物理验证边界</h3><p>支持一个包/一次HS突发，包尾trailing丢弃到下一SoT。实物包模式未确认，不能宣称通用CSI解析器。FIFO溢出需整机复位，普通坏包等待下一完整帧。</p></div></div>
+<p>8条D-PHY控制同步链均通过最终网表原生STA：首级仅连接对应第二级、无组合逻辑，级间最小setup <strong>+13.487ns</strong>。只例外首级D；原5.15的word_count→pixel_bits_cnt模块已从新工程实际映射网表移除，未放宽这条元数据路径。</p>
+<p>当前配置：<a href="build/camera_ppi/outflow/ti60_camera.bit">ti60_camera.bit</a> · <a href="build/camera_ppi/signoff.json">CAD签核与指纹</a> · <a href="docs/ppi_camera.md">PPI接口、错误恢复及复现</a><br><code>SHA256 7fc292efc91c6a28c1121dfb57224d63828ceb0d35fcd5dfffebae660d82bc23</code></p>
+<h2 id="validation">已经证明什么，还缺什么</h2>
+<div class="grid"><div class="card"><h3>CSI与完整尺寸预处理</h3><p>新D-PHY/PPI联合验证：六组相位、字节时钟停启、慢UI、复位用例通过；完整1920×1080 RAW→640×480连续3好帧、0坏帧，逐像素对照。另有CRC/ECC/尺寸/超时/溢出错误恢复测试。四模型缩小几何整数对照误差0。</p></div><div class="card"><h3>真实Sapphire RTL仿真</h3><p>Questa合法运行Sapphire3.4.0并执行9468字节固件；验证模组I²C、ID、曝光、两组学习权重、按键及PLIC中断。</p><small>摄像头和加速器完成为模型，尚非实板</small></div><div class="card"><h3>实板仍待验收</h3><p>供电跳线、真实ID与颜色、DDR/HDMI并发、Sapphire启动、中断、采集与推理FPS均未测量。</p></div></div>
+<p>新PPI整机RAM10 204/256、DSP148/160、XLR48995/60800。布局布线后I3时序与79脚配置/源码/模型/固件指纹通过，signoff.json=PASS并已生成bit；这是CAD与数字仿真结果，没有下载FPGA或写Flash。720p处理、完整ISP、AE/白平衡、原画对比及稳定&gt;15fps仍需后续验证或实现；720p30也不等同于原赛题显示要求。</p>
+<footer><a href="README.md">项目说明</a> · <a href="docs/validation.md">验证记录</a> · <a href="docs/electrical_logic_review.md">电气复查</a> · <a href="docs/control_registers.md">APB寄存器</a><br>保护IP未解密，旧UART工程/四风格参数继续保留。C固件、模型、仿真、vendor与生成产物按当前上传规则留本地。</footer>
+</main></body></html>

@@ -35,9 +35,12 @@ def main():
     for name in STYLES:
         model, metadata = load_network(args.run / name / "model.pt", device)
         torch.manual_seed(metadata["seed"])
-        untrained = StyleNetwork(**model.config).to(device).eval()
+        untrained = type(model)(**model.config).to(device).eval()
+        if hasattr(model, "qat"):
+            untrained.qat = model.qat
+            untrained.freeze_bn()
         style = Image.open(args.styles / f"{name}.jpg").convert("RGB")
-        style.thumbnail((metadata["arguments"]["style_size"],) * 2, Image.Resampling.LANCZOS)
+        style.thumbnail((metadata["arguments"].get("style_size", 512),) * 2, Image.Resampling.LANCZOS)
         targets = [gram(feature) for feature in vgg(to_tensor(style).unsqueeze(0).to(device))]
         trained_values = []
         initial_values = []

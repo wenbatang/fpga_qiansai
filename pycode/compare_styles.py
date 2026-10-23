@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
+import io
 import time
 from pathlib import Path
 
@@ -12,6 +14,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 from torchvision.transforms.functional import to_tensor
 
 from prepare_styles import ROOT, STYLES
+from prepare_distinct_styles import STYLES as DISTINCT_STYLES
 from style_network import load_network
 
 
@@ -30,7 +33,13 @@ def to_image(tensor):
 @torch.inference_mode()
 def predict(model, images, device):
     batch = torch.stack([to_tensor(image) for image in images]).to(device)
-    return [to_image(item) for item in model(batch)]
+    hardware=hasattr(model,'qat') and 'depth' in model.config
+    if hardware:
+        from hardware_network import rgb565_roundtrip
+        batch=rgb565_roundtrip(batch)
+    output=model(batch)
+    if hardware:output=rgb565_roundtrip(output)
+    return [to_image(item) for item in output]
 
 
 def sheet(originals, predictions, reference, label, page, total_pages, names, size=240):
@@ -64,11 +73,15 @@ def main():
     parser.add_argument("--data", type=Path, default=ROOT / "convertpic" / "val2017")
     parser.add_argument("--styles", type=Path, default=ROOT / "styles")
     parser.add_argument("--output", type=Path, default=ROOT / "results" / "four_styles_v1")
-    parser.add_argument("--style", nargs="+", choices=list(STYLES), default=list(STYLES))
+    parser.add_argument('--catalog',choices=('legacy','distinct'),default='legacy')
+    parser.add_argument("--style", nargs="+", choices=list(dict.fromkeys([*STYLES,*DISTINCT_STYLES])))
     parser.add_argument("--limit", type=int, default=72)
     parser.add_argument("--size", type=int, default=256)
     parser.add_argument("--cpu", action="store_true")
     args = parser.parse_args()
+    styles=DISTINCT_STYLES if args.catalog=='distinct' else STYLES
+    args.style=args.style or list(styles)
+    if any(name not in styles for name in args.style):parser.error('Style not in selected catalog')
     torch.set_num_threads(4)
     device = torch.device("cuda" if torch.cuda.is_available() and not args.cpu else "cpu")
     split = json.loads((args.run / "split.json").read_text(encoding="utf-8"))
@@ -83,7 +96,8 @@ def main():
     summary = {}
     overview_outputs = {}
     for style_name in args.style:
-        model, metadata = load_network(args.run / style_name / "model.pt", device)
+        checkpoint_bytes=(args.run/style_name/'model.pt').read_bytes()
+        model, metadata = load_network(io.BytesIO(checkpoint_bytes), device)
         destination = args.output / style_name
         destination.mkdir(parents=True, exist_ok=True)
         reference = Image.open(args.styles / f"{style_name}.jpg").convert("RGB")
@@ -98,21 +112,23 @@ def main():
         for offset in range(0, len(names), 12):
             page = offset // 12 + 1
             canvas = sheet(originals[offset:offset + 12], predictions[offset:offset + 12], reference,
-                           STYLES[style_name]["label"], page, pages, names[offset:offset + 12])
+                           styles[style_name]["label"], page, pages, names[offset:offset + 12])
             canvas.save(destination / f"comparison_{page:02d}.jpg", quality=95)
         overview_outputs[style_name] = predictions[:6]
         summary[style_name] = {"images": len(names), "comparison_pages": pages, "training_steps": metadata["step"],
-                               "parameters": metadata["parameters"], "render_seconds_including_cpu_transfer": elapsed}
+                               'checkpoint_sha256':hashlib.sha256(checkpoint_bytes).hexdigest(),'best_epoch':metadata.get('epoch'),
+                               "parameters": metadata["parameters"], "render_seconds_including_cpu_transfer": elapsed,
+                               'scope':'FPGA RGB565 software reference' if hasattr(model,'qat') else 'perceptual teacher software inference'}
         print(f"Rendered {style_name}: {len(names)} images, {pages} sheets", flush=True)
         del model
     # A compact common-content view helps compare the four distinct styles.
     cell = 190
-    margin = 92
+    margin = max(92,max(round(font(19).getlength(styles[name]['label']))+12 for name in args.style))
     row_h = cell + 18
     overview = Image.new("RGB", (margin + 6 * (cell + 6) + 12, 60 + (len(args.style) + 1) * row_h), "white")
     draw = ImageDraw.Draw(overview)
     draw.text((margin, 13), f"{len(args.style)} 种风格 · 同一组留出图片 · 神经网络推理对比", font=font(24), fill="black")
-    for row, (label, imgs) in enumerate([("原图", originals[:6])] + [(STYLES[name]["label"], overview_outputs[name]) for name in args.style]):
+    for row, (label, imgs) in enumerate([("原图", originals[:6])] + [(styles[name]["label"], overview_outputs[name]) for name in args.style]):
         y = 60 + row * row_h
         draw.text((4, y + cell // 2 - 10), label, font=font(19), fill="#333333")
         for column, image in enumerate(imgs):

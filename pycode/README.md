@@ -1,8 +1,21 @@
 # 四种风格转换网络
 
+新增独立四风格实验：[星空、浮世绘、水墨、彩色油画训练说明](docs/distinct_styles.md)，对应[四键 FPGA 工程](../xilinx/projects/uart_style_keys/README.md)。新参考在 `styles/distinct_v1`，教师在 `runs/distinct_teacher_v2`，学生在 `runs/distinct_student_v1`；旧版版画及所有旧参数保留。对比工具新增 `--catalog distinct`，旧目录和旧默认四风格继续兼容。
+
 在 `pycode/convertpic/val2017/` 的照片上训练四个独立前馈 CNN：浮世绘、梵高、水墨国画、油墨版画。结果布局为每页 12 组，6 列、两块“上排原图 / 下排风格化”，右上角显示参考风格图。
 
-## 本轮实验
+## 当前优化入口
+
+最终算法与FPGA模型见 [优化记录](docs/optimization.md) 和 [架构图](architecture.html)。优化教师位于`runs/optimized_teacher_v2/`，最终学生位于`runs/fpga_student_phase/`；总览分别在`results/optimized_teacher_v2/`与`results/fpga_student_phase/`。权重和图片按Git策略留本地，下面保留原V1实验说明。
+
+单图默认使用优化教师；指定最终学生时，自动模拟RGB565输入/输出，与FPGA参考一致：
+
+```powershell
+python pycode/stylize.py input.png pycode/results/new_vangogh.png --style vangogh
+python pycode/stylize.py input.png pycode/results/fpga_vangogh.png --style vangogh --run pycode/runs/fpga_student_phase
+```
+
+## 原V1实验
 
 - 用户最初要求三种风格，随后决定同时保留“水墨国画”和“油墨版画”，因此共四种。
 - 从 5,000 张照片中按固定种子 `20261008` 留出 72 张，只用其余 4,928 张训练。留出名单和训练名单保存在运行目录的 `split.json`。
@@ -105,7 +118,7 @@ $stylePython = 'E:\software\anaconda\envs\yolo\python.exe'
 4. 转换任意单张图片：
 
 ```powershell
-& $stylePython pycode/stylize.py pycode/convertpic/val2017/000000000139.jpg pycode/results/my_vangogh.png --style vangogh
+& $stylePython pycode/stylize.py pycode/convertpic/val2017/000000000139.jpg pycode/results/my_vangogh.png --style vangogh --run pycode/runs/four_styles_v1
 ```
 
 `--cpu` 可用于无 GPU 推理。完整图片保持原始宽高；极小图片（任一边 <16 像素）不支持。
@@ -114,11 +127,13 @@ $stylePython = 'E:\software\anaconda\envs\yolo\python.exe'
 
 结构为 3×3 Conv/IN/ReLU 编码器（16/32/64 通道，两次 stride=2）、3 个残差块、nearest 上采样解码器和 sigmoid 输出。彩色模型 269,763 个参数；墨色模型用单通道输出后复制为 RGB，269,473 个参数，保证灰度由网络结构产生。
 
-此模型是 PC 端风格效果/训练基线。未量化、未导出 FPGA 权重、未实现 RTL 推理，也未验证 Ti60 帧率。IN 使用当前特征图统计量，不能直接当作固定 BN 折叠；sigmoid、上下采样及多层特征缓存也需要单独实现。参数少于 500KB 的 INT8 理论大小不代表已完成 INT8 量化或满足 FPGA 算力要求。
+此原版模型是 PC 端风格效果/训练基线，其 IN、sigmoid 和编码解码结构尚未直接映射到 FPGA。IN 使用当前特征图统计量，不能直接当作固定 BN 折叠；参数少于 500KB 的 INT8 理论大小不代表已完成该原版模型的硬件映射。
+
+本轮另行优化教师并训练使用折叠 BN 的定点学生，详见 [训练与量化架构](architecture.html) 和 [独立 FPGA 工程](../xilinx/projects/uart_style_hdmi/README.md)。`train_optimized.py` 用于继续教师优化或训练学生；`export_hardware.py` 导出真实 int8 权重；`evaluate_optimized.py` 对原版、优化教师、定点学生进行同内容对比。所有新运行保存在独立 `runs/` 与 `results/`，不覆盖 `four_styles_v1`。
 
 评估中的 GPU 延迟仅指 256×256、batch=1、FP32、热身后 CNN 推理，不含图片解码、VGG、绘图或传输，不能当作 640×480 摄像头实时系统 FPS。感知误差下降只证明参考风格统计拟合有所改善，画质还需检查对比图；本任务没有像素对齐的艺术目标图，不用原图作为“真值”报告误导性的 PSNR/SSIM。
 
-文件夹虽名为 `val2017`，本实验使用其中大部分图片训练，不把全部目录宣称为训练未见过的验证集。留出的 72 张才是本实验的独立效果检查集。
+文件夹虽名为 `val2017`，本实验使用其中大部分图片训练，不把全部目录宣称为训练未见过的验证集。留出的 72 张不参与梯度训练：24 张用于选择检查点，48 张用于效果回归和人工检查。本轮算法开发已参考回归结果，因此这 48 张不能标成完全盲测的最终成绩。
 
 ## Git 上传
 
@@ -126,5 +141,9 @@ $stylePython = 'E:\software\anaconda\envs\yolo\python.exe'
 
 ## 方法来源
 
+2026-10-18 六风格独立实验入口：[Xilinx 六风格工程](../xilinx/projects/uart_style_six/README.md)、[素材、训练与量化](../xilinx/projects/uart_style_six/docs/training.md)。六种为梵高厚涂、莫奈印象派、浮世绘、彩色剪纸、复古漫画、水墨，去掉水彩绘本。参考在 `styles/art6_v1/`，有效训练在 `runs/art6_v2/`，第一轮退化学生保留在 `runs/art6_v1/`；旧模型与四键工程保留。新入口为 `art6_catalog.py`、`train_art6.py`、`evaluate_art6.py` 和 `render_board_art6.py`。12通道、63×63感受野是本轮 Xilinx 配置，未直接替换易灵思模型。
+
 - [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)
 - [PyTorch 官方 fast_neural_style 示例](https://github.com/pytorch/examples/tree/main/fast_neural_style)：参考感知损失/前馈网络方法；本目录实现为独立编写的小型网络。
+
+2026-10-19 六风格去框推理：`art6_border.py`在每层使用reflect-101（极小轴回退edge），`render_border_art6.py`生成`results/art6_border_v1/`。学习检查点和原zero推理完整保留；直接调用旧模型forward仍是zero，当前去框预测应使用`art6_border.predict`。[原因与验证](../xilinx/projects/uart_style_six/docs/border_fix_20261019.md)。FPGA新bit以该项目最新签核为准。

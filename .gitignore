@@ -95,6 +95,8 @@ work/
 # Independent projects: standard, fast and future Vivado build variants.
 # Authored RTL remains in projects/<name>/rtl/, outside these trees.
 /xilinx/projects/*/vivado*/
+# Generated include binds local learned ROM paths; recreated by prepare.
+/xilinx/projects/uart_style_six/rtl/style_weights.vh
 /elinx/elinxdemo/**/ip/
 netlist/
 netlists/
@@ -141,7 +143,16 @@ dist/
 .agents/
 软件安装包/
 
+# Generated include contains local learned weight paths; keep it local.
+/xilinx/projects/uart_style_hdmi/rtl/style_weights.vh
+/xilinx/projects/uart_style_keys/rtl/style_weights.vh
+/elinx/projects/uart_style_keys/vendor/
+/elinx/projects/uart_style_tiles/vendor/
+/elinx/projects/uart_art_styles/vendor/
+/elinx/projects/style_video/vendor/
 # Everything not whitelisted remains ignored: FPGA project/configuration
 # files (*.xpr, *.xml, *.xci, *.xdc, *.sdc, *.tcl), bitstreams, reports,
 # waveforms, images, archives, installers, memory data and C/C++ sources.
 # Ignoring a file does not delete its local copy.
+# New camera art project: licensed/generated sources remain local.
+/elinx/projects/camera_art_styles/vendor/

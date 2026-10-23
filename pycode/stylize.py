@@ -10,28 +10,38 @@ from torchvision.transforms.functional import to_tensor
 
 from compare_styles import to_image
 from prepare_styles import ROOT, STYLES
+from prepare_distinct_styles import STYLES as DISTINCT_STYLES
 from style_network import load_network
+from hardware_network import HardwareNetwork, rgb565_roundtrip
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--style", choices=list(STYLES), required=True)
-    parser.add_argument("--run", type=Path, default=ROOT / "runs" / "four_styles_v1")
+    parser.add_argument("--style", choices=list(dict.fromkeys([*STYLES,*DISTINCT_STYLES])), required=True)
+    parser.add_argument("--run", type=Path, default=ROOT / "runs" / "optimized_teacher_v2")
     parser.add_argument("--cpu", action="store_true")
     args = parser.parse_args()
     device = "cuda" if torch.cuda.is_available() and not args.cpu else "cpu"
     model, _ = load_network(args.run / args.style / "model.pt", device)
     with Image.open(args.input) as opened:
         image = ImageOps.exif_transpose(opened).convert("RGB")
-    if min(image.size) < 16:
+    hardware=isinstance(model,HardwareNetwork)
+    if hardware:
+        torch.backends.cudnn.allow_tf32=False
+        torch.backends.cuda.matmul.allow_tf32=False
+    if min(image.size) < 16 and not hardware:
         raise ValueError("Image dimensions must be at least 16 pixels")
     with torch.inference_mode():
-        result = model(to_tensor(image).unsqueeze(0).to(device))[0]
+        pixels=to_tensor(image).unsqueeze(0).to(device)
+        if hardware:pixels=rgb565_roundtrip(pixels)
+        result=model(pixels)
+        if hardware:result=rgb565_roundtrip(result)
+        result=result[0]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     to_image(result).save(args.output)
-    print(f"Saved {args.output}")
+    print(f"Saved {args.output}; {'FPGA RGB565 software reference' if hardware else 'optimized teacher software output'}")
 
 
 if __name__ == "__main__":

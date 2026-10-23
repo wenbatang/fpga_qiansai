@@ -50,7 +50,13 @@ class StyleNetwork(nn.Module):
 
 def load_network(checkpoint, device="cpu"):
     data = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    model = StyleNetwork(**data["network_config"])
+    if data.get("family") == "dilated_int8_student":
+        from hardware_network import HardwareNetwork
+        model = HardwareNetwork(**data["network_config"])
+        model.qat = data.get("qat", True)
+        model.freeze_bn()
+    else:
+        model = StyleNetwork(**data["network_config"])
     model.load_state_dict(data["model"])
     model.to(device).eval()
     return model, data

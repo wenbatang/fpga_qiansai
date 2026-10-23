@@ -1,0 +1,5 @@
+# Versions used by the current PC sender environment.
+pyserial==3.5
+Pillow==12.3.0
+# Optional in code; included here for the faster RGB565 conversion path.
+numpy==2.2.6
