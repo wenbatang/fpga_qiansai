@@ -156,3 +156,15 @@ dist/
 # Ignoring a file does not delete its local copy.
 # New camera art project: licensed/generated sources remain local.
 /elinx/projects/camera_art_styles/vendor/
+# Independent full720/C8 camera experiments: keep licensed dependencies local.
+/elinx/projects/camera_art_30/vendor/
+/elinx/projects/camera_full720_30/vendor/
+# Generated learned constants are model data even when exported as Verilog.
+/elinx/projects/camera_full720_30/rtl/full_shared_params.sv
+# Independent interactive camera project: licensed/generated dependencies local.
+/elinx/projects/camera_art_interactive/vendor/
+/elinx/projects/camera_art_interactive/rtl/full_shared_params.sv
+# Inherited C8 learned literals are also model data, not authored operators.
+/elinx/projects/camera_art_30/rtl/tiny_shared_params.sv
+/elinx/projects/camera_full720_30/rtl/tiny_shared_params.sv
+/elinx/projects/camera_art_interactive/rtl/tiny_shared_params.sv

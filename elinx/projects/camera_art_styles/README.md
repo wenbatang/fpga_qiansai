@@ -1,14 +1,36 @@
-# SC431HAI 摄像头 → 四风格 CNN → 真正720p HDMI
+# SC431HAI → RF33 六通道CNN → 720p60 HDMI
+
+**最新已签核RF33版：[下载bit](build/camera_fps_rf33_srl_720/outflow/ti60_camera.bit)** · [工程](build/camera_fps_rf33_srl_720/ti60_camera.xml) · [签核](build/camera_fps_rf33_srl_720/signoff.json) · [最终复核](build/camera_fps_rf33_srl_720/final_review.json) · [完整使用和架构](docs/rf33_720.md) · [离线架构图](architecture.html)。2026-10-24。
+
+用户已看过比较图并选择RF33。真实1280×720输入/处理，四风格梵高/剪纸/漫画/水墨；三输出缓冲解耦HDMI提交，双在途写仲裁仍等真实B，SRL压缩权重。实际整机CAD：**230RAM/130DSP/55759XLR，setup/hold +0.379/+0.027ns**，CNN166.667MHz自身setup+0.501ns，79脚/12Bank及所有电平保持。
+
+新SRL完整720p梵高CNN/DMA全部921600像素整数一致、6007407 UI周期，模型等效 **16.646fps**，约为原720p模型1.881fps的8.85倍。**尚未下载，真实摄像头/DDR/CPU/显示并发FPS待实测**。普通FF版本`camera_fps_rf33_720`因XLR超限不可用，务必选带`srl`的目录。
+
+启动原图；KEY0–3依次选四风格，KEY1+KEY2约0.5秒回原图，KEY0+KEY3约1秒复位；串口只读CAM3/115200，不上传图片。原图模式I00正常。按键三种显示内容和手势识别尚未接入本bit。
+
+bit SHA256：`2a288989e1fdf84264a3579f7bd823b5f903aac50f661db0636ffd072cda2398`。旧十二通道模型/bit保留，下文均为对应旧阶段。
+
+---
+
+# 保留的十二通道真正720p版
 
 **详细学习文档：[720p工程完整解读：框架、逐模块接口和实现](docs/project_guide.md)**。包含完整端口声明、DDR/CDC、RISC-V/APB、定点CNN及诊断；[中间文件清理记录](docs/cleanup_inventory.md)。
 
-**当前720p试验版：[下载bit](build/camera_720_fast/outflow/ti60_camera.bit)** · [工程](build/camera_720_fast/ti60_camera.xml) · [签核](build/camera_720_fast/signoff.json) · [最终复核](build/camera_720_fast/final_review.json) · [架构](architecture.html) · [详细说明](docs/full720.md)。用户认可的VGA偏置修复版继续保留，下文为其记录。
+**保留的十二通道720p版：[下载bit](build/camera_720_fast/outflow/ti60_camera.bit)** · [工程](build/camera_720_fast/ti60_camera.xml) · [签核](build/camera_720_fast/signoff.json) · [最终复核](build/camera_720_fast/final_review.json) · [架构](architecture.html) · [详细说明](docs/full720.md)。用户认可的VGA偏置修复版继续保留，下文为其记录。
 
 1920×1080 RAW10全视野插值为1280×720，再执行原四模型CNN，HDMI720p60全幅显示。CNN独立166.667MHz，DDR/UI保持原时钟；条带核心32→48，计算/舍入流水优化。四种风格、固件和按键操作保持，启动原画；KEY0–3依次梵高、剪纸、漫画、水墨；KEY1+KEY2约0.5秒回原画。
 
 完整720p梵高CNN/DMA测试921600像素逐值通过，等效约**1.88fps**；像素吞吐约为旧VGA的2.64倍，但总FPS略低于旧VGA的2.136，仍未达到15fps，实板C/I待测。200MHz布线有负setup，因此交付166.667MHz：RAM254/256、DSP148/160、XLR45613/60800，最小setup/hold **+0.428/+0.026ns**，79脚/12Bank及电平通过，未代为下载/固化。
 
 bit SHA256：`fbaecb588dbe01c85db920e8fdeae6a1525f5abd2f459ad913afbf163d10aa19`。清理了21个可再生中间目录约240MiB，必要IP/旧bit/模型/报告及demo保留。暗场色偏尚未调整曝光、白平衡或模型；先保留认可的效果。
+
+## 本轮帧率实验与后续交互
+
+完整记录见 [帧率实验、真实画质对照与后续验收](docs/fps_experiments.md)。独立六通道RF33梵高CNN/DMA已逐值完成720p，6007407个100MHz UI周期、等效 **16.646fps**。最新SRL整机bit见顶部；旧十二通道双缓冲和最初C6模型的分析属于历史过程，新版已使用三输出bank，但真实DDR并发/实板FPS仍待测。
+
+已另训RF33/RF63各四风格，用户选择RF33，原十二通道保持。参见 [训练与画质](../../../pycode/fps_student.md)、[架构瓶颈与原模型存储实验](docs/fps_architecture_analysis.md)。普通FF实验仅core map122RAM/126DSP并不足以证明整机适配，最终使用已签核SRL权重版。
+
+按键以后用于原图/风格/左右对比，手势1–4用于梵高/剪纸/漫画/水墨；只在原图或对比界面，持续4个完整一秒窗口才切换。当前只完成独立四秒门控RTL，尚无图像手势分类器或新交互版bit；[显示、手势和帧池设计](docs/display_gesture_design.md)。现有bit按键操作仍按下文。
 
 ---
 

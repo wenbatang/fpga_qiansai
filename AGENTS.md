@@ -327,3 +327,67 @@
 - 清理回执camera_art_styles/build/cleanup_all_result.json；删除后最新版p720 audit/final_review及15套Ti60历史指纹PASS。8个Xilinx bit里6个匹配，uart_hdmi/fast与uart_style_six默认720p现有bit相对旧签核指纹已不一致、mtime早于清理；本轮未改写/重建/重新放行，记录cleanup_postcheck.json及docs/cleanup_inventory.md。
 - 新详细文件camera_art_styles/docs/project_guide.md按最新camera_720_fast解读顶层/系统/采集/DDR/显示/CNN/CDC/RISC-V/APB/CAM3，附33个手写模块与3个厂商公开边界的完整参数/端口声明，未解密IP。rtl/p720/ti60_camera_720_top.sv为当前build顶层逐字节阅读镜像，源XML仍使用build内原顶层，禁止重复加入两份同名模块。未修改活动生产RTL/模型/电平/bit。
 - Git选择性上传独立项目/common/pycode/说明及授权规则，不上传用户新增demo V9、build/sim/vendor/权重/工程配置/C固件。仓库依然不是独立可重建的完整工程归档，文档须明确本地依赖边界。
+
+## 帧率候选与按键/手势设计（2026-10-23）
+
+- 用户本轮优先研究提高帧率，已允许独立轻量学生训练、先比较画质再决定；手势仅1–4，依次梵高/剪纸/漫画/水墨。原12通道模型、已签核bit、demo V7/V9不覆盖；本轮不自动提交/推送或访问硬件。
+- 独立六通道RF33/RF63各四模型已真实训练100轮浮点+24轮QAT、每组5952步，可用候选统一在pycode/runs/fps_student_v1/refined；首轮塌缩单独保留为失败。每组小/极小尺寸五层软件整数0误差，两梵高各完整720p0误差；真实留出照片比较位于pycode/results/fps_student_v1/refined，说明pycode/fps_student.md。C6更平滑、RF63较接近原版，未替用户选择画质。
+- camera_art_styles/rtl/fps为独立C6实验，不在正式XML中。五层并行6/6/6/6/3、浅权重寄存器、1024深多银行历史RAM、18位坐标；运行时配置365项而非旧1217，旧固件不能直接复用。8组真实学习参数RTL各112×40共35840像素与独立整数逐值一致，含输入停顿/输出背压；五种RAM深度覆盖全部地址、边界、读保持和同址旧数据，最大11424。
+- RF33梵高完整720p实际CNN/DMA、两672×720条带/核心640/halo16、真实异步FIFO/有界AXI/最后B逐值通过921600像素，6007407个100MHz UI周期，CNN6.002ns，等效16.646fps。没有真实摄像头/DDR控制器/CPU/显示提交并发，不代表实板或整题>15fps。RF33 core实际map122RAM/126DSP，整机230RAM/130DSP只是相加预算，未整机布局布线/STA；RF63不能沿用该资源或帧率。
+- 旧video_job_control等COMMIT ACK才启动下一作业，60.074ms计算在60Hz下可能量化至4帧=15fps或5帧=12fps。建议三输出bank解耦计算/显示，保留front/pending/engine所有权、旧读事务排空和最终B；720p30采集+15fps推理的共享单拍写每19.29UI拍需完成一次AW/W/B，真实联合压力及必要突发合并尚未完成。不得把16.646内核模型称新整机达标。
+- rtl/fps12独立保原12通道数值/1217升序配置，顺序浅权重实际推断4968个SRL8；224宽core153RAM预算整机261超限，208宽core143RAM预算251有潜力，约3fps仍为估算。此存储不是任意地址RAM，只支持完整顺序加载，现控制器expected_address逐项核对与冻结固件满足；映射后常量及非均匀/背压梵高960像素与RTL/整数一致，不等于整机签核。
+- 后续按键用于原图/风格/左原右风格，手势只在已生效的原图/对比界面采样。同手势需4个完整一秒窗口，1Hz下t0/1/2/3/4五次新检测才证明4秒，失效/超时/换界面清资格，确认无手后才重新武装。rtl/interaction/gesture_hold_gate.sv独立5参数63758周期通过，仅门控而非图像分类器，未接生产或生成新交互bit。对半显示必须同源frame_id，增加源bank引用/容量，不能只延后原三槽release导致采集无空槽。
+- 阶段入口camera_art_styles/docs/fps_experiments.md、fps_architecture_analysis.md、display_gesture_design.md；README与architecture.html同步。新增候选的图像/权重/build/sim继续只留本地，模型选型、映射数值、三bank调度、365项固件及精确CDC/电气/STA完成前不交付新bit；签核bit可用于后续JTAG实测，未实测不称FPS或整题验收完成。用户新增style_model/与demo V9不触碰。
+
+## RF33三缓冲SRL整机签核（2026-10-24）
+
+- 用户看过真实四风格比较后，已明确选“优先六通道RF33，继续争取帧率”。新独立build/camera_fps_rf33_srl_720采用该四模型，旧12通道/可用bit保留；不重复询问选型。本轮没有JTAG/串口/Flash或Git提交/推送。
+- 普通FF浅权重整机camera_fps_rf33_720实际map230RAM/130DSP，但pack69716XLR超过60800，失败报告保留且签核显式拒绝。新SRL变体只改权重存储/类名，真实1152权重SRL8，小核少9216FF/5766LUT；完整升序365项加载是必要契约，APB逐项地址校验+原固件克隆两处1217→365满足，不能支持任意单字更新。
+- 最终新固件9692B、四处16份boot lane副本一致；真实Sapphire3.4.0/新APB两模型730写入、可变cfg_ready、START/PLIC IRQ和8故障安全退出通过。新SRL四模型RTL17920像素、原生映射网表3840非均匀像素与整数一致；完整SRL梵高720p第三bank921600像素误差0、6007407UI周期，6.002ns CNN，模型16.646fps，不能代替实板FPS。
+- 三输出槽0/2/10MiB、三原图4/6/8MiB；output_bank与commit_bank独立2bit，原图source在engine_done释放，输出前台仅reader晚ACK释放。reader先排旧读/FIFO复位/两域busy退出且仍在guard窗才ACK，真实rd_busy经2FF；pixel_fifo_fps显式10bit词数补0至11bit。新jobs/reader/真实FIFO/720p60联合6作业间隔仅多5–11UI拍、19完整显示帧逐值通过；引擎为延迟模型，不冒充完整SoC。
+- axi_write_pair_fps允许每主一笔/总两笔在途，AW/W成对保序，固定ID0有序B队列路由，只有真实B释放信用，保留最后B完整帧屏障。随机2328事务/743错误/同拍进出/背压/reset通过；合成压力额外B延迟边界13→23拍，24仍积压FAIL，不据此保证实际DDR吞吐。后续对半显示扩原图槽不能占用已分给第三输出的10MiB。
+- 实际Efinity2026.1.132/I3整机CAD/79脚12Bank/最终原生STA签核PASS：RAM230/256、DSP130/160、XLR55759/60800；setup/hold +0.379/+0.027ns，CNN自身setup+0.501ns，8条DPHY唯一二级链最小+13.541ns。24标量首级、166Gray最大延迟、73实际稳定束(cfg48+起点11+FPS14)、8精确DPHY首级，无整组切断/无依据多周期。peri与旧720版逐字节相同，未改DDR/UI/外部电平。
+- 当前bit路径camera_art_styles/build/camera_fps_rf33_srl_720/outflow/ti60_camera.bit，SHA256 2a288989e1fdf84264a3579f7bd823b5f903aac50f661db0636ffd072cda2398。scripts/fps/signoff.py audit(False)先于离线pgm文件生成，audit(True)及16历史发布指纹复核PASS；signoff/final_review绑定同次源/模型/固件/配置/报告。本轮未上板，新720p真实采集/DDR/CPU/CNN/HDMI并发、画质/FPS/供电温升待测，不宣称整题完成。
+- 当前操作仍启动原画，KEY0–3选四风格，KEY1+KEY2约0.5秒回原图、KEY0+KEY3约1秒复位；原画复制不计I。按键三界面、实际图像手势识别未接本bit，仅独立4秒门控通过。入口docs/rf33_720.md、README、architecture.html及根Ti60_programming_guide同步；旧project_guide明确对应保留12通道版。
+
+## 借鉴47风格的四风格30fps候选（2026-10-30）
+
+- 用户明确要求审阅`style_model/`及其`elinx/`、借鉴47风格约20fps实现并争取四风格30fps。参考工程保持只读；独立实现为`elinx/projects/camera_art_30/`，原RF33/旧12通道模型与bit保留，本轮不自动Git提交/推送、JTAG/串口/Flash访问。
+- 候选复用已训练C8的原槽0/3/4/5（梵高/剪纸/漫画/水墨），本地槽0/1/2/3，四组各1159B、1216B对齐ROM共4864B。没有本轮重训，画质不等同于已认可RF33；实际同源720p/RGB565与软件低光对照在`build/quality/`，说明`docs/model_quality.md`。参考原47组DW/head相同并固化，stem/PW由RISC-V配置；346次兼容事务并不等于全部层可任意动态更新。
+- 摄像头/DDR/输出图像仍1280×720，CNN分支2×2池化后640×360，C8 stem3×3+四组DW/PW(d1/2/4/8)+有符号RGB残差+最近邻放大+原720p RGB旁路。196MAC/原图像素不含halo；不可称每层全720p CNN，也不能直接加载RF33权重。10条核心128/halo32/总宽192，全球偶数池化相位、reflect101及最终B屏障保持。
+- 优化包括PW双context稳态II8、两128bit打包槽与AW/W/B重叠、三输出0/2/10MiB及三源4/6/8MiB、reader晚ACK与两写请求在途。UI100MHz/CNN166.667MHz/DDR PHY400MHz/HDMI720p60不升频、不改引脚电平。参考40.65ms计算再串行等60Hz消隐可能量化为50ms≈20fps，这是代码推断而非独立实测。
+- 发现Efinity2026.1.132对二维数组动态局部写入的实际映射差异：PW结果首像素错，DMA部分W lane被常量0；RTL四完整720p通过仍不足放行。已用固定context/channel及slot/lane唯一写者修复，失败正式源/映射/时序/诊断归档`build/baseline_dynamic/`，没有错误交付bit。根因说明`docs/synthesis_issue.md`。后续同类存储必须验证真实原语数值，不能仅看RTL/DRC/STA。
+- 修复后的四种完整720p RTL/CNN/DMA均各921600像素与独立整数参考误差0，UI周期2818615/2818616/2818619/2818615，100MHz UI与6.002ns CNN模型下最慢35.478367fps；未含真实DDR控制器/摄像头/HDMI并发。实际pool/jobs/reader/FIFO/raster加固定engine耗时模型12个不同30Hz源帧，12完成/12ACK/0跳帧、23完整HDMI帧逐值、0欠载，原画不计I；该测试不是完整CNN SoC或实板30fps。
+- 完整四风格、实际原语核与DMA、按键/APB/Sapphire/三bank/错误排空/保护、79脚12Bank、精确CDC和原生STA须共同通过`build/720p/signoff.json`才允许交付bit。参考/旧bit保持、同字节候选与生产别名须明确验证绑定，不通过只改收据冒充重跑。最新状态与入口见本项目README、architecture.html和docs/performance.md；手势/对半显示仍未集成。
+- 本轮最终Efinity2026.1.132/I3全CAD签核PASS：RAM174/256、DSP100/160、XLR53603/60800，setup/hold +0.309/+0.026ns，8条D-PHY唯一二级链最小+13.778ns。离线生成`camera_art_30/build/720p/outflow/ti60_camera.bit`，SHA256 `18f3fb3ffdd3d55951dfd2d38260dca726f2ba4fb38a61d2a2858b252c817c3f`；输入、14类仿真、参数/固件/ROM、原生STA、原理图及精确SDC重生共同绑定。尚未上板，35.478367为模型吞吐，不能当实板30fps。
+- DMA原语网表使用`build/experiments/*_fixed.sv`编译，和最终生产文件完整字节相等；严格别名审计保留原PASS/当前收据、compiled inputs/map/logs，并限制只能增加规定的alias字段。后续清理须保留这些源、`build/probe_dma/`必要映射证据及`sim/dma_mapped/candidate_verification.json`，否则正确地使fresh audit失效。core256仅独立模型37.5694fps/未采用，16beat突发写仅后续方案/未实现，不擅自升PLL。
+
+## 全720p六通道新网络（2026-10-30）
+
+- 用户明确要求更换轻量网络、减少参数并保持真正720p争取30fps。新独立工程`elinx/projects/camera_full720_30/`，训练在`pycode/full720_style/`；原C8半尺寸分支、RF33、style_model及demo V7/V9不改，本轮不下载/Flash/串口访问或Git提交推送。
+- 实际训练c6_v1共6000步、batch12、96×96训练裁剪、冻结BN和末段QAT；复用固定512张训练划分，用户照片留出，教师只读C8原槽0/3/4/5。学生stem1×1(3→6)、四组DW3×3/PW1×1(d1/2/4/8)、有符号head及逐像素原RGB残差，无池化/下采样/2×2共享；逻辑每层均1280×720、RF31。单风格卷积权重784→396（−49.49%），四风格联合可训练参数747；参数少不代表恢复全尺寸后硬件资源同比下降。
+- 四条各352×720，中央320列+左右16 halo，四条恰输出完整1280×720。全局reflect101、逐层边界、最终B屏障保持。PW双出通道/四上下文，DW三列bank并行三tap；初版地址长链setup−2.251ns保留`build/baseline_pre_pipeline`，用前瞻地址/列bank及行基址寄存流水修复，未提高时钟或用新例外掩盖该路径。
+- 四风格完整720p实际RTL/CNN/DMA均各921600像素与独立整数参考误差0，UI周期2558528/2558528/2558526/2558527，100MHz UI/6.002ns CNN模型下最低39.084974fps（25.58528ms）。此为有界AXI/真实异步FIFO模型，未含真实DDR控制器及摄像头/HDMI完整并发，不称实板30fps。两张留出照片八个完整720p软件整数案例、16极小案例和九隐藏层720×1280形状核对通过；实际画质与C8/RF33不同，对照位于新项目`build/quality/`。
+- 四模型真实EFX原语核24×40各960像素、DMA128×24各3072像素均逐值通过，含背压/三bank/最终B/故障恢复/原图；探针DMA只改模块名和几何，完整文本派生及当前生产源哈希核对。原语日志保留14705/18006个未连接端口告警、0 Error。216配置事务/736B对齐单模型/2944B四组ROM；3272B固件与四boot lane一致，真实Sapphire执行两模型432写入及START/PLIC IRQ通过。检查点重新量化与全部导出逐值一致，不能与346/365/1217事务旧固件混用。
+- Efinity2026.1.132/I3最终CAD/79脚12Bank签核PASS：RAM220/256、DSP142/160、XLR52326/60800；最小setup/hold +0.043/+0.026ns，CNN setup+0.043ns余量较小。UI100MHz、CNN166.667MHz、DDR PHY400MHz、HDMI720p60及整份peri与保留C8一致。24标量首级/166Gray最大延迟/74位稳定束/8精确D-PHY首级，8条唯一二级链最小setup+13.450ns；SDC异地重建一致，不整组切断或无依据多周期。
+- 新bit为`camera_full720_30/build/720p/outflow/ti60_camera.bit`，SHA256 `fe53fe766aa0e6b7c97c63c06aa1d0777b74d68d105e8817cb487f3a9938925b`。17类当前回执、模型/固件/源码/原生STA/电气和当前bit共同绑定，signoff/final_review均PASS，旧C8/RF33及参考源/bit指纹保持。README、architecture、docs/model/implementation/performance/validation与根使用指南同步。启动原图，KEY0–3梵高/剪纸/漫画/水墨，组合键同C8，CAM4/115200；真实整机FPS/画质/实际供电温升仍待上板。
+- Git规则补齐camera_art_30及camera_full720_30的vendor排除，生成学习常量`camera_full720_30/rtl/full_shared_params.sv`也仅留本地；手写RTL/Python/MD/architecture按既有白名单。保留`build/probe*`、全部仿真回执/原始日志/必要网表和初始化文件，清理时不得破坏签核证据。新工程仍不是完整可重建Git归档；实际手势/按键三界面未集成。
+
+## 独立风格重训、主机手势和三界面（2026-10-30）
+
+- 用户要求先减少无用中间文件、重训改善梵高/水墨并处理亮屏观感，加入PC摄像头手势，硬件本轮只加原图/风格/左原右风格。已明确采用KEY0循环界面、KEY1下一风格、KEY2上一风格、KEY3独立长按约1秒复位；不要沿用旧直接四风格键或组合键复位。新工程`elinx/projects/camera_art_interactive`，旧full720/C8/RF33、style_model、demo V7/V9保留。没有授权本轮自动提交/推送、串口/JTAG/Flash访问。
+- 清理先扫描659份JSON签核/来源引用，拒绝广泛动态删除后只处理6个展示并验证不被引用的Questa work编译库，删除2904882486B；源码、旧模型/bit、报告、网表、RAM初始化和回执日志保留，旧full720 fresh audit在清理后PASS。记录新项目`build/cleanup_result.json`，其他候选缓存未批量删除。
+- `pycode/painterly_style`四教师各1600步、学生14000步＋3000步真实折叠整数QAT已完成。每风格C6/RF31/396卷积权重，但DW/head不再共享常量，全部216事务运行时加载，四模型2944B ROM、3272B真实CPU固件；没有2×2池化。使用固定512训练划分，留出用户照片；曝光/gamma/亮屏矩形与水墨纸白约束。最终两张四风格720p软件/QAT/独立int64误差0，实际画质仍有局部纹理和边缘偏重限制，不把教师图当学生或实板效果。
+- 新运行时层首候选61270XLR超限。依据`abs(bias)+255*sum(abs(weight))<2^21`将累加/偏置缩为22位、舍入23位、局部树按数学界限缩窄，不更改图像尺寸或外部时钟/电平。中间trimmed候选58593XLR、CNN setup+0.008ns，余量很小；归档`build/attempt_runtime_trimmed`并解除仅该候选冻结后，最终模型已导出，最终CAD/原语/完整帧回归正在进行。最终仍以同次signoff/final_review均PASS为交付门槛，当前不可用中间结果替代新bit签核。
+- 对半在CNN内部已对齐的原RGB FIFO处按全局x<640合成，RAW与风格来自同源帧同坐标；不新增DDR原图引用或显示读口，因此保留三源/三输出槽。原图模式复制整帧，所有模式等最后DDR B及安全消隐ACK；模式/风格在engine_start锁存、按输出bank关联、commit ACK后才更新前台。小尺寸四风格对半、忙中改变、最终B/故障恢复、12种模式/风格元数据和新按键/KEY3保护已通过，完整最终回归继续。
+- CAM5仍115200/33字段，mode新增请求显示15–16、前台显示17–18、作业显示19–20、前台风格21–22，其余延续CAM4。`pc/camera_view.py`只读。高位style[5]仅在内部现有启动邮箱复用为split标志，低2位模型ID；无新的无握手多位CDC。79脚/12Bank与正确20261012原理图及保留full720的整份peri保持。
+- `pycode/gesture_demo`已从EMEET SmartCam C960 2K采集，用户确认1–4可保持4秒切换PC风格；针对“三只认中间三指”又兼容自然弯拇指的拇指＋食指＋中指，75合成变换/8门控通过，调整后的实际姿势待复测。只在原图/对比采样，t0/1/2/3/4五次新采样证明4完整秒，帧隙>0.4秒/数字不明确/模式暂停清资格；确认后无手0.5秒才再武装。原图确认后仍保持原图，需切视图查看；不要误报无响应。
+- 主机GUI用独立`.venv`和官方MediaPipe Hand Landmarker21点，通过`launch.py`的桌面兼容启动器解决打包进程摄像头COM/DLL查找失败，不改驱动/隐私。停止或关闭窗口释放摄像头；图像不保存或上传，JSON只有诊断计数。GUI已验证旧→最终模型加载与四风格整数输出。它不连接板卡、不发UART命令，不等于FPGA手势实现，PC FPS不能冒充板上FPS。README、architecture及详细模块/工作流说明在新项目，上传范围不放开C/XML/SDC/权重/vendor。
+
+- 交互版最终签核补充：RAM220/256、DSP142/160、XLR58593/60800；setup/hold +0.084/+0.026ns；最低CNN/DMA模型吞吐39.084974fps；四模型完整720p各逐值通过、完整对半帧通过，实际EFX核四模型/实际EFX对半DMA四模型逐值通过，21类最终回执。79脚12Bank、23标量/166Gray/75稳定束/8 D-PHY精确首级及原生STA、同次模型/ROM/3272B固件/源码/bit共同绑定，未提高DDR/UI/外部电平。新bit `camera_art_interactive/build/720p/outflow/ti60_camera.bit` SHA256 `9c6d490b2354fa84202c07772671aea949b5cde4768cc04f959418ec1e26858c`，signoff/fresh final_review均PASS后才交付。README、architecture、模块/模型/验证/性能及根使用指南已更新；未上板，实际持续30fps、画质、供电温升仍待验收。
+
+## 本轮清理与imezpy上传授权（2026-10-30）
+
+- 用户当前明确要求“把不重要的删掉，然后上传到仓库”，本轮允许在既有imezpy提交和推送关键改动；不改main、不扩展固件/模型/工程产物白名单，不代表以后自动推送授权。
+- 本次重新扫描715份JSON/3568绝对引用，仅删除新交互项目20个无引用Questa编译work库，共383文件/1105059808B约1.03GiB。具体目标、路径/reparse/保护扩展名检查及回执在其build/cleanup_repository_20261030_*，模型/bit/配置/IP/实际网表/原始日志/回执保留。tools/cache_inventory.py仅只读盘点，不自动删除。
+- 上传此前未提交的RF33/三bank性能改动、C8/全720/新交互独立工程手写源、Python训练/定点/手势与说明；用户新增demo V9及style_model参考不加入本次提交。补排除三个独立工程继承的生成tiny_shared_params.sv，不将学习常量借RTL扩展名上传。详情docs/repository_sync_20261030.md；清理后对最新交互版重新fresh审核，不重新宣称实板验收。
