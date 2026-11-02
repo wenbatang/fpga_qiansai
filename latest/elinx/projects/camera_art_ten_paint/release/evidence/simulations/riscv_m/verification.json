@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "arithmetic_cases": 16512,
+  "irq_and_advance_cases": 3,
+  "scope": "Python ISA adapter arithmetic and event accounting; real Sapphire verification is separate",
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_riscv_m.py": "be0ec6c5b4564034a11580c6e08ba5e044b52ea187301fbaaf9f5bb27737c771",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\riscv_m.py": "1c59bb795f43506f7bf7b5970b38c69730c7fed74e40d3841a018db64658ff26",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\build\\720p\\ip\\control_soc\\control_soc.v": "651d1a58045f7159a90ccd94b7f8c85e7d151b23142156b90d6c769cb809b933"
+  }
+}

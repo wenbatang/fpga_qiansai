@@ -1,0 +1,149 @@
+\section{系统组成及功能说明}
+\subsection{整体介绍}
+系统由图像数据平面和软件控制平面组成。数据平面连接摄像头、RAW处理、DDR、CNN和HDMI；控制平面由Sapphire RISC-V、APB寄存器、按键和手势状态机构成。\sig{video_system_720}在100MHz UI域组织帧池、作业与DDR仲裁，通过异步FIFO与166.667MHz CNN域、74.25MHz显示域交换数据。摄像头字节时钟来自D-PHY，可能在低功耗期间停止，因此不直接跨域采样多位包头。
+
+\begin{table}[H]\centering\small
+\caption{模块与主要源码对应}
+\begin{tabularx}{\linewidth}{@{}p{.27\linewidth}X@{}}\toprule 功能 & 主要源码\\\midrule
+PPI与CSI解析 & \sig{csi_ppi_bridge_recover.sv}\\
+RAW预处理 & \sig{camera_bayer_720.sv}\newline \sig{camera_pack_720.sv}\\
+源帧与作业管理 & \sig{camera_frame_writer_720.sv}\newline \sig{source_frame_pool.sv}\newline \sig{video_job_control.sv}\\
+分条DMA与跨域 & \sig{video_tile_engine_async.sv}\newline \sig{video_cnn_async.sv}\\
+卷积及参数 & \sig{full_dw3x3.sv}\newline \sig{full_pointwise.sv}\newline \sig{full_parameter_bank.sv}\\
+显示及UI & \sig{frame_reader.sv}\newline \sig{video_raster60.sv}\newline \sig{fps_overlay60.sv}\newline \sig{tmds_hdmi60.sv}\\
+CPU及交互 & \sig{video_control_apb_fast.sv}\newline \sig{style_keys47.sv}\newline \sig{gesture_snapshot.sv}和C固件\\\bottomrule
+\end{tabularx}
+\end{table}
+以下接口表列出主要模块边界，不重复展开全部诊断端口及厂商DDR PHY。方向均相对该节模块；有效/就绪型流仅在valid与ready同时有效时前进，无ready的摄像头输入必须持续接收。
+
+\subsection{硬件系统介绍}
+\subsubsection{平台与电气接口}
+系统采用Ti60F225I3 DemoBoard V4及demo10配套SC431HAI排线模组，沿用板载DDR3、USB串口和HDMI，未增加自制机械或供电结构。板级依据为20261012版原理图\cite{board}；采集参考V7，对照V9的Bayer与数据延迟处理\cite{demo}，未改原demo。
+\begin{table}[H]\centering\small
+\caption{外设连接与电平约束}
+\begin{tabularx}{\linewidth}{@{}p{.22\linewidth}p{.18\linewidth}X@{}}\toprule 接口 & 配置电平 & 连接与实现约束\\\midrule
+MIPI专用RX & 1.2V & Bank2A/2B；配套模组接J4，J2/J3均2--3\\
+摄像头控制 & 3.3V & SCL D12、SDA B14开漏；C12模组RESET高有效\\
+四按键 & 3.3V输入 & KEY0--3依次C4、P14、N14、A3，低有效\\
+板载USB串口 & 3.3V & R4 RX、R14 TX；J8不是UART接线座\\
+DDR3 & 1.5V & 保留原板DDR PHY、终端及OE绑定\\
+HDMI串化侧 & 1.8V & Bank3A，使用现有板级TMDS电路\\\bottomrule
+\end{tabularx}
+\end{table}
+电气签核逐项检查79个实际端口、12组Bank、方向、I/O标准及DDR数据/OE绑定，与CAD时序检查相互独立。用户已确认J4和跳线接法；实际电源电压、连接器状态和温升仍须实板测量，数字审查不代替物理测量。
+
+\subsubsection{摄像头接收与RAW预处理}
+\blocktitle{作用}
+将四lane CSI-2 RAW10包恢复为可发布的RGB565帧。\sig{csi_ppi_bridge_recover}将字节及SoT等状态形成44位记录，经512深异步FIFO送入UI域，保持数据与状态原子对应。解析器检查包头、ECC/CRC、字节数与帧长度，错误帧不发布。
+\begin{porttable}
+四lane PPI字节及状态 & 输入 & 32位数据与各lane有效、同步及SoT，来自D-PHY RX\\
+\sig{vs/hs/valid/raw} & 输出 & 帧、行、样本有效及40位RAW10四样本\\
+\sig{packet_error/overflow} & 输出 & 包错误与FIFO溢出，影响整帧有效性\\
+\sig{frame_start/end/bad} & 输出 & 预处理后边界与坏帧标志，供打包及手势旁路\\
+\sig{pixels[31:0]} & 输出 & 两个RGB565像素，低16位为较早的左像素\\
+\end{porttable}
+传感器配置为1920×1080四lane RAW10，每行2400字节，每五字节恢复四个10位样本。Bayer模块以邻行、邻列插值补齐颜色，再按约$x=\lfloor3u/2\rfloor$、$y=\lfloor3v/2\rfloor$映射形成1280×720全视野输出，RAW高八位量化为RGB565。尺寸变换在CNN之前进行；风格网络内部不再减半分辨率。帧尾排空插值与打包流水，核对像素数，避免漏掉最后一行。
+
+\subsubsection{DDR写入与源帧池}
+\blocktitle{作用}
+将无背压的摄像头像素流与受仲裁影响的DDR分离。128位字由低至高排列8个RGB565像素，行stride为2560B，每帧1843200B，即115200个128位字。写入记录使用17位字索引，避免超过65535字后回绕。
+\begin{porttable}
+\sig{fifo_data[178:0]} & 输入 & 含帧号、字索引、坏帧及独立EOF的像素记录\\
+\sig{allocate/allocation_ack} & 双向 & 写帧前申请空闲bank并获得编号\\
+\sig{AW/W/B} & 双向 & 写地址、128位数据、最终响应；B错误作废本帧\\
+\sig{publish/abort_capture} & 输出 & 发布完整好帧或丢弃，半帧不能成为有效源\\
+\sig{claim/release} & 双向 & 引擎领取并锁住源bank，使用后释放\\
+\end{porttable}
+\sig{source_frame_pool}管理4、6、8MiB三个源bank，轮流承担采集、最新完整帧及引擎锁定帧。一个bank不能同时被覆盖和读取。推理落后时允许新好帧替换未领取旧帧，并显式累计跳过数；持续采集不等于每帧都已经推理。
+
+\subsubsection{作业控制与输出槽}
+\sig{video_job_control}在启动时锁存源帧号、风格及视图，忙中仅保留最新请求，不改变正在计算的身份。三个输出槽位于0、2、10MiB，轮流承担计算、待提交和前台，最多维护两项完整输出队列。
+\begin{porttable}
+\sig{start/style/mode} & 输入 & 本次作业请求；无完整源或无合法权重时拒绝\\
+\sig{engine_busy/done/error} & 输入 & done必须晚于最后DDR B成功响应\\
+\sig{output_bank/source_base} & 输出 & 锁定的目的槽及源地址\\
+\sig{commit/commit_ack} & 双向 & 安全消隐提交与显示确认，ACK后释放旧前台\\
+\end{porttable}
+左原右风格在CNN内已经对齐的原RGB支路上，以全局$x<640$选择原图，右侧选择风格结果，二者来自同一源帧与坐标；不将“最新原图”叠到旧风格帧。每个输出槽保存视图及风格元数据，前台身份只在commit ACK后更新。
+
+\subsubsection{分条DMA与总线仲裁}
+\sig{video_tile_engine_async}将720p拆为四条：每条有效320列，左右各16列halo，实际输入352×720。四条各输出320×720，拼回完整921600像素。halo只提供邻域，不作为重复像素发布；边界按全局图像坐标作reflect101处理。
+\begin{porttable}
+\sig{clk/fast_clk/reset} & 输入 & UI100MHz与CNN166.667MHz，原子FIFO及握手跨域\\
+\sig{start/style/raw_mode} & 输入 & 作业启动与模式标志，启动时锁存\\
+\sig{cfg_valid/address/data} & 输入 & 配置写入；由cfg\_ready反馈接收状态\\
+\sig{AR/R}\newline \sig{AW/W/B} & 双向 & 30位字节地址、128位数据，核对响应和RLAST\\
+\sig{busy/done/error/cycles} & 输出 & 作业状态与UI域周期计数\\
+\end{porttable}
+引擎采用突发读，两组128位写打包槽重叠拼包和AXI事务。读仲裁优先响应同时请求的显示读取，授予事务保持至RLAST。写信用由真实B响应释放，不以W通道完成代替DDR写完成。背压期间保持地址、数据与valid，异常响应不先写入有效显示FIFO再报错。
+
+\subsubsection{CNN卷积与参数存储}
+\sig{full_dw3x3}执行六通道独立3×3膨胀卷积，多行缓存保存历史，列地址分为三个bank，内部位置并行读取三tap。反射边界遇到bank冲突时用第二读阶段补齐，再进入乘加，不复制整份历史以增加端口。\sig{full_pointwise}执行1×1投影、通道混合与有符号输出头，采用两输出通道lane、四像素上下文重叠计算。context标签随流水传递，按接收顺序退休，保持像素顺序。
+\begin{porttable}
+\sig{in_data/valid/ready} & 双向 & DW输入48位六通道uint8；PW依CIN参数确定\\
+\sig{in_skip/in_inside} & 输入 & 同像素残差及全局有效区域标志\\
+\sig{out_data/valid/ready} & 双向 & 中间六通道uint8；head为三个有符号16位值\\
+\sig{origin_x/start} & 输入 & 条带全局横向原点和初始化，决定图像边界\\
+\sig{cfg_valid/address/data} & 输入 & 权重、偏置、逐通道移位的原子配置\\
+\end{porttable}
+\sig{full_parameter_bank}按layer、kind、item选中参数，检查范围与装载顺序。十组风格只保留一个活动工作集，共用计算核。增加风格主要增加ROM和目录，仍有存储与控制开销，不能说风格数完全不影响资源。
+
+\subsubsection{HDMI与统计叠加}
+\sig{frame_reader}读取已提交输出槽，经FIFO送入像素域。\sig{video_raster60}以74.25MHz产生1650×750总周期、1280×720有效区的720p60时序；RGB、DE和同步按一致延迟送入TMDS编码与串化。
+\begin{porttable}
+\sig{front_base/commit} & 输入 & 完整前台地址与换帧请求，只在安全窗口采纳\\
+\sig{AR/R} & 双向 & DDR显示读取，检查响应后才接收像素\\
+\sig{rgb/hsync/vsync/de} & 输出 & RGB888、同步及有效区，像素域对齐\\
+\sig{captured/inferred} & 输入 & 好采集帧及神经作业完成计数，按UI时基取差\\
+\sig{tmds_data/clock} & 输出 & 由现有接口资源串化至板级TMDS通道\\
+\end{porttable}
+\sig{fps_snapshot}以稳定toggle邮箱将C/I、手势进度和风格送到像素域，收到ACK前不改变数据。I仅统计完成的神经作业，原图拷贝和重复刷新不计推理FPS。KEY3关闭文字和青框，不改变RAW/SPLIT的识别资格。
+
+\subsubsection{时钟复位与CDC}
+各域在时钟稳定后同步释放复位；PLL失锁或DDR校准失效使数据流退出运行，不继续信任旧源帧。单比特用同步器/toggle，像素流用异步FIFO，多位配置和状态用稳定束握手。
+最终约束保留23组标量首级例外、166条Gray最大延迟约束、87位稳定数据束及8条精确D-PHY首级例外。八个D-PHY首级仅连接对应二级，最小级间setup余量+13.391ns。未用整组异步时钟切断隐藏关系；旧CSI5.15元数据争议路径已不在当前公开PPI解析方案中。
+
+\subsection{软件系统介绍}
+\subsubsection{RISC-V固件与APB控制}
+Sapphire RV32IM程序运行于32KB片内RAM，当前固件10588B，BSS结束于\sig{0xF90071AC}，栈余3668B。CPU负责控制，整幅像素由DMA经AXI访问DDR。
+固件先检查处理器能力，经开漏I\textsuperscript{2}C读取\sig{0x3107/0x3108}，确认预期ID \sig{CD6B}，再写摄像头配置并读回尺寸、VTS等。无应答、ID错误或配置失败时关闭采集、复位模组、释放I\textsuperscript{2}C并禁止CNN启动。
+\begin{table}[H]\centering\small
+\caption{APB主控制接口，基址\sig{0xF8100000}}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}X@{}}\toprule 偏移 & 用途\\\midrule
+\sig{0x04/0x08} & 采集/复位/UI控制及busy、源帧、权重状态\\
+\sig{0x0C/0x10} & sticky中断W1C及中断屏蔽\\
+\sig{0x28/0x2C/0x30} & 请求风格、加载身份、clear/commit/START\\
+\sig{0x50/0x54/0x58} & 配置地址、数据和确认事务数\\
+\sig{0x80--0xBC} & 手势快照状态、seq/epoch及原子风格请求\\
+\sig{0x2000--0x3FFC} & 2048个32位RGB565双样本词，只读\\
+\sig{0x4000--0x5CBF} & 十组学习参数ROM，10×736B\\\bottomrule
+\end{tabularx}
+\end{table}
+每组由CPU发出216项配置，等待CNN接收后计数，地址、事务与身份都正确才commit。加载目标与后来按键请求分开保存，不能把尚未加载的请求当成当前权重。引擎结束通过PLIC IRQ16通知CPU，启动及完成与完整帧所有权关联。
+
+\subsubsection{按键与手势模块}
+四键经两级同步和约10ms消抖。KEY0循环原图、风格图、左右对比；KEY1/KEY2下一/上一风格；KEY3按下一次切换UI，长按只翻转一次。KEY1+KEY2长按约1秒进入或退出学习，学习时KEY0录入，KEY1/KEY2选择标签。
+\sig{gesture_snapshot}从原图左侧$x=0\ldots639$、$y=40\ldots679$旁路采样，每10像素取一处，得到64×64 RGB565、8192B快照。REQUEST后等待新SOF、4096样本及好EOF才ready，CPU多次扫描期间不覆写，读完再ACK。seq、epoch和0.6秒源龄拒绝重复及过期数据。
+当前分类需要3帧空背景和每类4份本人模板。补偿整体亮度后保留最大连通前景，规范化并提取64维HOG、64维灰度、64维轮廓，比较镜像距离并拒绝不明确结果。它不设固定R大于G的肤色门，但仍不是通用手部检测器。
+约333ms一张快照，三张多数投票形成约1秒决定；至少5次同类新决定且完整4秒才原子提交。RAW确认后自动切STYLE，SPLIT确认后保持对比。STYLE暂停识别，返回RAW/SPLIT可继续。同一手势持续保持不重复触发，不同数字重新满足确认窗口。
+
+\begin{table}[H]\centering\small
+\caption{用户手形与十风格顺序，原风格编号依次为0、2、3、4、34、7、9、15、31、40}
+\begin{tabularx}{\linewidth}{@{}clX@{}}\toprule 数字 & 风格 & 手形\\\midrule
+0 & 梵高旋涡厚涂 & 五指弯曲围成O形\\
+1 & 浮世绘海浪 & 食指\\
+2 & 彩色剪纸 & 食指、中指\\
+3 & 复古漫画 & 中指、无名指、小指\\
+4 & 竹林水墨 & 除拇指外四指\\
+5 & 阿什维尔抽象 & 五指张开\\
+6 & 形体对比 & 拇指、小指\\
+7 & 蒙德里安几何 & 拇指、食指、小指\\
+8 & 彩色马赛克 & 拇指、食指\\
+9 & 雨夜厚涂 & 食指弯钩\\\bottomrule
+\end{tabularx}
+\end{table}
+模板断电丢失。通用免本人录入模型已试训，但人员留出结果和第7/9类不足，未装入当前bit，不能称已经通用识别0--9。
+
+\subsubsection{PC训练与诊断工具}
+PC离线完成教师引导、QAT、参数导出、整数参考及报告图生成，运行时不为摄像头链路提供推理。CAM7串口为115200、8N1、33个HEX32字段，输出采集、作业、快照与错误状态；它们是观察值，不代替原子握手。
+\sig{latest}整理模型、参数、固件、工程配置和bit，原目录保留历史签核。先核对器件和bit指纹，再下载当前交付件；修改模型或重建后，重新做相应数值、时序、电气审查，不沿用旧PASS。

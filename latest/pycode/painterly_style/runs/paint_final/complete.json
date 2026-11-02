@@ -1,0 +1,15 @@
+{
+  "step": 17000,
+  "hardware_qat": true,
+  "source_hashes": {
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\train.py": "fccd2618216cacfa84b36f2fd5b7931779e79f1e82bf3d817784c4d827b6d0fd",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\network.py": "cf26d3b1ffc0d5be8a776e57bd9b17f80355fe9b4c3edce37d25f5168619432f",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\network.py": "76e489ed56d679519ec2056d711dee89d4540603eed36b1bac1a7c0206c4ce78",
+    "F:\\fpga_qiansai\\pycode\\style_network.py": "ae545b8a1ed7d716ca03137dbc3b5180554fb6b29259f822c1c96c6bd3092db9",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\train.py": "dd6da0fb9e8733c68a641df98b42d51286a745a06b8436d6c8b3311434207007",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\refine.py": "8d6b011599890875b99f680b8fdfd911020df1781ef46ab0dd1322e0f25d0d10",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\hardware_qat.py": "0810aad50f5cba7fd924c5728f0491e472c77acec0ea05c94d670bc3482cdad3",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\integer.py": "8f4c7eaf65bea6f16097f9b004943b7d2fe7660a74f81482853740fdaeb8a118",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_v1\\model.pt": "158f5371453d619349b5a4c4901cba13c44308b132cdf679e865159453dc4976"
+  }
+}

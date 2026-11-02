@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "steps": 12000,
+  "visits": [
+    3693,
+    923,
+    923,
+    923,
+    923,
+    923,
+    923,
+    923,
+    923,
+    923
+  ],
+  "elapsed_seconds": 428.00868330000003,
+  "source_hashes": {
+    "F:\\fpga_qiansai\\pycode\\ten_style\\retrain_painterly_v2.py": "104d646817e510f8998300b43383b4872ec556a45b34f89c97fc29e1ef7b825d",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\network.py": "3814cd49f653838db011e1bd572980c22aa428c01172bddd3c074cae3e0e0ee4",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\hardware_qat.py": "876d692e89e931a210a95d44c69a8576be36c314f43c9eabc4645020354cab88",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\integer.py": "f70ca1c5c54b27b5b08fa23d53b680d756ec3708255b0ef4cc3b7015782c57e4",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\train.py": "dc025a07038bdf365e626f361164e390b2cd11c38709c4a7b85fe5d9e6005886",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\teacher_integer.py": "7bd903f329fdbb69bdf20a9567479c6dd2d84e66b6c0543701373bd775353803",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\catalog.py": "addddd970bfa8d4a1831a5167f789d3f6a8530f5a08b5455557a5cb44bfcd084",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\network.py": "76e489ed56d679519ec2056d711dee89d4540603eed36b1bac1a7c0206c4ce78",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\train.py": "dd6da0fb9e8733c68a641df98b42d51286a745a06b8436d6c8b3311434207007",
+    "F:\\fpga_qiansai\\pycode\\style_network.py": "ae545b8a1ed7d716ca03137dbc3b5180554fb6b29259f822c1c96c6bd3092db9",
+    "C:\\Users\\wenbatang\\.cache\\torch\\hub\\checkpoints\\vgg19-dcbb9e9d.pth": "dcbb9e9dad569fff7a846263a77324fc34978fea2bfb039c012d710e1776ae44",
+    "runs\\ten_painterly_probe_v1\\model.pt": "fe4cc31e9b57fe39b6d09d60bb6a3d37575a9db0cb6257e698c9d7277a238e81",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_final\\model.pt": "eabf60bcff71f5c3df007361a5c265cd51bec0b05bcbd36dc2303480e4cde834",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\runs\\ten_c6_v2\\split.json": "f52831e26cfaab121e85ea3190b53ef13bc1fffed39faa26899675ee7eaabe4e"
+  },
+  "reference_hashes": {
+    "F:\\fpga_qiansai\\pycode\\styles\\art6_v1\\vangogh.jpg": "cad32acc6f2e6cb48cb7d6b96ff0734287f1d484fbfd360d82dd8acbafcf62b4",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_v1\\teachers\\vangogh\\model.pt": "942a8cf01c2a927b260a60e844ed04cb5362b80d406afb21511aa9623b499912",
+    "F:\\fpga_qiansai\\style_model\\styles\\ukiyoe.jpg": "2a0419e4fa32a678cd9a5a5fb38666d97b15504441fa0b752b3d471a803f83df",
+    "F:\\fpga_qiansai\\pycode\\styles\\art6_v1\\papercut.jpg": "c578dca0c5e65405873c3f611d72db9e22264701eca62f5135f69f4ef04ab243",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_v1\\teachers\\papercut\\model.pt": "f7fb8318089317d3fe42860218356b8c9a9db6f33019c03199437cc9eb768bd8",
+    "F:\\fpga_qiansai\\pycode\\styles\\art6_v1\\comic.jpg": "9beacd295a044f0fd23225e4cb392c15d217fa578e4df10e7b9f6f62f05ecf22",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_v1\\teachers\\comic\\model.pt": "47318a6be8a7df432e14f3ad8f64ef02050c7f97e87a4a5830dd519a43356025",
+    "F:\\fpga_qiansai\\pycode\\styles\\art6_v1\\inkwash.jpg": "3f58f1e85856cc0802852c56eccf30f2020c16837c7510174ba9bf6daaad8429",
+    "F:\\fpga_qiansai\\pycode\\painterly_style\\runs\\paint_v1\\teachers\\inkwash\\model.pt": "db000af54fd2a73b537f5e70f3b5bae652c381c0d4ed4c3fde8023234f1f9e76",
+    "F:\\fpga_qiansai\\style_model\\styles\\asheville.jpg": "087e406c3bb7f1d9d0fe7801f58fc4a9e15c4aaab7abbbb23b8d0e7f2b53f333",
+    "F:\\fpga_qiansai\\style_model\\styles\\contrast_of_forms.jpg": "24dbd2171f6f63c74d19ea39595f29f8e3ed45015582f0bd0afb0ff0833db678",
+    "F:\\fpga_qiansai\\style_model\\styles\\mondrian.jpg": "5d100763ccaf69abf3ccd0dbdcf6d6669e841618dd3a3410d09a85ac0324b149",
+    "F:\\fpga_qiansai\\style_model\\styles\\mosaic.jpg": "7a61f1ab8f17e38b43dab92aa8c0de5b8c8982719cb0b5b5fb5e45f1bf00a516",
+    "F:\\fpga_qiansai\\style_model\\styles\\misty_mood_leonid_afremov.jpg": "f784ccad3a72eea2f322ea16e51e4214720fba7a350ef012eefe123f812f9ea5"
+  }
+}

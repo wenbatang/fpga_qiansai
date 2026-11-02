@@ -1,0 +1,177 @@
+{
+  "slot": 5,
+  "gesture": 5,
+  "source_id": 7,
+  "name": "asheville",
+  "label": "阿什维尔抽象",
+  "architecture": "full_c6",
+  "full_resolution": true,
+  "weights": 396,
+  "bytes": 712,
+  "stride_bytes": 736,
+  "config_writes": 216,
+  "layers": [
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        3,
+        1,
+        1
+      ],
+      "weight_bytes": 18,
+      "weight_padded": 20,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 93790
+    },
+    {
+      "d": 1,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 144910
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 73238
+    },
+    {
+      "d": 2,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 158435
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 119483
+    },
+    {
+      "d": 4,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 117833
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 75760
+    },
+    {
+      "d": 8,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 174529
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 70499
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": true,
+      "shape": [
+        3,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 18,
+      "weight_padded": 20,
+      "channels": 3,
+      "shift_padded": 4,
+      "bound": 80888
+    }
+  ],
+  "npz_sha256": "04215fd6d762ad130c5f71efc8c63f437080d5390ef69dafb5233b3b5b6f8d21",
+  "bin_sha256": "0df4c85e1d51186afca169ff221ddec3b62653f1ad12c322ebc02f7de4fc102c"
+}

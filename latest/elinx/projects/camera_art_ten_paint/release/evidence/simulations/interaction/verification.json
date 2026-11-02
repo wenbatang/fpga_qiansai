@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "metadata_cases": 30,
+  "glyph_pixels": 1190,
+  "scope": "Actual keys/optional calibration chord/capture/mailbox/overlay RTL and literal production metadata block; completion/reader ACK modeled, not full system or actual DDR",
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\interaction\\tb.sv": "857e6a1f97360fcc3fb1c9b3c356bffa6895efe623bee2730b828b4dae40138f",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\interaction\\frame_state.sv": "2bb68d2afbf4dd57380037e51cee937c5cc9338ca32fcaf45cba4910ee2a8f58",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\style_keys47.sv": "b59aa9c94dec8c12f8134fc4e961e7a443d123b82ea7ac69831058bd660a5bea",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\fps_snapshot.sv": "fbf42862dd4981315c6bb613bf35af9b1c0f69a6cb5d9f52859f2bb9e6d35951",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\hdmi60\\fps_overlay60.sv": "4d5a77e342b70535d3ea8474a4b481499542e86eb4503083be8e72adc1d6dddc",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\p720\\video_system_720.sv": "9b0f27d27cfc399cc6d0a105666669c5458b721b4a3f950931981a572af5803f",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_interaction.py": "6970276cd1412b524d1e0f72db0a91319f907ae1f65278b4c2b8181d2a95d174",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\scripts\\simutil.py": "a875d771ef400fc5b24d3c00b75718a7086ba904372fb8647aba0a89f90cbe29"
+  },
+  "logs_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\interaction\\vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\interaction\\vlog.log": "f86183d258ae2a21d9faacee05125ff3685b70d8fa9344f8fe6dcc69f89fd17b",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\interaction\\vsim.log": "eb2679c88453d8efeb0b729528cefeb2e538144c78d4598ad0bf02c5af516428"
+  }
+}

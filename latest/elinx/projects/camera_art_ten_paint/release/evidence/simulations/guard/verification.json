@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "scope": "Actual keys+snapshot+controller guarded APB commit and real debounced KEY0 timing; no image/CPU/physical board acceptance",
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\guard\\tb.sv": "157c59da5f66372433b691db40fcd0b24a789f54fb2bb6c58099a4ef73366cc0",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\style_keys47.sv": "b59aa9c94dec8c12f8134fc4e961e7a443d123b82ea7ac69831058bd660a5bea",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\gesture_snapshot.sv": "a88e1f20b813aa9178e89788230f70329eccef3d3b4d57ce4326f6d43aa95fa1",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\p720\\video_control_apb_fast.sv": "b6ceee39d9692635de9b9c4b3b36cab7c981fcbc527c914b55dcd1de7c19745c",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_guard.py": "07cd6aa63039d066efd817452350d1795024ad682f4c20a48eb1e2da21349f01",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\scripts\\simutil.py": "a875d771ef400fc5b24d3c00b75718a7086ba904372fb8647aba0a89f90cbe29",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\guard\\weights.mem": "da69679bf527e527593a2a0ce67ace40bf75c95eea0d5e2a7b785a98a793e17a"
+  },
+  "logs_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\guard\\vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\guard\\vlog.log": "9d7bbb8014751ec84bba089b62630339922b5c136f36374d4560cfc497b1973c",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\guard\\vsim.log": "f04c2a91efd6bd7556986c6d447ea4fd1da43ef042b4df848ff011570c887663"
+  }
+}

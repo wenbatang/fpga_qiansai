@@ -1,0 +1,177 @@
+{
+  "slot": 9,
+  "gesture": 9,
+  "source_id": 40,
+  "name": "misty_mood_leonid_afremov",
+  "label": "雨夜厚涂",
+  "architecture": "full_c6",
+  "full_resolution": true,
+  "weights": 396,
+  "bytes": 712,
+  "stride_bytes": 736,
+  "config_writes": 216,
+  "layers": [
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        3,
+        1,
+        1
+      ],
+      "weight_bytes": 18,
+      "weight_padded": 20,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 79908
+    },
+    {
+      "d": 1,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 144910
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 105837
+    },
+    {
+      "d": 2,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 158410
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 104733
+    },
+    {
+      "d": 4,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 132464
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 122368
+    },
+    {
+      "d": 8,
+      "groups": 6,
+      "signed": false,
+      "shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "weight_bytes": 54,
+      "weight_padded": 56,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 180129
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "shape": [
+        6,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 36,
+      "weight_padded": 36,
+      "channels": 6,
+      "shift_padded": 8,
+      "bound": 60181
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": true,
+      "shape": [
+        3,
+        6,
+        1,
+        1
+      ],
+      "weight_bytes": 18,
+      "weight_padded": 20,
+      "channels": 3,
+      "shift_padded": 4,
+      "bound": 105459
+    }
+  ],
+  "npz_sha256": "2003971ef7b94a0caff9caf235aaedc66babf0bb00b1c5b58fe76aa3e7999d18",
+  "bin_sha256": "eee9581a4697aac66b4220721c2f066a3655ba9c76f23f93255916b34993ee4e"
+}

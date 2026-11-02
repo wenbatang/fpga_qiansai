@@ -1,0 +1,20 @@
+[
+  {
+    "name": "mona_lisa",
+    "page": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+    "path": "baogao\\assets\\source\\mona_lisa.jpg",
+    "bytes": 94310471,
+    "sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de",
+    "rights": "Public-domain artwork / PD-Art per Wikimedia Commons file page"
+  },
+  {
+    "name": "pearl_earring",
+    "page": "https://commons.wikimedia.org/wiki/File:Girl_with_a_Pearl_Earring.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Girl_with_a_Pearl_Earring.jpg",
+    "path": "baogao\\assets\\source\\pearl_earring.jpg",
+    "bytes": 2922649,
+    "sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc",
+    "rights": "Public-domain artwork / PD-Art per Wikimedia Commons file page"
+  }
+]

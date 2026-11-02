@@ -1,0 +1,396 @@
+{
+  "slot": 3,
+  "name": "papercut",
+  "label": "彩色剪纸",
+  "architecture": "c8",
+  "checkpoint_sha256": "3b02bfd7722beebf1829a7b30b668207ae113e3f54a5ca29f4aa5a081ffceee0",
+  "npz_sha256": "713e74e5d27b2c5fde6fd229dcb135a5dea668224adbb3102c84c4308081933a",
+  "bin_sha256": "9112a684410e1a4329e66cde403aa9323554e4c2464f21333741b2fcaf166863",
+  "bytes": 1159,
+  "layers": [
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "bound": 285985,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            3,
+            3,
+            3
+          ],
+          "offset": 0,
+          "bytes": 216
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 216,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 248,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 8,
+      "signed": false,
+      "bound": 153607,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "offset": 256,
+          "bytes": 72
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 328,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 360,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "bound": 77178,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            8,
+            1,
+            1
+          ],
+          "offset": 368,
+          "bytes": 64
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 432,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 464,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 2,
+      "groups": 8,
+      "signed": false,
+      "bound": 185494,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "offset": 472,
+          "bytes": 72
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 544,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 576,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "bound": 165569,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            8,
+            1,
+            1
+          ],
+          "offset": 584,
+          "bytes": 64
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 648,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 680,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 4,
+      "groups": 8,
+      "signed": false,
+      "bound": 131006,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "offset": 688,
+          "bytes": 72
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 760,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 792,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "bound": 116868,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            8,
+            1,
+            1
+          ],
+          "offset": 800,
+          "bytes": 64
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 864,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 896,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 8,
+      "groups": 8,
+      "signed": false,
+      "bound": 155581,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "offset": 904,
+          "bytes": 72
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 976,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 1008,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": false,
+      "bound": 73291,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            8,
+            8,
+            1,
+            1
+          ],
+          "offset": 1016,
+          "bytes": 64
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            8
+          ],
+          "offset": 1080,
+          "bytes": 32
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            8
+          ],
+          "offset": 1112,
+          "bytes": 8
+        }
+      ]
+    },
+    {
+      "d": 1,
+      "groups": 1,
+      "signed": true,
+      "bound": 125123,
+      "fields": [
+        {
+          "field": "w",
+          "dtype": "i1",
+          "shape": [
+            3,
+            8,
+            1,
+            1
+          ],
+          "offset": 1120,
+          "bytes": 24
+        },
+        {
+          "field": "b",
+          "dtype": "<i4",
+          "shape": [
+            3
+          ],
+          "offset": 1144,
+          "bytes": 12
+        },
+        {
+          "field": "shift",
+          "dtype": "u1",
+          "shape": [
+            3
+          ],
+          "offset": 1156,
+          "bytes": 3
+        }
+      ]
+    }
+  ],
+  "padding": "reflect101; edge when axis<=dilation",
+  "rounding": "floor((acc+2^(shift-1))/2^shift)",
+  "input": "RGB uint8; hidden uint8=6/255; signed head delta=1/255",
+  "not_old_bitstream_compatible": true
+}

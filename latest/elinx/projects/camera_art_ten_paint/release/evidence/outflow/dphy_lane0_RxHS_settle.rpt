@@ -1,0 +1,70 @@
+
+Efinix report_timing Report
+Version: 2026.1.132
+Date: Mon Nov  2 21:31:43 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+User command: report_timing -from {inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF} -npaths 200 -nworst 1 -file {dphy_lane0_RxHS_settle.rpt}
+
+Timing Model: I3
+	process : typical
+	temperature : -40C to 100C
+	voltage : 0.95 +/-30mV
+	speedgrade : 3
+	technology : t16ff
+	status : final
+
+Summary:
+
+ Path #  | Slack(ns) |                                          Start Pin                                          |                                          End Pin                                          |      Launch Clock      |     Capture Clock
+================================================================================================================================================================================================================================================================
+ 1       |  12.955   | inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF|CLK | inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_2P~FF|D | i_cam_ck_CLKOUT (RISE) | i_cam_ck_CLKOUT (RISE)
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack           : 12.955 ns (required time - arrival time)                                                   
+Path Start      : inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF|CLK
+Path End        : inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_2P~FF|D  
+Launch Clock    : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                      
+Capture Clock   : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                      
+Path Type       : Max at Slow Process Corner                                                                 
+Data Path Delay : 0.784 ns                                                                                   
+Logic Levels    : 0                                                                                          
+
+Launch Clock Path Delay        : 2.488
++ Clock To Q + Data Path Delay : 0.784
+--------------------------------------
+End-of-path arrival time       : 3.272
+
+Constraint                     : 14.286
++ Capture Clock Path Delay     :  2.070
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 16.227
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                       Netlist Resource(s)
+===============================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                            
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                            
+             net (fo=359)    2.362        2.488     i_cam_ck_CLKOUT                                                                            
+ (43,316)    EFX_FF          0.000        2.488     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                      Netlist Resource(s)
+=============================================================================================================================================
+  (43,316)   EFX_FF (Tco)    0.168        0.168     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF|Q
+             net (fo=1)      0.616        0.784     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P     
+  (36,305)   EFX_FF          0.000        0.784     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_2P~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                       Netlist Resource(s)
+=================================================================================================================================================
+ (110,323)   input              0.000       0.000     i_cam_ck_CLKOUT                                                                            
+ (110,323)   input              0.126       0.126     i_cam_ck_CLKOUT                                                                            
+             net (fo=359)       1.944       2.070     i_cam_ck_CLKOUT                                                                            
+ (36,305)    EFX_FF             0.000       2.070     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_2P~FF|CLK
+ (36,305)    EFX_FF (Setup)    -0.003       2.067     inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_2P~FF    
+

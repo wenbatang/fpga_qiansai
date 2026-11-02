@@ -1,0 +1,39 @@
+WARNING: cannot find correct IV value
+Running: E:/software/efinity\bin\efx_sta.exe --prj F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\ti60_camera.xml -t F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\inspect_dphy.tcl -- --circuit ti60_camera --family Titanium --device Ti60F225 --operating_conditions I3 --vdb_file outflow\ti60_camera.vdb --use_vdb_file on --prj F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\ti60_camera.xml --output_dir outflow --work_dir work_pnr --place_file outflow\ti60_camera.place --route_file outflow\ti60_camera.route --sync_file outflow\ti60_camera.interface.csv --generate_prevpr_netlist off --sdc_file=ti60_camera.sdc
+INFO     : Reading project database "F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\ti60_camera.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 4 [FlowMsg::MaxThreads]
+INFO     : SDC file 'ti60_camera.sdc' parsed successfully.
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Router Setup
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing trace digest: 17033483457068230873
+INFO     : Successfully reloaded trace from trace file
+INFO     : SDC file 'ti60_camera.sdc' parsed successfully.
+           
+INFO     : Evaluating user specified Tcl script "F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\inspect_dphy.tcl" [FlowMsg::EvaluatingTclScript]
+INFO     : Write timing paths report to "outflow\final_dphy_lane0_RxHS_settle.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane0_RxStopState.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane1_RxHS_settle.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane1_RxStopState.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane2_RxHS_settle.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane2_RxStopState.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane3_RxHS_settle.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_lane3_RxStopState.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_byte_to_core.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : Write timing paths report to "outflow\final_dphy_core_to_byte.rpt" ...
+INFO     : Done printing reported timing result
+INFO     : The entire flow of EFX_STA took 50.3400353 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_STA took 52.09375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_STA virtual memory usage: begin = 19.956 MB, end = 628.728 MB, delta = 608.772 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_STA peak virtual memory usage = 632.92 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_STA resident set memory usage: begin = 22.508 MB, end = 626.468 MB, delta = 603.96 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_STA peak resident set memory usage = 630.072 MB [FlowMsg::RSSUsage::Peak]

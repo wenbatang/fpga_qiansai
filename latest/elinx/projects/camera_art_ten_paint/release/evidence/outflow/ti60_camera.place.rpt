@@ -1,0 +1,53 @@
+
+Elitestek FPGA Placement and Routing.
+Version: 2026.1.132 
+Date: Mon Nov  2 21:31:47 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+ 
+Family: Titanium 
+Device: Ti60F225
+Top-level Entity Name: ti60_camera
+
+---------- IO Interface Summary (begin) ----------
+
++------------------------+--------------+
+| Missing Interface Pins | Input/Output |
++------------------------+--------------+
+|        uart_rx         |    Input     |
++------------------------+--------------+
+
+----------- IO Interface Summary (end) ----------
+
+
+---------- Module Resource Usage Distribution Estimates (begin) ----------
+
+'Module Resource Usage Distribution Estimates' table printed in: outflow\ti60_camera.hier_util.rpt
+
+----------- Module Resource Usage Distribution Estimates (end) ----------
+
+Elapsed time for packing: 0 hours 0 minutes 2 seconds
+---------- Resource Summary (begin) ----------
+Inputs: 104 / 1703 (6.11%)
+Outputs: 253 / 2267 (11.16%)
+Global Clocks (GBUF): 12 / 32 (37.50%)
+Regional Clocks (RBUF): 1 / 32 (3.12%)
+	RBUF: Core: 0 / 16 (0.00%)
+	RBUF: Periphery: 1 / 8 (12.50%)
+	RBUF: Multi-Region: 0 / 8 (0.00%)
+XLRs: 59011 / 60800 (97.06%)
+	XLRs needed for LUT4: 25193 / 60800 (41.44%)
+	XLRs needed for LUT4 + FF: 7707 / 60800 (12.68%)
+	XLRs needed for COMB4: 0 / 60800 (0.00%)
+	XLRs needed for COMB4 + FF: 0 / 60800 (0.00%)
+	XLRs needed for Adder: 3034 / 60800 (4.99%)
+	XLRs needed for Adder + FF: 4000 / 60800 (6.58%)
+	XLRs needed for SRL8: 1082 / 14720 (7.35%)
+	XLRs needed for SRL8 + FF: 0 / 14720 (0.00%)
+	XLRs needed for FF: 17995 / 60800 (29.60%)
+	XLRs needed for Routing: 0 / 60800 (0.00%)
+Memory Blocks: 230 / 256 (89.84%)
+DSP Blocks: 142 / 160 (88.75%)
+---------- Resource Summary (end) ----------
+
+Elapsed time for placement: 0 hours 2 minutes 4 seconds

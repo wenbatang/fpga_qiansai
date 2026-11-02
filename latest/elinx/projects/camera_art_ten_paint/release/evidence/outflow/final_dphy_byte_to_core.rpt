@@ -1,0 +1,512 @@
+
+Efinix report_timing Report
+Version: 2026.1.132
+Date: Mon Nov  2 21:37:14 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+User command: report_timing -from_clock i_cam_ck_CLKOUT -to_clock core_clk -npaths 2000 -nworst 1 -file {final_dphy_byte_to_core.rpt}
+
+Timing Model: I3
+	process : typical
+	temperature : -40C to 100C
+	voltage : 0.95 +/-30mV
+	speedgrade : 3
+	technology : t16ff
+	status : final
+
+Summary:
+
+ Path #  | Slack(ns) |                                    Start Pin                                    |                                         End Pin                                          |      Launch Clock      |  Capture Clock
+============================================================================================================================================================================================================================================
+  1      |  9.054    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[3]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][3]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  2      |  9.169    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[0]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][0]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  3      |  9.268    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[4]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][4]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  4      |  9.290    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[2]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][2]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  5      |  9.348    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[6]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][6]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  6      |  9.356    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[1]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][1]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  7      |  9.356    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[5]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][5]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  8      |  9.356    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[7]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][7]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+  9      |  9.356    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[9]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][9]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+ 10      |  9.362    | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[8]~FF|CLK | bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][8]~FF|D | i_cam_ck_CLKOUT (RISE) | core_clk (RISE)
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.054 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[3]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][3]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.651 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.651
+--------------------------------------
+End-of-path arrival time       : 2.721
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (113,301)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[3]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (113,301)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[3]~FF|Q           
+             net (fo=1)      0.521        0.651     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[3]                
+ (121,288)   EFX_FF          0.000        0.651     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][3]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (121,288)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][3]~FF|CLK
+ (121,288)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][3]~FF    
+
+++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.169 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[0]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][0]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.536 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.536
+--------------------------------------
+End-of-path arrival time       : 2.606
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,289)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[0]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,289)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[0]~FF|Q           
+             net (fo=1)      0.406        0.536     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[0]                
+ (146,295)   EFX_FF          0.000        0.536     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][0]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (146,295)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][0]~FF|CLK
+ (146,295)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][0]~FF    
+
+++++ Path 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.268 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[4]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][4]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.437 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.437
+--------------------------------------
+End-of-path arrival time       : 2.507
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,292)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[4]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,292)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[4]~FF|Q           
+             net (fo=1)      0.307        0.437     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[4]                
+ (153,285)   EFX_FF          0.000        0.437     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][4]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,285)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][4]~FF|CLK
+ (153,285)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][4]~FF    
+
+++++ Path 4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.290 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[2]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][2]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.415 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.415
+--------------------------------------
+End-of-path arrival time       : 2.485
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (139,288)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[2]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (139,288)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[2]~FF|Q           
+             net (fo=1)      0.285        0.415     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[2]                
+ (144,286)   EFX_FF          0.000        0.415     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][2]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (144,286)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][2]~FF|CLK
+ (144,286)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][2]~FF    
+
+++++ Path 5 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.348 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[6]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][6]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.357 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.357
+--------------------------------------
+End-of-path arrival time       : 2.427
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,299)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[6]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,299)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[6]~FF|Q           
+             net (fo=1)      0.227        0.357     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[6]                
+ (153,294)   EFX_FF          0.000        0.357     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][6]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,294)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][6]~FF|CLK
+ (153,294)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][6]~FF    
+
+++++ Path 6 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.356 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[1]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][1]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.349 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.349
+--------------------------------------
+End-of-path arrival time       : 2.419
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,301)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[1]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,301)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[1]~FF|Q           
+             net (fo=1)      0.219        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[1]                
+ (153,301)   EFX_FF          0.000        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][1]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,301)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][1]~FF|CLK
+ (153,301)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][1]~FF    
+
+++++ Path 7 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.356 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[5]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][5]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.349 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.349
+--------------------------------------
+End-of-path arrival time       : 2.419
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,313)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[5]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,313)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[5]~FF|Q           
+             net (fo=1)      0.219        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[5]                
+ (153,313)   EFX_FF          0.000        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][5]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,313)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][5]~FF|CLK
+ (153,313)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][5]~FF    
+
+++++ Path 8 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.356 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[7]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][7]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.349 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.349
+--------------------------------------
+End-of-path arrival time       : 2.419
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,309)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[7]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,309)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[7]~FF|Q           
+             net (fo=1)      0.219        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[7]                
+ (153,309)   EFX_FF          0.000        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][7]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,309)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][7]~FF|CLK
+ (153,309)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][7]~FF    
+
+++++ Path 9 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.356 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[9]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][9]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.349 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.349
+--------------------------------------
+End-of-path arrival time       : 2.419
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (148,315)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[9]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (148,315)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[9]~FF|Q           
+             net (fo=1)      0.219        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[9]                
+ (153,315)   EFX_FF          0.000        0.349     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][9]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (153,315)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][9]~FF|CLK
+ (153,315)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][9]~FF    
+
+++++ Path 10 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Slack            : 9.362 ns (required time - arrival time)                                                 
+Path Start       : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[8]~FF|CLK         
+Path End         : bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][8]~FF|D
+Launch Clock     : i_cam_ck_CLKOUT {rise@0.000 ns fall@7.143 ns period=14.286 ns} (RISE)                   
+Capture Clock    : core_clk {rise@0.000 ns fall@5.000 ns period=10.000 ns} (RISE)                          
+Path Type        : Max at Slow Process Corner                                                              
+Data Path Delay  : 0.343 ns                                                                                
+Logic Levels     : 0                                                                                       
+Timing Exception : Max Delay Path 9.800 ns                                                                 
+
+Launch Clock Path Delay        : 2.070
++ Clock To Q + Data Path Delay : 0.343
+--------------------------------------
+End-of-path arrival time       : 2.413
+
+Constraint                     :  9.800
++ Capture Clock Path Delay     :  2.104
+- Clock Uncertainty            :  0.126
+- Setup                        :  0.003
+---------------------------------------
+End-of-path required time      : 11.775
+
+Launch Clock Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                 Netlist Resource(s)
+===================================================================================================================================
+ (110,323)   input           0.000        0.000     i_cam_ck_CLKOUT                                                                
+ (110,323)   input           0.126        0.126     i_cam_ck_CLKOUT                                                                
+             net (fo=359)    1.944        2.070     i_cam_ck_CLKOUT                                                                
+ (113,307)   EFX_FF          0.000        2.070     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[8]~FF|CLK
+
+Data Path
+  Location    Delay Type    Incr(ns)     Path(ns)                                     Netlist Resource(s)
+============================================================================================================================================
+ (113,307)   EFX_FF (Tco)    0.130        0.130     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[8]~FF|Q           
+             net (fo=1)      0.213        0.343     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.waddr_cntr_gry_r[8]                
+ (118,307)   EFX_FF          0.000        0.343     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][8]~FF|D
+
+Capture Clock Path
+  Location     Delay Type     Incr(ns)     Path(ns)                                      Netlist Resource(s)
+================================================================================================================================================
+ (0,162)     input              0.000       0.000     core_clk                                                                                  
+ (0,162)     input              0.126       0.126     core_clk                                                                                  
+             net (fo=12811)     1.978       2.104     core_clk                                                                                  
+ (118,307)   EFX_FF             0.000       2.104     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][8]~FF|CLK
+ (118,307)   EFX_FF (Setup)    -0.003       2.101     bridge/ppi_fifo/u_efx_fifo_top/xefx_fifo_ctl/genblk7.wr2rd_addr_sync/pipe_reg[0][8]~FF    
+

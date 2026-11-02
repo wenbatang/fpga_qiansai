@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "auto_switch": true,
+  "ui_toggle": true,
+  "scope": "Actual video_system/control/keys/snapshot/UI/boot wiring. Image transport black boxes, front metadata and image timing forced; not full camera SoC.",
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\ui_system\\tb.sv": "6fd2c8986ea37b38a06ba416b9444fba001369883f0e7ee185a2a7889068a39b",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\p720\\video_system_720.sv": "9b0f27d27cfc399cc6d0a105666669c5458b721b4a3f950931981a572af5803f",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\p720\\video_control_apb_fast.sv": "b6ceee39d9692635de9b9c4b3b36cab7c981fcbc527c914b55dcd1de7c19745c",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\style_keys47.sv": "b59aa9c94dec8c12f8134fc4e961e7a443d123b82ea7ac69831058bd660a5bea",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\gesture_snapshot.sv": "a88e1f20b813aa9178e89788230f70329eccef3d3b4d57ce4326f6d43aa95fa1",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\board_boot.sv": "8d400c89f0005f617eaf5413ea3fa7982a87d750cb16c7fdfd7508fd535794f4",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\fps_snapshot.sv": "fbf42862dd4981315c6bb613bf35af9b1c0f69a6cb5d9f52859f2bb9e6d35951",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\rtl\\hdmi60\\fps_overlay60.sv": "4d5a77e342b70535d3ea8474a4b481499542e86eb4503083be8e72adc1d6dddc",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_ui_system.py": "3a4c6eb04a40e1bf91ecfc0b2fb683b2c258343eb9559628b4e567c606719d26",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\scripts\\simutil.py": "a875d771ef400fc5b24d3c00b75718a7086ba904372fb8647aba0a89f90cbe29"
+  },
+  "logs_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\ui_system\\compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\ui_system\\vsim.log": "8fdfe19a62022fba8ed4d67c85a6f1f8a035d7ab38765ddf2c465614953c787c"
+  }
+}

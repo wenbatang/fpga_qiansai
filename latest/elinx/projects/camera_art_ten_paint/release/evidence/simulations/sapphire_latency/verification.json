@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "classification_ui_cycles": 3209746,
+  "clock_hz": 100000000,
+  "classification_ms": 32.09746,
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_sapphire_latency.py": "3cf166f456fadb607c2b5b459e14a19e21663fdaa2b4eb2d9e62815806830888",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\latency.c": "6d8dbcb4d7c2d604f6406a490583a2c4bce0393aead020bc27433ae9fb9e730a",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_calibrated.c": "61a3559eace831691d50223c579821a69257d696bc5db4a39dc42ab0ae972400",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\start.S": "3e43cbd6bc2547e01a93c65ecc39fd7cb9fd8f68ec11830c1d0b788aa0773495",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\link.ld": "36a245a6eaa80cff659921c14a2b4aefcd3d87958f2ecd58df53d924014420cc",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\build\\720p\\ip\\control_soc\\Testbench\\modelsim\\control_soc.v": "a81f0a010446295c07ff6542efcf1fea290d1d34c84e72086f37b79c0d53a3f0",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin": "4df0b5d7643a561ef27a939730bcb769d7935dbe94d0122c9044dd0afe95c058",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin": "7127d2f39c54fca58e260283965c9fe828bdbd955f689c77d7dae0a9c66f7e8a",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin": "10be00cd67a999b4c886ab1c12065c381d4070ddc77a4a2a1f088b2a53b9364a",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin": "5d49fd377f7fc59642c0ac13f916a2b971b861d32acf12040e9fb1105fb07a8e",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\latency.bin": "a5afb4adf603c88203598983ff46c83c61c139b2f95efc9ba2a54c5f38158a61",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\pixels.mem": "b19a7fbc6c9fefa2e0ffe06b5ccc2c7cbc8d2ed7de3acc94ed11e7b2c4d99524",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\tb.sv": "808840eece2c682443ec03d2c369dc849038b95cae5facdffacbff8937ffa87e"
+  },
+  "logs_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\compile.log": "8bc2a91f53c765304e63b2feb04f430747626ee3305d9fecee29a18c2823bc0a",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\objcopy.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\vlib.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\vlog.log": "ad17753492a1d93711c22dbfe23e39c3022de12b1974809483c568266c3c72af",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\sapphire_latency\\vsim.log": "ae484e0372c720e16d325a0e4504976489e526dc10c6e66463eb6dba4ef86fff"
+  },
+  "scope": "Actual Sapphire cycle measurement for one synthetic fist; standalone timing firmware prepares other-class prototypes explicitly. Not production boot/enrollment proof, worst-case latency, real-camera accuracy or board FPS."
+}

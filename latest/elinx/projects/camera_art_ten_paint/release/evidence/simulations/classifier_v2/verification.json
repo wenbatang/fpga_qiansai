@@ -1,0 +1,2499 @@
+{
+  "result": "PASS",
+  "calls": [
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -2,
+      "metrics": {
+        "foreground_count": 0,
+        "mean_rgb": 0,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 1
+      }
+    },
+    {
+      "operation": "background",
+      "args": [
+        1
+      ],
+      "result": -2,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        0
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        1
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        2
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        0
+      ],
+      "result": -1,
+      "metrics": {
+        "foreground_count": 0,
+        "mean_rgb": 527368,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 2
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        1
+      ],
+      "result": -2,
+      "metrics": {
+        "foreground_count": 0,
+        "mean_rgb": 0,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 5
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -2,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 4
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 589,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 5,
+        "margin": 21,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 725773,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 1384726,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 1,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 13,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 1,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 660236,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 13,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 1,
+      "metrics": {
+        "foreground_count": 484,
+        "mean_rgb": 594186,
+        "threshold": 6,
+        "best_distance": 2,
+        "margin": 9,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 1,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 659980,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 13,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 1,
+      "metrics": {
+        "foreground_count": 697,
+        "mean_rgb": 1318677,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 13,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 2,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 2,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 2,
+      "metrics": {
+        "foreground_count": 572,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 3,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 2,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 725773,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 2,
+      "metrics": {
+        "foreground_count": 830,
+        "mean_rgb": 1384726,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 651,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 3,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 1384983,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 4,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 12,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 4,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792591,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 12,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 4,
+      "metrics": {
+        "foreground_count": 870,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 4,
+        "margin": 9,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 4,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 792079,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 12,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 4,
+      "metrics": {
+        "foreground_count": 1207,
+        "mean_rgb": 1516825,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 12,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 5,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 26,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 5,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 858383,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 26,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 5,
+      "metrics": {
+        "foreground_count": 935,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 6,
+        "margin": 24,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 5,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 857871,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 26,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 5,
+      "metrics": {
+        "foreground_count": 1301,
+        "mean_rgb": 1517082,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 26,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 6,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 27,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 6,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 27,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 6,
+      "metrics": {
+        "foreground_count": 623,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 7,
+        "margin": 19,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 6,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 725773,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 27,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 6,
+      "metrics": {
+        "foreground_count": 885,
+        "mean_rgb": 1384727,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 27,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 7,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 7,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 7,
+      "metrics": {
+        "foreground_count": 642,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 5,
+        "margin": 19,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 7,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 726029,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 7,
+      "metrics": {
+        "foreground_count": 914,
+        "mean_rgb": 1384983,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 25,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 8,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 28,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 8,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 28,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 8,
+      "metrics": {
+        "foreground_count": 619,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 4,
+        "margin": 24,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 8,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 725773,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 28,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 8,
+      "metrics": {
+        "foreground_count": 856,
+        "mean_rgb": 1384726,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 28,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 9,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 15,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 9,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 15,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 9,
+      "metrics": {
+        "foreground_count": 624,
+        "mean_rgb": 659979,
+        "threshold": 6,
+        "best_distance": 7,
+        "margin": 12,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 9,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 725773,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 15,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 9,
+      "metrics": {
+        "foreground_count": 883,
+        "mean_rgb": 1384727,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 15,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -1,
+      "metrics": {
+        "foreground_count": 0,
+        "mean_rgb": 527368,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 2
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -1,
+      "metrics": {
+        "foreground_count": 0,
+        "mean_rgb": 1054736,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 2
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -2,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 4
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": 3,
+      "metrics": {
+        "foreground_count": 948,
+        "mean_rgb": 726541,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 5,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "background",
+      "args": [
+        0
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        1
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        2
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        0,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        1,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        2,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        3,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        4,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        5,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        6,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        7,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        8,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        0
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        1
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        2
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "template",
+      "args": [
+        9,
+        3
+      ],
+      "result": 0,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 65535,
+        "margin": 0,
+        "reason": 0
+      }
+    },
+    {
+      "operation": "predict",
+      "args": [],
+      "result": -2,
+      "metrics": {
+        "foreground_count": 848,
+        "mean_rgb": 726285,
+        "threshold": 6,
+        "best_distance": 0,
+        "margin": 0,
+        "reason": 7
+      }
+    },
+    {
+      "operation": "background",
+      "args": [
+        0
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        0
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        1
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        2
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        0
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        1
+      ],
+      "result": 0,
+      "metrics": null
+    },
+    {
+      "operation": "background",
+      "args": [
+        2
+      ],
+      "result": 0,
+      "metrics": null
+    }
+  ],
+  "predictions": [
+    {
+      "digit": 0,
+      "variant": "same",
+      "result": 0
+    },
+    {
+      "digit": 0,
+      "variant": "shift",
+      "result": 0
+    },
+    {
+      "digit": 0,
+      "variant": "small",
+      "result": 0
+    },
+    {
+      "digit": 0,
+      "variant": "green_dark",
+      "result": 0
+    },
+    {
+      "digit": 0,
+      "variant": "brighter_bg",
+      "result": 0
+    },
+    {
+      "digit": 1,
+      "variant": "same",
+      "result": 1
+    },
+    {
+      "digit": 1,
+      "variant": "shift",
+      "result": 1
+    },
+    {
+      "digit": 1,
+      "variant": "small",
+      "result": 1
+    },
+    {
+      "digit": 1,
+      "variant": "green_dark",
+      "result": 1
+    },
+    {
+      "digit": 1,
+      "variant": "brighter_bg",
+      "result": 1
+    },
+    {
+      "digit": 2,
+      "variant": "same",
+      "result": 2
+    },
+    {
+      "digit": 2,
+      "variant": "shift",
+      "result": 2
+    },
+    {
+      "digit": 2,
+      "variant": "small",
+      "result": 2
+    },
+    {
+      "digit": 2,
+      "variant": "green_dark",
+      "result": 2
+    },
+    {
+      "digit": 2,
+      "variant": "brighter_bg",
+      "result": 2
+    },
+    {
+      "digit": 3,
+      "variant": "same",
+      "result": 3
+    },
+    {
+      "digit": 3,
+      "variant": "shift",
+      "result": 3
+    },
+    {
+      "digit": 3,
+      "variant": "small",
+      "result": 3
+    },
+    {
+      "digit": 3,
+      "variant": "green_dark",
+      "result": 3
+    },
+    {
+      "digit": 3,
+      "variant": "brighter_bg",
+      "result": 3
+    },
+    {
+      "digit": 4,
+      "variant": "same",
+      "result": 4
+    },
+    {
+      "digit": 4,
+      "variant": "shift",
+      "result": 4
+    },
+    {
+      "digit": 4,
+      "variant": "small",
+      "result": 4
+    },
+    {
+      "digit": 4,
+      "variant": "green_dark",
+      "result": 4
+    },
+    {
+      "digit": 4,
+      "variant": "brighter_bg",
+      "result": 4
+    },
+    {
+      "digit": 5,
+      "variant": "same",
+      "result": 5
+    },
+    {
+      "digit": 5,
+      "variant": "shift",
+      "result": 5
+    },
+    {
+      "digit": 5,
+      "variant": "small",
+      "result": 5
+    },
+    {
+      "digit": 5,
+      "variant": "green_dark",
+      "result": 5
+    },
+    {
+      "digit": 5,
+      "variant": "brighter_bg",
+      "result": 5
+    },
+    {
+      "digit": 6,
+      "variant": "same",
+      "result": 6
+    },
+    {
+      "digit": 6,
+      "variant": "shift",
+      "result": 6
+    },
+    {
+      "digit": 6,
+      "variant": "small",
+      "result": 6
+    },
+    {
+      "digit": 6,
+      "variant": "green_dark",
+      "result": 6
+    },
+    {
+      "digit": 6,
+      "variant": "brighter_bg",
+      "result": 6
+    },
+    {
+      "digit": 7,
+      "variant": "same",
+      "result": 7
+    },
+    {
+      "digit": 7,
+      "variant": "shift",
+      "result": 7
+    },
+    {
+      "digit": 7,
+      "variant": "small",
+      "result": 7
+    },
+    {
+      "digit": 7,
+      "variant": "green_dark",
+      "result": 7
+    },
+    {
+      "digit": 7,
+      "variant": "brighter_bg",
+      "result": 7
+    },
+    {
+      "digit": 8,
+      "variant": "same",
+      "result": 8
+    },
+    {
+      "digit": 8,
+      "variant": "shift",
+      "result": 8
+    },
+    {
+      "digit": 8,
+      "variant": "small",
+      "result": 8
+    },
+    {
+      "digit": 8,
+      "variant": "green_dark",
+      "result": 8
+    },
+    {
+      "digit": 8,
+      "variant": "brighter_bg",
+      "result": 8
+    },
+    {
+      "digit": 9,
+      "variant": "same",
+      "result": 9
+    },
+    {
+      "digit": 9,
+      "variant": "shift",
+      "result": 9
+    },
+    {
+      "digit": 9,
+      "variant": "small",
+      "result": 9
+    },
+    {
+      "digit": 9,
+      "variant": "green_dark",
+      "result": 9
+    },
+    {
+      "digit": 9,
+      "variant": "brighter_bg",
+      "result": 9
+    }
+  ],
+  "feature_values_equal": 26496,
+  "canonical_values_equal": 565248,
+  "target_text_bytes": 4680,
+  "target_data_bytes": 0,
+  "target_bss_bytes": 18404,
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_calibrated.c": "61a3559eace831691d50223c579821a69257d696bc5db4a39dc42ab0ae972400",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_classifier_v2.py": "c834a46dcab7b5cce3b8036b1dc769131f64d65b3b58eed8646d4128d35888b5",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\gesture_reference.py": "49bf134531c002bd3148073d725c9e202d98ddfefb1f73e6468a053acda73ff2",
+    "F:\\fpga_qiansai\\pycode\\gesture_digits\\calibrated_reference\\check_calibrated.py": "5a0230ac3c02937c15ab632f5c7a709bac83bf04805ab329cb965762a059be11",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\classifier_v2\\wrapper.c": "4ab59ddd8e75425b22df788bcf06f2def2fc658fc9cd89ff97a539c589b8bc82"
+  },
+  "scope": "Optional supervised prototype candidate, synthetic silhouettes/colors and exact C/Python integer equivalence; not real SC431HAI accuracy, full linked RAM usage or board acceptance"
+}

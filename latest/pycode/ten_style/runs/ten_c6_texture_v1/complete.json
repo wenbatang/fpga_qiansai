@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "steps": 3000,
+  "model_step": 14000,
+  "elapsed_seconds": 99.32429760000014,
+  "source_hashes": {
+    "F:\\fpga_qiansai\\pycode\\ten_style\\train.py": "dc025a07038bdf365e626f361164e390b2cd11c38709c4a7b85fe5d9e6005886",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\network.py": "3814cd49f653838db011e1bd572980c22aa428c01172bddd3c074cae3e0e0ee4",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\hardware_qat.py": "876d692e89e931a210a95d44c69a8576be36c314f43c9eabc4645020354cab88",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\integer.py": "f70ca1c5c54b27b5b08fa23d53b680d756ec3708255b0ef4cc3b7015782c57e4",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\teacher_integer.py": "7bd903f329fdbb69bdf20a9567479c6dd2d84e66b6c0543701373bd775353803",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\catalog.py": "addddd970bfa8d4a1831a5167f789d3f6a8530f5a08b5455557a5cb44bfcd084",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\network.py": "76e489ed56d679519ec2056d711dee89d4540603eed36b1bac1a7c0206c4ce78",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\runs\\c6_v1\\model.pt": "6db3f9d1fd7b812745477ec88a3110d203473a04c48a1458b93696719edeb127",
+    "F:\\fpga_qiansai\\pycode\\full720_style\\runs\\c6_v1\\split.json": "f52831e26cfaab121e85ea3190b53ef13bc1fffed39faa26899675ee7eaabe4e",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\runs\\ten_c6_v2\\model.pt": "c0a044cc15d16b10cd9827cb659a7c65b8e529044c8be4f994254c0dcbf38be4",
+    "F:\\fpga_qiansai\\pycode\\ten_style\\refine_texture.py": "1916a88eb2e1f91e59a6eb4c8e9b98f4fbd0ab8db69b65dba86a82537274c46c",
+    "C:\\Users\\wenbatang\\.cache\\torch\\hub\\checkpoints\\vgg19-dcbb9e9d.pth": "dcbb9e9dad569fff7a846263a77324fc34978fea2bfb039c012d710e1776ae44"
+  }
+}

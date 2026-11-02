@@ -391,3 +391,88 @@
 - 用户当前明确要求“把不重要的删掉，然后上传到仓库”，本轮允许在既有imezpy提交和推送关键改动；不改main、不扩展固件/模型/工程产物白名单，不代表以后自动推送授权。
 - 本次重新扫描715份JSON/3568绝对引用，仅删除新交互项目20个无引用Questa编译work库，共383文件/1105059808B约1.03GiB。具体目标、路径/reparse/保护扩展名检查及回执在其build/cleanup_repository_20261030_*，模型/bit/配置/IP/实际网表/原始日志/回执保留。tools/cache_inventory.py仅只读盘点，不自动删除。
 - 上传此前未提交的RF33/三bank性能改动、C8/全720/新交互独立工程手写源、Python训练/定点/手势与说明；用户新增demo V9及style_model参考不加入本次提交。补排除三个独立工程继承的生成tiny_shared_params.sv，不将学习常量借RTL扩展名上传。详情docs/repository_sync_20261030.md；清理后对最新交互版重新fresh审核，不重新宣称实板验收。
+
+## SC431HAI板载自主手势集成（2026-11-01）
+
+- 用户明确选择板载SC431HAI自主识别、不依赖电脑。新独立`elinx/projects/camera_art_gesture`基于已签核camera_art_interactive；旧项目/bit/四组学习参数、demo V7/V9及style_model保持。本轮不自动Git提交/推送，不访问串口/JTAG或写Flash。
+- FPGA从原720p RGB565旁路提取左侧固定(64,96)/512×512 ROI，每8像素取中心，得到64×64二值肤色掩码；不降低风格CNN尺寸、不增加DDR图像读流或反压摄像头。完整SOF/好EOF/4096样本才发布，单CPU所有权、128×uint32只读，ready期间不覆写，模式/手动epoch使旧快照失效。
+- RISC-V实际C做去孤立点、最大连通区、掌心距离变换和掌心外分支计数，1–4对应梵高/剪纸/漫画/水墨，三支持拇指＋食指＋中指和食中无名指；五指/不明确拒绝。它是固定ROI、直立分指、简单背景和较好光照下的几何试用版，不是MediaPipe网络移植；肤色物体/脸/偏绿/暗场/旋转可能影响，实际混淆矩阵与误触率未验证，不能称通用手部检测完成。
+- 目标约5Hz新报告、完整4秒资格、报告间隙>0.6秒/姿势失效/显示epoch改变清资格，确认后无手≥0.5秒重武装。CPU记录请求时间（早于曝光），读取前及分类后均要求请求年龄≤0.6秒，未请求/重复/旧ready不能补满窗口。只在实际RAW/SPLIT且无待切显示时启用。手势只写requested_style，不绕过真实CPU权重216项加载/ACK/START；KEY1/2从当前请求槽循环，KEY0三界面、KEY3独立长按复位保留。
+- 新APB0x80状态/0x84序号/0x88epoch/0x8C请求1释放2/0x90候选窗口锁定/0x94分类周期，0x2000–0x21FC为512B掩码；同UI100MHz，读前后核对epoch/ready/序号。5820B真实固件、BSS后剩13572B栈余量；4份boot byte lane及IP副本匹配。实际Sapphire单个中国式三2248813 UI周期≈22.49ms，含一次完成中断；不是所有手势最坏值或实板用时。
+- 屏幕保留C/I/H60并新增G编号/P完整秒窗口；进度扩展已有原子邮箱、消隐更新，静态青框只跨两级标量可见性。首次严格检查发现4bit字符索引使第16号P数字回绕，失败候选归档attempt_progress_index4，未生成bit；改5bit后175个P0–P4字形像素通过，再重新完整CAD。不得把CDC端点数改小来掩盖未使用信号。
+- 新9类验证包括完整720p快照全部128字、CPU持有/坏帧/取消、实际EFX原语RAM、C7基本＋72镜像平移轮廓、12个保持/过期/回绕场景、实际RV32机器码、真实Sapphire分类中断、当前槽按键/原子显示/字形与实际顶层开漏/PLL/停钟/复位保护。输入为明确合成/模型，不是完整真实摄像头SoC验收；旧21类数值证据仅继承逐字节未变算子并核对全部旧输入/日志/报告/bit，不冒充新整机重跑。
+- 最终Efinity2026.1.132/I3签核PASS：RAM222/256、DSP142/160、XLR59122/60800，setup/hold +0.031/+0.026ns余量较小；8条D-PHY唯一二级链最小+13.545ns，24标量首级/166Gray最大延迟/81稳定束/8精确D-PHY首级。整份peri、79脚12Bank、电平与旧交互版一致，UI100MHz/CNN166.667MHz/DDR400MHz/HDMI720p60保持；无整组异步切断/无依据多周期。
+- 新bit为`camera_art_gesture/build/720p/outflow/ti60_camera.bit`，SHA256 `1845f0a18e0684ef4450fbf99dde097d73b317f0aece82d5c5922d01c1ad7e1b`，signoff/fresh final_review均PASS。README、architecture、docs/gesture.md和根使用指南已同步；C仍按既有白名单只留本地。实际手部识别率/背景光照适应性、整机FPS与模拟供电/电流/温升仍待上板，不宣称整题验收或物理零风险。
+
+## 板载手势绿偏修复（2026-11-01）
+
+- 用户实测旧手势版有青框、照亮仍G0/P0，并确认摄像头偏绿。旧硬件R>G/R-G>8会拒绝G≥R的手部颜色；颜色回归复现这一敏感条件，但没有实际ROI，不能认定现场仅此根因。独立新建`elinx/projects/camera_art_gesture_fix`，旧gesture/interactive/模型/bit/demo保持；未自动提交推送或访问串口/JTAG/Flash。
+- 新快照保留64×64 RGB565共8KB、2048只读APB字（0x2000..0x3FFC，低16位左样本），ROI仍x64..575/y96..607、每8像素取中心；不在FPGA提前做肤色丢弃。完整4096样本/好EOF发布、CPU持有、epoch/源龄核验保持，修复SOF同拍REQUEST被覆盖。
+- CPU流式建立三个512B掩码：原严格档、中度G≤4R/3、较强G≤8R/5；后两档需R-B≥12/G-B≥4/chroma≥20且最低亮度。依次选通过原几何的最窄档；这是未实拍标定的工程阈值，不是自动白平衡、MediaPipe或通用网络，不改变主画面色彩。修复禁用超过约21.47秒后有符号deadline比较导致返回RAW不立即取样、pending无ready超时取消、清资格后陈旧G/P显示。
+- CAM6仍115200/33字段/304B，前24和末mode定义保留；24–31改为快照seq/CPU报告/reason和profile/strict-wide命中/面积半径枝数/RGB均值/CPU周期/epoch-samples-ready状态。各观察寄存器分次写，串口只对采样瞬间原子，不保证seq与几何来自同次报告，不能用于逐帧数值对照；四秒资格不依赖这些诊断。PC工具兼容CAM5/6及--line离线解析，无发送命令。
+- 新11类回归要求包含颜色全ROI/实际EFX RAM映射、C几何与216个RGB565合成链路/65536旧规则等价/512灰绿/7原因分支、72镜像平移、22保持/超时/长暂停/回绕、实际RV32、真实Sapphire、按键/显示字形、顶层保护与608字节UART逐位。单绿偏中国式三的真实Sapphire分类3963428 UI周期约39.63ms，不是最坏耗时或实板识别率；6856B固件、BSS后11508B栈余量。
+- 主神经网络/132参数文件/weight ROM、采集配置/DDR/PLL保持，整份peri及79脚12Bank逐项复核。新增架构和接口原因说明见该项目README/architecture.html/docs/gesture_fix.md；最终bit仍须同次原生STA、精确CDC、电气、11回执与fresh签核，初次CNN setup−0.153ns仅归档，不作为交付。本轮真实准确率/整机FPS/电源温升未验收。
+- 最终修正版同次Efinity2026.1.132/I3签核及fresh复查PASS：RAM227/256、DSP142/160、XLR58697/60800、setup/hold +0.079/+0.026ns，8唯一D-PHY二级链最小+13.622ns；24标量/166Gray/81束/8精确首级，未改时钟/电平。11类回执含实际RAM全2048字（265原语未连接端口告警、0错误）与608字节UART逐位、84解析自测。新bit3174909B，`camera_art_gesture_fix/build/720p/outflow/ti60_camera.bit` SHA256 `09adab80ee5ecddf723635273dc422db0a5d04452b1af1099f3c42fdf9ffc910`。旧CNN数值/吞吐仅继承同字节算子；没有实板识别率或30fps新证据，未下载/固化/推送。
+
+## 十风格与0–9板上录入（2026-11-01）
+
+- 用户要求十风格和十手势两项都做；源风格按`style_model`的`[0,2,3,4,34,7,9,15,31,40]`依次映射本地slot/手势0–9：梵高、浮世绘、剪纸、漫画、竹林水墨、阿什维尔、形体对比、蒙德里安、马赛克、雨夜厚涂。中国单手数字已确认：0握拳，1–5数指，6拇小、7捏合、8拇食、9弯钩。新工程`elinx/projects/camera_art_ten`保留全部旧bit/模型，参考`style_model`和demo不改；不自动Git提交推送、下载或写Flash。
+- 用户两条真实CAM6已保存在新项目`build/board_log_20261101`：快照完整且CPU持续报告，strict/wide均0，RGB均值31/56/37及30/55/36，reason1；未捕获P4时刻，两条均requested/loaded/front slot0，不能据此认定P4具体根因。旧肤色门槛仍不适配现场；新手势不再以R>G等肤色关系为前置条件。
+- `pycode/ten_style`最终texture_v1实际8000浮点+6000硬件QAT，总14000步，十组独立C6/RF31/396卷积权重；固定512训练/24留出，34用户照片排除。20完整720p软件案例为两照片×十模型，独立int64/GPU整数/折叠QAT误差0，另40极小例及10层全720形状通过。最终较初版增强线条/笔触，仍简化部分C8细密纹理，不称原作/实板画质已验收。参数712有效B/736stride/216事务，每组全部DW/PW/head运行时加载，ROM7360B；22位界210951、含舍入211463，零裁剪。
+- 生产仍真正1280×720、无池化/半尺寸还原，UI100MHz/CNN166.667MHz/HDMI720p60保持，十模型共用一个计算核心。ROM改APB0x4000–0x5CBF，避免8KB ROI0x2000–0x3FFC重叠；本地槽4bit，元数据与bank关联，S只显示前台已提交风格。十模型小尺寸RTL和实际EFX核/DMA逐值，完整slot9 SPLIT921600像素/2558528UI/模型39.084974fps，不能当十种完整SoC或实板FPS。
+- `pycode/gesture_digits`固定公开作者commit并按205原图组拆分，不把同源增强图混入train/test；源10确认为握拳重映射0，原0是OK圈剔除。多轮MLP/CNN/背景合成/stride2留出准确率不合格，保留FAIL，不用于生产自动风格选择。数值C/整数一致不等于真实准确率。生产仅include`gesture_calibrated.c`，为需本人录入的监督原型分类器，不称免校准神经手部网络。
+- 可选学习：KEY1+KEY2消抖长按1秒，进出学习并回RAW；L-时空框按KEY0自动三张BG，再L0–L9各按一次KEY0收三张新姿势，KEY1/2可选标签。学习时KEY0不切界面，普通时三界面/下一/上一/KEY3长按复位保持。30模板全录才允许自动选择；模板只在CPU RAM，断电/KEY3清除，不写Flash。背景差分/中位数亮度补偿/规范化+256特征，10×3原型距/间隔拒绝。需静止机位、相近姿势和背景，前景不宜占青框大半；本人真实准确率待测。
+- 正常每秒一次新图，至少五次同类报告且完整四秒才确认；数字0有效，nohand=-1/ambiguous=-2，code0显示横杠/code1–10显示0–9。源龄0.6秒、报告看门狗1.6秒，seen_seq独立记录，重复帧不补窗口；RAM读完所有扫描后才ACK，失效BG重置/当前类restart避免污染校准。确认后空框约1–2秒才重武装。S与P4分别表示前台提交和请求接受。
+- 原子提交修复软件检查后按键竞态：snapshot 0xBC写分类epoch、0xB8写slot/读结果；组合APB ACCESS在同UI edge验证token/enable/cancel/learning，control同edge消费guard_event，manual key优先。KEY0 mode_event与更新同edge组合输出；learn/capture也为UI strobes，长按只在真正消抖释放重武装，毛刺不重发。拒绝guard不发布P4/active，reason86；B4为学习/录入sticky W1C，事件赢clear。cpu_status11位中learning10独立保持，disable/cancel清低10资格，reset全清。
+- CAM7仍115200/33字段/304B，末mode中loaded/requested各4bit、front_style4bit，CPU状态[31:21]；学习位31，code0不是数字0。profile254解释前景/噪声阈/距离/间隔，public NN profile255不启用。G/P或L/A及S通过同稳定邮箱消隐更新，24标量/166Gray/87束/8精确DPHY首级。79脚12Bank/完整peri/DDR/MIPI/电平保持。原Sapphire已有M插件，新编译RV32IM，在启摄像头前检查misa与乘除自检；不升级或改CPU IP。
+- 当前9004B固件、BSS后4948B栈余量；真实Sapphire执行十模型2160参数、380次ROM byte reads及21次PLIC/W1C、167sensor写通过，手势MMIO/图像引擎为模型。21类新回执加软件/模型追溯/校准参考三个外部门槛，包含18个实际C工作流/13门控和原子race、EFX guard/ROI/ROM、十模型数值、原画/对半/错误排空、按键与顶层保护。旧数字链证据仅用于逐字节未变算子。
+- 新README/architecture.html/docs/project.md同步；build/sim/vendor/C/模型本地保留，额外排除两新训练目录runs/results与gesture数据克隆，不改变上传白名单。当前整机资源RAM230/DSP142/XLR59124，最终原生STA/精确CDC/fresh签核和bit指纹以本项目最后记录为准；未上板、未测实际FPS或物理供电温升。
+- 最终十风格/板上校准版签核及fresh复查PASS：RAM230/256、DSP142/160、FF29720/LUT32987/XLR59124，最小setup/hold +0.133/+0.026ns（CNN自身+0.151ns），8条唯一D-PHY二级链最小+13.392ns；24标量/166Gray/87束/8精确首级及SDC异地重建一致。9004B固件，BSS end0xF9006CAC/4948B栈余量。bit3177297B，`camera_art_ten/build/720p/outflow/ti60_camera.bit` SHA256 `6196d9d3183350ee12cabcd739bbee986064a0e779bea7e7dc078397d753e739`。21类新回执与三外部门槛严格绑定十槽范围、当前checkpoint/ROM/源码/日志，不接受单槽缩小回执或误选v2。未下载/固化/推送；实际真人校准后的识别率/连续FPS/模拟电气仍未验收。
+- 同一9004B机器码额外完成38完整ROI（3背景+30模板+数字0五次检测）板上录入协议仿真，4.04000418秒确认后原子guard接受并实际重载slot0，累计2376参数写入/13次ROI计算期间完成IRQ，39,450,608指令/32,575条M指令，无校准RAM后门。该补充回执由fresh final_review独立绑定，不改原21项签核或bit。相机/作业/MMIO为模型，计时按指令并仅空等跳时，不称Sapphire周期或真人准确率。
+
+## 最新交互修订（2026-11-02）
+
+- 用户反馈十手势成功一次后不能继续，要求原图识别成功自动跳转风格图、最后按键开关UI。新独立`elinx/projects/camera_art_ten_ui`基于保留的`camera_art_ten`，旧bit/源码/模型不改；不自动下载、写Flash或提交推送。
+- 原因之一是旧gs_blocked只接受明确nohand解除，偏绿/变化背景可能一直ambiguous。新运行时记录confirmed_code，不同有效数字可从零重新满足五次新报告/四完整秒；同一数字持续保持不重复触发。epoch变化或不允许识别时清blocked，返回RAW/SPLIT可重新识别，包括同一数字；nohand仍按原规则解锁，重复/过期/未知帧不能补确认资格。
+- 同UI edge的已接受guard_event驱动keys的gesture_confirm，RAW自动请求STYLE，SPLIT保持。手动KEY0与学习优先，不能让自动模式变更生成cancel而否决自身guard；旧token/按键竞态保护保持。完整DDR写响应、安全消隐和bank元数据仍决定实际前台，P4不冒充已显示。
+- KEY3现在消抖按下一次翻转文字与青框UI可见性，长按只翻转一次，不复位板卡/PLL、不清模板、也不暂停识别。board_boot仅保留上电延时；KEY0三视图、KEY1/2下一/上一、KEY1+KEY2学习录入保持。UI隐藏仍只在RAW/SPLIT识别，需看进度再按KEY3。重新配置/断电模板仍丢失。
+- 仅三手写RTL及gesture_runtime.c变化：board_boot/style_keys47/video_system_720；CNN/参数/DDR/MIPI/PLL/79脚12Bank及peri保持。删除原boot按键复位同步器后精确首级为23标量/166Gray/87稳定束/8D-PHY，无新增无握手总线。固件9068B，模块/集成UI/真实Sapphire/机器码校准与重复手势回归通过；最终时序/bit指纹以本项目签核为准。旧十风格数值回归仅在逐字节一致的算子/参数上继承，不称本轮重新跑过完整CNN数值。
+
+- 2026-11-02交互修订最终签核与fresh复查PASS：12类本轮回归，真实Sapphire9068B固件/十槽2160参数，实际RV32IM机器码38ROI/2376参数/13完成IRQ。RAM230/256、DSP142/160、XLR59003/60800、FF29695/LUT32891；最小setup/hold +0.055/+0.025ns，8条唯一二级链最小+13.303ns，23标量/166Gray/87束/8精确首级。BSS end0xF9006CF0/4880B栈余量。bit3175863B，`camera_art_ten_ui/build/720p/outflow/ti60_camera.bit` SHA256 `598a2312e477166d33e7d2cc7aa52d919913eb5d90a756221aaceabe5fe63099`；与源码/ROM/固件/电气/时序/回执共同绑定。原图自动STYLE后仍按旧规则暂停手势，按KEY0到SPLIT可连续换手势。未连接硬件、未烧Flash或推送。
+
+## 十风格绘画纹理重训（2026-11-02）
+
+- 用户反馈十风格梵高仅变蓝、旧四风格磨砂纹理消失，要求重训。本轮只新增训练/验证/独立参数包，不改已签核camera_art_ten_ui的手势/UI/bit，也不下载、Flash或推送。
+- 新脚本在pycode/ten_style：retrain_painterly.py保留梵高1500步试训，retrain_painterly_v2.py以试训为起点训练十槽12000步；使用旧painterly_style/paint_final四分支暖启动相应槽，直接VGG绘画/既有风格参考Gram及局部纹理能量，削弱原像素/平滑回归。四高容量绘画教师，另外六类C8仅弱空间锚点，不称十槽完全无C8。槽4使用保留水墨参考，不声称逐像素复刻原47组；剪纸/漫画部分参考为此前认可AI概念图，不冒充名画原作。
+- 独立runs/ten_painterly_probe_v1及runs/ten_painterly_v2保留。新增实际13500步，梵高5193次更新，其余各923次；step27500仅沿用历史全局计数，不是每槽步数。最终model.pt SHA256 7250b683772fdd9c3756f9f062ce639aadfcbfbc49eb64e6ac2e15588e489e86。固定512训练/24验证，34用户照片SHA排除出训练，三张自然验证照质检加两用户照片输出。
+- 保持十槽顺序、独立C6/RF31、每层全1280×720、396卷积权重/216事务/736B步长/7360B ROM，不贴噪声或另加滤镜。evaluate_painterly.py验证50完整720p（三自然+两用户照片×十）NumPy int64/GPU整数/实际折叠QAT误差0，另40极小/奇数尺寸通过，十层实际空间形状均720p；保守界239482<2^21，0裁剪，保持22位累加/23位舍入。
+- package_painterly.py只导出runs/ten_painterly_v2/package，ROM逐字节反拼通过；audit_painterly.py fresh校验源/参考/训练行数/图/模型/参数包及两个旧bit。camera_art_ten_ui fresh复查仍PASS，旧bit598a2312…未改。没有新模型对应的新bit或新RTL/CAD/实板结论；不能将参数形状相同当作新时序签核。
+- 梵高细笔触明显恢复，但仍偏局部磨砂/短笔触，不是大尺度星月夜语义旋涡；其它部分风格偏淡/边缘化，未获用户画质验收。真实对照results/painterly_v2_final，说明PAINTERLY_RETRAIN.md，README/architecture.html已更新。训练、模型、图片、参数包继续Git忽略，无清理或覆盖旧成果。
+
+## 重训模型bit与增强手势大框（2026-11-02）
+
+- 用户明确要求重训后生成bit，并反映手势误认/跳号、希望框更大。新独立elinx/projects/camera_art_ten_paint基于保留的camera_art_ten_ui，实际集成painterly27500模型（SHA7250b683772fdd9c3756f9f062ce639aadfcbfbc49eb64e6ac2e15588e489e86），保持十槽顺序、全720p、KEY3 UI开关/原图确认自动STYLE/同源对比/重复识别规则。旧模型/bit/demo均不改，未自动下载/Flash/串口或Git推送。
+- 青框640×640，坐标x0..639/y40..679，完整在SPLIT原图半边。仍为64×64 RGB565/8KB快照，STEP10时左偶像素中心x4+10n、y45+10n；不能用x偏移5，否则2像素拍的偶x计数永不命中。小x/y相位计数器替代动态模10，完整4096像素及实际EFX RAM通过，无CNN降尺寸或新增图像RAM。
+- 增强分类器：背景采集补偿整体亮度再估计噪声，最大8连通区（复用canonical/histogram，父表与面积分区）排除分散背景，5/95亮度分位规范化。192特征=64无向HOG/64灰度/64轮廓，距离权重1/0.5/2，镜像最小距，十类各四模板仍7680B。前景无R>G固定肤色门。需要本人重新录入43完整帧（三背景+40模板），模板仍仅RAM；按KEY0保持1–2秒，轻微改变手角度，不能当免校准通用神经手部检测器。
+- 每约333ms一张新快照，三次多数投票约每秒一个决定；单帧错误不直接改G，三种无多数不确认。五次同类投票且完整4秒才BC/B8原子请求，重复seq/epoch/0.6秒源龄/1.6秒报告看门狗与回滚保持。G为投票后候选，原始分类仍可在CAM7观察寄存器看到，不把多寄存器读当逐帧原子报告。风格界面仍暂停手势，KEY0到对比可继续识别。
+- C/Python独立oracle比较26496特征/565248规范像素一致；同50个合成镜像/杂物/亮斑/小旋转，旧29正确/0误认/21拒绝，新48正确/0误认/2拒绝，不是实物准确率。当前10588B真实RV32IM机器码58ROI（3+40+15）在4.08001313秒决定窗口后原子接受slot0并重载，2376真实参数写入/14 ROI期间完成IRQ；计时按指令，不是Sapphire周期。真实Sapphire另验证当前生产固件十槽2160参数/PLIC。
+- 独立Sapphire时延程序显式准备其它类原型，仅测一个合成握拳3209746 UI周期/32.09746ms，不能当生产录入、真实识别率或最坏时延证明。生产C没有校准后门，完整录入协议由上条真实机器码测试覆盖。固件10588B、BSS end0xF90071AC，3668B栈余量，四条Boot RAM指纹一致。
+- 21类本轮回归包含新十模型RTL/实际EFX核各960像素、DMA/对比/背压/故障恢复、完整slot0 SPLIT921600像素/2558528UI逐值一致；模型39.084974fps非实板FPS。50完整720p软件+40小尺寸当前参数一致，界239482、0裁剪，216事务/槽、ROM7360B。
+- seed0最终CNN -0.175ns失败归档build/timing_seed0；seed1加工具合法beneficial_skew后重做综合/接口/布线/原生STA/精确CDC，保持实际时钟/电平/例外。最终RAM230/256、DSP142/160、FF29702/LUT32898/XLR59011/60800；最小setup/hold +0.108/+0.026ns，8条唯一D-PHY二级链最小+13.391ns，精确23标量/166Gray/87束/8首级。79脚12Bank/完整peri逐字保持。
+- 当前bit3193065B，camera_art_ten_paint/build/720p/outflow/ti60_camera.bit，SHA256 75766d7cdd66154d2d8da1db7a800ed49f38864ae52316c97b2dadaab959a2de。signoff和fresh final_review均PASS并绑定当前源码/模型/固件/时序/电气/21回执；已生成，未代烧，真实摄像头准确率/FPS和物理电压温升待测。README/architecture.html/docs/project.md及根指南已更新，新vendor/学习常量继续Git忽略。
+
+
+## 自定义O形0与免录入手势试训（2026-11-03）
+
+- 用户最终定义0为五指一起弯曲围成O形，不是握拳；1食指，2食指/中指，3中指/无名指/小指，4除拇指，5全掌，6拇指/小指，7拇指/食指/小指，8拇指/食指，9食指弯钩。按顺序对应来源风格0/2/3/4/34/7/9/15/31/40。用户希望下载即用，个人录入只作可选增强，不能以强制本人逐类录入冒充完成。
+- 新研究目录pycode/gesture_factory，固定公开ASL-HG/HaGRID照片，按人员分组，离线MediaPipe/GrabCut仅辅助标注，不是把MediaPipe移植到FPGA。借用ASL手形O/F/Y/L/X分别对应0/3/6/8/9；W不是用户3，数据集数字不能直接映射。README、architecture.html、EXPERIMENTS.md记录实际边界。
+- 两轮实际3000/6000步小CNN：7615/12863参数，未见人员照片测试71.41%/79.74%，包含非目标类别；v2的9召回26.83%，4召回51.61%。7自动候选4张经目视只1张明确合格，其余3张已在独立factory_masks_reviewed.npz改为非目标；合格7无验证/测试样本。原输入和结果保留作诊断，不能把这些自动标签作为已清洗训练配方。审查NOT_READY，不输出免录入可用bit。
+- 本轮未改任何FPGA工程、固件、引脚电平或旧bit，也未访问摄像头/串口/JTAG/Flash或提交推送。camera_art_ten_paint旧bit SHA75766d7cdd66154d2d8da1db7a800ed49f38864ae52316c97b2dadaab959a2de保持。后续先补足正确手形真人样本与真实前景提取验证，再做整数/生产固件/资源/时序/电气签核；4秒门限不能修复系统性的错分类。data/build/runs/results继续本地忽略。
+
+
+## latest完整归档与报告上传（2026-11-03）
+
+- 用户明确授权本轮将最新elinx项目、完整风格/训练整理到latest并上传imezpy，不问澄清问题。仅latest内扩展上传范围到C/ASM/链接脚本、XML/peri/SDC、必需IP/初始化、最终pt/参数、bit与固定536张公共内容/验证图；根目录其他位置仍遵循原白名单，不批量加入demo、style_model或其他未跟踪项目。VGG574MB通用权重按官方脚本获取，不入Git。
+- latest基线为保留的camera_art_ten_paint，生产RTL/固件/peri/模型/bit保持；通用免本人录入模型未达标不混入交付件。当前仍需个人录入，手形0为O、3为后三指、7为拇食小；KEY0视图、KEY1/2风格、KEY3 UI。归档包含路径重定位、完整性/79脚12Bank检查、独立CAD辅助入口、训练/推理与536图/教师参考依赖。历史签核回执为原路径归档，不当新目录重新CAD证据。
+- baogao按官方模板五部分改main.tex，前两页项目速览，模块给主要输入输出与实现；训练说明C6/RF31/DW-PW/BN折叠/整数QAT、真实训练日志。十风格各用蒙娜丽莎与戴珍珠耳环少女两例，20完整720p实际整数输出均QAT一致、另两完整帧NumPy独立核对；不是生成式效果图或实物照片。内置imagegen产三张白底科研示意并修正输入通道/显示路径，工具未暴露Image2.5型号选择，不冒称指定型号。外部在线权重下载只写预期，当前ROM重载不等于在线下载。
+- .gitattributes仅latest/baogao关闭换行转换以保护指纹；中间CAD/仿真库、Python环境、报告build与94MB原始名画不上传。源码与PDF/图资产在本轮明确范围内提交推送，不改main或烧写硬件。

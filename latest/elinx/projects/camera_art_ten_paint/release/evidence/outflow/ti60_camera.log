@@ -1,0 +1,33 @@
+Running: efx_run_pgm.py ti60_camera --family Titanium --device Ti60F225 --output_dir outflow --work_dir work_pnr --opt mode=active width=1 enable_roms=on spi_low_power_mode=on io_weak_pullup=on oscillator_clock_divider=DIV8 enable_crc_check=on bitstream_compression=on active_capture_clk_edge=posedge release_tri_then_reset=on enable_external_master_clock=off jtag_usercode=0xFFFFFFFF
+E:/software/efinity\bin\efx_pgm.exe --interface_designer_settings outflow\ti60_camera_or.ini --periph outflow\ti60_camera.lpf --family Titanium --device Ti60F225 --source F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\work_pnr\ti60_camera.lbf --dest outflow\ti60_camera.hex --mode=active --width=1 --enable_roms=on --spi_low_power_mode=on --io_weak_pullup=on --oscillator_clock_divider=DIV8 --enable_crc_check=on --bitstream_compression=on --active_capture_clk_edge=posedge --release_tri_then_reset=on --enable_external_master_clock=off --jtag_usercode=0xFFFFFFFF
+INFO     : Elitestek FPGA Bitstream Generator.
+INFO     : Version: 2026.1.132 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+INFO     : Compiled: May 29 2026.
+INFO     : Using source file "F:\fpga_qiansai\elinx\projects\camera_art_ten_paint\build\720p\work_pnr\ti60_camera.lbf"
+INFO     : Generating HEX programming file for device "Ti60F225", family "Titanium"
+INFO     : Using periphery source file "outflow\ti60_camera.lpf"
+INFO     : Generating bit file: "outflow\ti60_camera.bit"
+INFO     : HEX Generation Options Summary:
+INFO     : 	Listing options specified to bitstream generation:
+INFO     : 	enable_crc_check                         = on
+INFO     : 	bitstream_compression                    = on
+INFO     : 	oscillator_clock_divider                 = DIV8
+INFO     : 	enable_external_master_clock             = off
+INFO     : 	spi_low_power_mode                       = on
+INFO     : 	active_capture_clk_edge                  = posedge
+INFO     : 	enable_remote_update                     = off
+INFO     : 	release_tri_then_reset                   = on
+INFO     : 	enable_seu_crc_check                     = off
+INFO     : 	seu_mode                                 = automatic
+INFO     : 	seu_wait_interval                        = 0xFFFFFF
+INFO     : 	jtag_usercode                            = 0xFFFFFFFF
+INFO     : 	io_weak_pullup                           = on
+INFO     : Finished generating "outflow\ti60_camera.hex"
+INFO     : Elitestek Bitstream Generator took 0.8590727 seconds [FlowMsg::StageDuration]
+INFO     :     Elitestek Bitstream Generator took 0.6875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elitestek Bitstream Generator virtual memory usage: begin = 2.624 MB, end = 11.832 MB, delta = 9.208 MB [FlowMsg::VMUsage]
+INFO     :     Elitestek Bitstream Generator peak virtual memory usage = 152.904 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elitestek Bitstream Generator resident set memory usage: begin = 9.408 MB, end = 21.352 MB, delta = 11.944 MB [FlowMsg::RSSUsage]
+INFO     :     Elitestek Bitstream Generator peak resident set memory usage = 158.384 MB [FlowMsg::RSSUsage::Peak]
+Stage completed: pgm

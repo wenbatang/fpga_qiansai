@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "firmware_bytes": 10588,
+  "ram_bytes": 32768,
+  "styles": 10,
+  "config_writes_per_style": 216,
+  "weights_rom_bytes": 7360,
+  "firmware_sha256": "087d6d831e6773bc6757a3cdf3fbe4dddb906543a0c6a9529fee6475bca55602",
+  "lanes": {
+    "EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin": "66e6eb28781dfaeb19073d8f4ab12515a153414a6dae6c685dcf677fa29dc64c",
+    "EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin": "6bd26a113cbb2ede80ad57c849cd45caa84e1ff196446f100ee6f2595da60d6f",
+    "EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin": "ef67853fee15deb80ece104ce6d9d4f88bbe9be6cb93c1b0d74f16917be7e758",
+    "EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin": "4636850ebe48f653f06bece94fb0f595f89d04c060b4ebfdbb337c9b4051da5b"
+  },
+  "files": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_calibrated.c": "61a3559eace831691d50223c579821a69257d696bc5db4a39dc42ab0ae972400",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_classify.c": "8f636d1b452647f211f8908426c112b9e96adfbbe71cf527ebf5e41ee70058d4",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_cnn_features.c": "feb7e921d760394355f9b5a7c10c94f48294631846525bbe5d2b2f60bc7d6484",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_cnn_infer.c": "1b21211f5f380acd87d0cd0b3f24efdd7eb972e330f3a2bee417585488ea8fe4",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_color.c": "ecf604ca75bfe946f9665d589f0bb5adb58428c83ad3635a8738a7c9ccea1594",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_features.c": "83080d3240635717241715a8c1c279790f0de977e83ab5e09ab1c84beead4d99",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_infer.c": "d6038741bb7b5c40252f0c39900993ec3d63bd16935c50a0cc6767cb027cadaf",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_model.h": "cba47b24b0980f3975c2101fb392a0a4275578550741cf740b9f49a58211866a",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_runtime.c": "3e54f4b6981333a250125ba66484c23fe2d7473229ce5a452915bf88b598e52d",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\link.ld": "36a245a6eaa80cff659921c14a2b4aefcd3d87958f2ecd58df53d924014420cc",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\main.c": "efff5e7a66595b6402018936eb25a2e85a2e60f361b61b64c8b96adb7bc481bb",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\start.S": "3e43cbd6bc2547e01a93c65ecc39fd7cb9fd8f68ec11830c1d0b788aa0773495"
+  }
+}

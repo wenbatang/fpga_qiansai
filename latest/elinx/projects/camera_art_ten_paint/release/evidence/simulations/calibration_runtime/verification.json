@@ -1,0 +1,247 @@
+{
+  "result": "PASS",
+  "workflows": [
+    {
+      "case": "complete_enrollment",
+      "frames": 43,
+      "requests": 43,
+      "acks": 44
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 0,
+      "trigger_time": 24.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 1,
+      "trigger_time": 34.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 2,
+      "trigger_time": 44.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 3,
+      "trigger_time": 54.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 4,
+      "trigger_time": 64.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 5,
+      "trigger_time": 74.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 6,
+      "trigger_time": 84.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 7,
+      "trigger_time": 94.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 8,
+      "trigger_time": 104.687
+    },
+    {
+      "case": "fresh_four_seconds",
+      "digit": 9,
+      "trigger_time": 114.687
+    },
+    {
+      "case": "normal_epoch_cancels_fifth_report"
+    },
+    {
+      "case": "duplicate_after_clear_rejected"
+    },
+    {
+      "case": "pending_active_ready_timeout"
+    },
+    {
+      "case": "mode_epoch_long_pause_post_age"
+    },
+    {
+      "case": "learning_partial_label_epoch_rollback"
+    },
+    {
+      "case": "w1c_event_wins"
+    },
+    {
+      "case": "atomic_epoch_style_guard",
+      "races": [
+        {
+          "phase": 1,
+          "kind": 0,
+          "result": 2,
+          "requested_style": 9
+        },
+        {
+          "phase": 1,
+          "kind": 1,
+          "result": 2,
+          "requested_style": 7
+        },
+        {
+          "phase": 2,
+          "kind": 0,
+          "result": 2,
+          "requested_style": 9
+        },
+        {
+          "phase": 2,
+          "kind": 1,
+          "result": 2,
+          "requested_style": 7
+        },
+        {
+          "phase": 3,
+          "kind": 0,
+          "result": 3,
+          "requested_style": 9
+        },
+        {
+          "phase": 3,
+          "kind": 1,
+          "result": 3,
+          "requested_style": 7
+        },
+        {
+          "phase": 3,
+          "kind": 2,
+          "result": 3,
+          "requested_style": 9
+        },
+        {
+          "phase": 3,
+          "kind": 3,
+          "result": 3,
+          "requested_style": 9
+        }
+      ]
+    },
+    {
+      "case": "repeat_different_digits_without_absence",
+      "digits": [
+        0,
+        1,
+        2
+      ],
+      "confirmations": 3
+    },
+    {
+      "case": "return_view_rearms_same_digit",
+      "templates_retained": true,
+      "confirmations": 4
+    },
+    {
+      "case": "majority_rejects_single_frame_wrong_digit",
+      "physical_frames": 15,
+      "accepted": 2
+    },
+    {
+      "case": "no_majority_never_qualifies",
+      "physical_frames": 15
+    }
+  ],
+  "atomic_guard_races": [
+    {
+      "phase": 1,
+      "kind": 0,
+      "result": 2,
+      "requested_style": 9
+    },
+    {
+      "phase": 1,
+      "kind": 1,
+      "result": 2,
+      "requested_style": 7
+    },
+    {
+      "phase": 2,
+      "kind": 0,
+      "result": 2,
+      "requested_style": 9
+    },
+    {
+      "phase": 2,
+      "kind": 1,
+      "result": 2,
+      "requested_style": 7
+    },
+    {
+      "phase": 3,
+      "kind": 0,
+      "result": 3,
+      "requested_style": 9
+    },
+    {
+      "phase": 3,
+      "kind": 1,
+      "result": 3,
+      "requested_style": 7
+    },
+    {
+      "phase": 3,
+      "kind": 2,
+      "result": 3,
+      "requested_style": 9
+    },
+    {
+      "phase": 3,
+      "kind": 3,
+      "result": 3,
+      "requested_style": 9
+    }
+  ],
+  "gate_only_cases": 13,
+  "globals_reset": [
+    "gs_candidate",
+    "gs_since",
+    "gs_last",
+    "gs_seq",
+    "gs_windows",
+    "gs_next_poll",
+    "gs_absent",
+    "gs_epoch",
+    "gs_blocked",
+    "gs_confirmed_code",
+    "gs_have_absent",
+    "gs_have_report",
+    "gs_active",
+    "gs_pending",
+    "gs_requested_at",
+    "gs_reports",
+    "gs_last_reason",
+    "gs_qualified_samples",
+    "gs_learning",
+    "gs_capturing",
+    "gs_capture_kind",
+    "gs_capture_label",
+    "gs_seen_seq",
+    "gs_have_seen_seq",
+    "gs_vote0",
+    "gs_vote1",
+    "gs_vote_count"
+  ],
+  "sources_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_runtime.c": "3e54f4b6981333a250125ba66484c23fe2d7473229ce5a452915bf88b598e52d",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\firmware\\gesture_calibrated.c": "61a3559eace831691d50223c579821a69257d696bc5db4a39dc42ab0ae972400",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\check_calibration_runtime.py": "c78da7ab9753a7f73c7ba49107f9b2397f6ebb350482c2c941a454801b462650",
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\calibration_runtime\\host.c": "211b4e43debff7f4abe28f2a6efbc11356edaa039bbcf5826dc5e367c5ecbb81",
+    "F:\\fpga_qiansai\\pycode\\gesture_digits\\calibrated_reference\\reference.py": "3e4aaafc20fe465ba41f563a0623945cdaf1022630d3851a7d569dfc9b65fc5a",
+    "F:\\fpga_qiansai\\pycode\\gesture_digits\\calibrated_reference\\check_calibrated.py": "5a0230ac3c02937c15ab632f5c7a709bac83bf04805ab329cb965762a059be11"
+  },
+  "logs_sha256": {
+    "F:\\fpga_qiansai\\elinx\\projects\\camera_art_ten_paint\\sim\\calibration_runtime\\compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "scope": "Actual runtime.c and calibrated.c on host. MMIO/REQ/SOF/ready/ACK/W1C/epoch and B8 atomic acceptance plus camera silhouettes are explicit models, no direct gs_pending injection. B8 write is committed before its next result read, same-edge cancel uses the pre-edge epoch and disables acceptance. Separate gate-only cases prepare matching token epoch and are labeled. Not Sapphire instruction timing, actual hardware hand accuracy or complete camera SoC."
+}

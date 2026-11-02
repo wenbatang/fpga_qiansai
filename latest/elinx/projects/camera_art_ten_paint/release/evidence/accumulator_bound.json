@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "max_abs_sum_bound": 239482,
+  "styles_compared": 10,
+  "signed_accumulator_bits": 22,
+  "rounded_bits": 23,
+  "clipped_weights": 0
+}

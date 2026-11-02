@@ -1,0 +1,60 @@
+{
+  "map_sha256": "3689fa9c1776dfae93023939d9fcaf9a568dbd9e4206d6248db2697c5b6e68a7",
+  "dphy_sha256": "c7560a17fada59d6002f1cf4706fde30bf7634ea583d31bda4072370bcf744df",
+  "first_stages": [
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.813
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[0].rx_dword_align_inst/genblk1.RxStopState_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.814
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[1].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.746
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[1].rx_dword_align_inst/genblk1.RxStopState_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.391
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[2].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.813
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[2].rx_dword_align_inst/genblk1.RxStopState_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.593
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[3].rx_dword_align_inst/genblk1.RxHS_settle_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.813
+    },
+    {
+      "first_stage": "inst_camera_dphy/u_efx_dphy_rx/genblk2[3].rx_dword_align_inst/genblk1.RxStopState_1P~FF",
+      "only_second_stage_endpoint": true,
+      "interstage_slack_ns": 13.536
+    }
+  ],
+  "reports": {
+    "final_dphy_lane0_RxHS_settle.rpt": "01a03d3094e5c0b761d13e5b7c954d7f0b2ca1a3600225154631fc208e37b623",
+    "final_dphy_lane0_RxStopState.rpt": "a52ea100ee8ec9453063d952100f872c97596f2117a99057c94e5251a4dbd3ac",
+    "final_dphy_lane1_RxHS_settle.rpt": "5aa87cfa6779c1641e05c7ab8945c54b3a22cff6cf989f14885a571b472ad9c0",
+    "final_dphy_lane1_RxStopState.rpt": "9f70eca78010c44ded4304a9d540d7b6763ab9307101cca657e0d1b108658a13",
+    "final_dphy_lane2_RxHS_settle.rpt": "e4ec6b2755f0930cf13cc1453be02d989e51f3dd2c81ae3b883661d5cf13a607",
+    "final_dphy_lane2_RxStopState.rpt": "1528a6b75634d19fe1531d9db600503065e77dee78b1fbe11ededae1e1281ce6",
+    "final_dphy_lane3_RxHS_settle.rpt": "6a57178e862abdc4b289309e2128912bd768f96f3e7bad15216f474ec41fa4dc",
+    "final_dphy_lane3_RxStopState.rpt": "22853c7f891f5a3b50d49b4d2393063176961ac7ab96fc50146c522c9de88997",
+    "final_dphy_byte_to_core.rpt": "d62689c57bd727d99131633337977bffcb22ca21c4e021ffd954614561023426",
+    "final_dphy_core_to_byte.rpt": "ab41213fededa6843114aebfeabe1096787641078d42dddcffeb97572d633898"
+  },
+  "scope": "Native STA register endpoint topology; no analog metastability measurement",
+  "vdb_sha256": "319986200e4547ddcf1e1cdcbe96b244b083d62504cb7f84d218f70b46f6e63c"
+}

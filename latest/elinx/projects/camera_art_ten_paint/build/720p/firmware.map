@@ -1,0 +1,79 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0xf9000000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+LOAD C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+LOAD E:/softare_FPGA/xpack-riscv-none-elf-gcc-15.2.0-1-win32-x64/xpack-riscv-none-elf-gcc-15.2.0-1/bin/../lib/gcc/riscv-none-elf/15.2.0/rv32im/ilp32\libgcc.a
+
+.text           0xf9000000     0x26ac
+ *(.text.start)
+ .text.start    0xf9000000       0x48 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+                0xf9000000                _start
+ *(.text*)
+ .text          0xf9000048        0x0 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+ .text          0xf9000048     0x1a18 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+                0xf900115c                machine_trap
+                0xf9001250                cal_reset
+                0xf90012a0                cal_valid_mask
+                0xf90012dc                cal_background_count
+                0xf90012e8                cal_class_count
+                0xf9001434                cal_class_threshold
+                0xf9001458                cal_restart_class
+                0xf90014d0                cal_capture_background
+                0xf90016e8                cal_capture_template
+                0xf90018c4                cal_predict
+ .text.startup  0xf9001a60      0xc4c C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+                0xf9001a60                main
+
+.rodata         0xf90026ac      0x2ac
+ *(.rodata*)
+ .rodata        0xf90026ac      0x2ac C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+
+.rela.dyn       0xf9002958        0x0
+ .rela.text.start
+                0xf9002958        0x0 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+
+.data           0xf9002958        0x4
+ *(.data*)
+ .data          0xf9002958        0x0 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+ .data          0xf9002958        0x4 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+ *(.sdata*)
+                0xf900315c                        __global_pointer$ = (. + 0x800)
+
+.bss            0xf900295c     0x4850
+                0xf900295c                        . = ALIGN (0x4)
+                0xf900295c                        __bss_start = .
+ *(.sbss*)
+ *(.bss*)
+ .bss           0xf900295c        0x0 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+ .bss           0xf900295c     0x4850 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+ *(COMMON)
+                0xf90071ac                        . = ALIGN (0x4)
+                0xf90071ac                        __bss_end = .
+                0xf9008000                        __stack_top = (ORIGIN (RAM) + LENGTH (RAM))
+                0x00000001                        ASSERT (((__bss_end + 0x800) <= __stack_top), Firmware does not leave 2KB stack)
+OUTPUT(firmware.elf elf32-littleriscv)
+
+.riscv.attributes
+                0x00000000       0x37
+ .riscv.attributes
+                0x00000000       0x35 C:\Users\WENBAT~1\AppData\Local\Temp\cc8PVSGJ.o
+ .riscv.attributes
+                0x00000035       0x37 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+
+.comment        0x00000000       0x33
+ .comment       0x00000000       0x33 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o
+                                 0x34 (size before relaxing)
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 C:\Users\WENBAT~1\AppData\Local\Temp\ccb6t6vh.o

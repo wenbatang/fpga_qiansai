@@ -1,0 +1,430 @@
+{
+  "result": "PASS",
+  "cases": [
+    {
+      "content": "mona_lisa",
+      "slot": 0,
+      "label": "梵高旋涡厚涂",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": 0,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_00.png",
+      "sha256": "42e45a725a53a48c41c9ab4971cbc87348ae78d79c9ccb5da2decc0d6c1b0513",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 1,
+      "label": "浮世绘海浪",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_01.png",
+      "sha256": "3bf9ab2cc2b21ea9cddfab7307d848b20d75e4dfab575d9f4e42a9a1ef742c51",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 2,
+      "label": "彩色剪纸",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_02.png",
+      "sha256": "0b3ed6b6c46addc486721bf928120c9019e8fb0de207d4839ac80bbb76542cb9",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 3,
+      "label": "复古漫画",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_03.png",
+      "sha256": "ba15a2c1743ddfbc2dc813ecbb84db737567f8ffa63e8bdce8221579711d3e13",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 4,
+      "label": "竹林水墨",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_04.png",
+      "sha256": "43dfa8e2e35d615bdc047f790e11bb2e473cd313479e5c3c5ba2e18e77d53c33",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 5,
+      "label": "阿什维尔抽象",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_05.png",
+      "sha256": "760ce1e37e0a30d3dff6f814b2debc642a94e8cc0588f12ec00ae79e6defda08",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 6,
+      "label": "形体对比",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_06.png",
+      "sha256": "2971855c9c0003b2bba02ef174acb50a0598a1f40255d4b01a2c9c580a70c13d",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 7,
+      "label": "蒙德里安几何",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_07.png",
+      "sha256": "aa85c7bbeb4a58bad4b239d3c687307e84cc0a6f42b19672257200fdfbb20c4f",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 8,
+      "label": "彩色马赛克",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_08.png",
+      "sha256": "e99d1eb8baa55c2ddb228019737da9bd01020736c2967407c2805e1baaaf1ef3",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "mona_lisa",
+      "slot": 9,
+      "label": "雨夜厚涂",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        398,
+        0,
+        483,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\mona_lisa_09.png",
+      "sha256": "52a01bec3083723f966210a6e4ba0c9665f77bc7ac08a32243d8b0b025bb1333",
+      "source_sha256": "393ba286ba82c9633117314a393e0641e47cfa214af5663e2323a20af52306de"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 0,
+      "label": "梵高旋涡厚涂",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": 0,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_00.png",
+      "sha256": "29229e429c1806c1d01de157e82f84909960cbd6b2a365edf9715573fa3f27d0",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 1,
+      "label": "浮世绘海浪",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_01.png",
+      "sha256": "94e6383efb715ad6b039414fd8f5ca6cdd198e55f8092817fa4ea38b1b75ebfb",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 2,
+      "label": "彩色剪纸",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_02.png",
+      "sha256": "b68f2bb7d150b4297ca4b7c6930e20247f7f47e05830090af909d1cde8b7f38d",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 3,
+      "label": "复古漫画",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_03.png",
+      "sha256": "2ab2e8815a76b02ea5151ed63529fb10d4d7fcc324c79509e69334c8b9e14b52",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 4,
+      "label": "竹林水墨",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_04.png",
+      "sha256": "aaf727a1e3611a4dcca30549a85a32449febf1ed82f0f194da5ac49f62764aed",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 5,
+      "label": "阿什维尔抽象",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_05.png",
+      "sha256": "c27418d3463a5e553afa763b1e31638bbc03cabde5dc64c29d5e88c1c1ad76fa",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 6,
+      "label": "形体对比",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_06.png",
+      "sha256": "7fc9f580bc730aa7fd966ef270b6775a64ada5d6fb6b0392eb39d128248b7647",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 7,
+      "label": "蒙德里安几何",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_07.png",
+      "sha256": "9c141d9f16c0215f9e8398f20ea4bf3ccabcd1477655a523b62ba68a20868cba",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 8,
+      "label": "彩色马赛克",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_08.png",
+      "sha256": "407600e6c1d150caa439018116542c66eea11e0a81ebffc77162d8ac58db8720",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    },
+    {
+      "content": "pearl_earring",
+      "slot": 9,
+      "label": "雨夜厚涂",
+      "full_inference_size": [
+        1280,
+        720
+      ],
+      "displayed_crop": [
+        335,
+        0,
+        609,
+        720
+      ],
+      "padding": "reflect101 around aspect-preserved portrait",
+      "qat_max_error": 0,
+      "independent_int64_error": null,
+      "output": "F:\\fpga_qiansai\\baogao\\assets\\comparisons\\pearl_earring_09.png",
+      "sha256": "b701b321afb3589755fd015919f640ee01b7f1dcf9e3d9b4d2a7a5c40c4febee",
+      "source_sha256": "2bcc1d67345b9d21dc5f4eecdba7940496ebdf2cccbb46b27181d083136b87dc"
+    }
+  ],
+  "model_sha256": "7250b683772fdd9c3756f9f062ce639aadfcbfbc49eb64e6ac2e15588e489e86",
+  "source_sha256": "97b9bb7db926eba4975d8e7efbedad73b8ff4c1703e7cbfdb19fff062c3ca079",
+  "step": 27500,
+  "board_photographs": false,
+  "scope": "Twenty actual complete720p integer outputs. Two independent int64 full-frame checks; all twenty QAT exact. Figure crops preserve portrait aspect. No artistic-quality score."
+}
