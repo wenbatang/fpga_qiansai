@@ -1,0 +1,32 @@
+\clearpage
+\subsection{实物展示与读数}
+\newcommand{\fieldshot}[3]{\begin{minipage}[t]{.48\linewidth}\centering
+\IfFileExists{assets/field/#1.jpg}{\includegraphics[width=\linewidth,height=.135\textheight,keepaspectratio]{assets/field/#1.jpg}}{\IfFileExists{assets/field/#1.png}{\includegraphics[width=\linewidth,height=.135\textheight,keepaspectratio]{assets/field/#1.png}}{\fbox{\parbox[c][.122\textheight][c]{.91\linewidth}{\centering\textcolor{teal}{\textbf{#1}}\par\small 待补实拍}}}}
+\par\smallskip{\small\bfseries #2}\par{\footnotesize #3}\end{minipage}}
+\noindent\fieldshot{P01}{原图与装置}{同框保留SC431HAI、开发板、HDMI屏及原场景。}\hfill
+\fieldshot{P02}{风格图}{固定机位，记录风格S和一处可辨识的纹理。}
+\par\medskip\noindent\fieldshot{P03}{同源左右对比}{让物体横跨中线，观察两侧轮廓与运动是否衔接。}\hfill
+\fieldshot{P04}{手势确认}{完整的手置于框中，记录候选G及进度P；视频保留确认过程。}
+\par\medskip\noindent\fieldshot{P05}{UI开启}{记录屏上完整字段及手势确认后的前台槽S。}\hfill
+\fieldshot{P06}{UI关闭}{同一视图按KEY3，以相同机位记录干净画面。}
+\par\medskip
+\noindent C为一秒内发布的好采集帧数，I为完成的新风格推理帧数，H60表示配置的HDMI刷新率。G为投票后的候选数字，短横线表示暂无候选。P为已经持续的完整秒数，范围0--4。S为已经提交到前台的风格槽号。录入时，L显示当前标签，A显示已经接受的样本数量。青框标出镜头中采样手势的区域。
+\clearpage
+\blocktitle{名画输入的实屏对照}
+\noindent\fieldshot{P07}{《蒙娜丽莎》}{十风格摄像头版，镜头采集原画，KEY3关闭UI。}\hfill
+\fieldshot{P08}{《戴珍珠耳环的少女》}{十风格摄像头版，固定机位，记录实际风格槽。}
+\par\bigskip
+\noindent\fieldshot{U01}{串口输入《蒙娜丽莎》}{UART四风格验证工程，上传源图后在板上转换。}\hfill
+\fieldshot{U02}{串口输入《戴珍珠耳环的少女》}{UART四风格验证工程，记录板上按键选择。}
+\par\bigskip
+摄像头图组包含光照、镜头曝光、白平衡与显示器再拍摄的影响。串口图组采用确定的RGB565输入和四风格模型。两条路径分别标记，便于说明色差和纹理差异来自哪一环节。照片缺席时图框保留“待补实拍”字样。
+
+\blocktitle{连续测量记录（待填）}
+在原图、风格图、对比图间切换后分别等到新前台生效，再开始计时。原图模式仅做拷贝，测推理速率时选风格或对比模式。以60秒为一组保存串口或屏幕记录，计算新推理帧数除以实际秒数，同时列出每秒最低值。切换延迟从消抖后请求到新前台提交，需保留同一时基的两个事件。
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}p{.36\linewidth}XX@{}}\toprule
+测量项 & 槽0风格图 & 槽4左右对比\\\midrule
+时间窗 / 好采集帧增量 & 待测 & 待测\\
+推理FPS均值 / 最低一秒 & 待测 & 待测\\
+跳过源帧 / 坏帧 / 显示欠载 & 待测 & 待测\\
+风格切换延迟 / 样本数 & 待测 & 待测\\\bottomrule
+\end{tabularx}\end{center}

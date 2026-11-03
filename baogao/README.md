@@ -1,6 +1,6 @@
 # 技术报告
 
-入口为 `main.tex`，交付预览为 `main.pdf`。章节遵循官方模板：独立封面（第1页）、单页项目速览（第2页）、目录/摘要、作品概述、系统组成及功能、完成情况和性能、总结、参考文献。正文按主要模块说明输入输出、时钟握手、作用与实现，没有伪造实物照片或板上FPS。
+入口为 `main.tex`，交付预览为 `main.pdf`。章节遵循官方模板：独立封面（第1页）、两页项目速览（第2–3页）、目录/摘要、作品概述、系统组成及功能、完成情况和性能、总结、参考文献。正文按主要模块说明输入输出、时钟握手、作用与实现，没有伪造实物照片或板上FPS。
 
 ## 生成内容
 
@@ -23,3 +23,7 @@ xelatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
 ## 本轮深化
 
 依据队友报告的组织方式扩充采集协议、DDR地址/所有权、AXI背压、卷积流水、HDMI换帧、精确CDC、RISC-V加载、手势分类及训练量化；技术事实按当前十风格源码复核。修订依据见 [revision_notes.md](revision_notes.md)。旧队友PDF保持原样，未混用旧四风格与KEY3复位说明。
+
+现场演示见 [两分钟实物展示拍摄脚本](两分钟实物展示拍摄脚本.md)，照片命名见 [实拍照片入口](assets/field/README.md)。第29–30页按赛题逐项对照，第38–39页为实拍与测量记录。
+
+教师对照实验见 support/compare_teacher.py 和 assets/comparisons/teacher_benchmark.json，四槽八例均复核与报告中学生像素一致。

@@ -225,3 +225,13 @@ dist/
 !/baogao/assets/source/sources.json
 /baogao/assets/source/*.jpg
 /baogao/build/
+
+# Report filming assets: local helper never published.
+/baogao/local_capture/
+!/baogao/sections/contest.tex
+!/baogao/sections/physical.tex
+!/baogao/assets/field/P0[1-8].jpg
+!/baogao/assets/field/P0[1-8].png
+!/baogao/assets/field/U0[12].jpg
+!/baogao/assets/field/U0[12].png
+!/baogao/assets/comparisons/teacher_benchmark.json

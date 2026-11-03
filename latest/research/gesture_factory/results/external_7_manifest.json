@@ -1,0 +1,33 @@
+{
+  "dataset": "https://data.mendeley.com/datasets/pwyrdzwzwf/1",
+  "archive_sha256_as_listed": "89f3a1f96f3f7a04c4076942725a198427ae21f18db5bfc85bfd70d4a87736f9",
+  "license": "CC BY 4.0",
+  "sampling": "24 equidistant positions among numerically sorted 250 filenames in i_love_you. CRC of extracted individual ZIP entries verified; no claim of full archive download.",
+  "files": {
+    "Image_1.jpg": "347be21eba685b2b9a73efb590ad4e36102861d32fbf6c88448db214354d6388",
+    "Image_109.jpg": "31f8f01f48ac8936cb8891a11968a657b6f9ef611762cb88afb1d3f4527424a9",
+    "Image_11.jpg": "af5376d87848d14e0f92ad3d4c5531f034e3555a4aac65f9a71e6f045a4e47f5",
+    "Image_120.jpg": "67a138feb6593a84f68a4692eaf41624edf71b32287da5860ef5890720f63de6",
+    "Image_130.jpg": "347be21eba685b2b9a73efb590ad4e36102861d32fbf6c88448db214354d6388",
+    "Image_141.jpg": "9be2d6c2ddbc7cb8c9eb23c22fee5d27f5b262212ab5976a370b07b797867f90",
+    "Image_152.jpg": "c496fb2ac9a02c1f6a6355d9b467dac0415c6e8f82a45e09591598b09474f6de",
+    "Image_163.jpg": "9f2224c0cbf9fafd8d3ba195db6c5d19526b98cb422b7a4ce7ac9d10cf1cbb58",
+    "Image_174.jpg": "627ebdd972d840f27ebf3b4de6f97c75fc36fc8418c54b23b0db8e070f070096",
+    "Image_185.jpg": "0853b510add33d74865d315368c294560705d44dd0ec72837be83c9ca1d7abb8",
+    "Image_195.jpg": "31f8f01f48ac8936cb8891a11968a657b6f9ef611762cb88afb1d3f4527424a9",
+    "Image_206.jpg": "585bf986abe0144cdb04d9149d7a26e6ea3f77535b5b1f03e05227871c4960cf",
+    "Image_217.jpg": "af34afedeb4eda9cb134a1578d0741cb913a0d4215ed552252c54724d4776d71",
+    "Image_22.jpg": "cf8e53f060c38f5b2123f328aab55b24d9a26fa1afc2d4e83f955f4d401e2905",
+    "Image_228.jpg": "0959aaafeb98a2bd06ce1769197d77340f675498ffcc817d4ce5aafffcc6277c",
+    "Image_239.jpg": "7def63cb22be9f8fb998a1cb1b096f0929dcd84b9149a3068789c08f7f722745",
+    "Image_250.jpg": "0841bc505e7d0b9e1731b2bae88b1976b8b1d9634224092f329312a4a390884b",
+    "Image_33.jpg": "2ebe86820c2c6e73dba23b9582715401b90a35f1b4c8ab3b4b965ff4fb3f0216",
+    "Image_44.jpg": "02d54c076698e647f9fb29dfa770362375a674f73b485ffe93e84767ec49ddd8",
+    "Image_55.jpg": "fcc70d1d6e116fdd58a0bab38e8a0c5b7beb1413021ad9870033ba76b22a9632",
+    "Image_65.jpg": "dcac303c52a5c41d9d9d916c8aa18d22fc5cd1d50024633a356f54efc4ec79e5",
+    "Image_76.jpg": "c1cc364675231fc64f65ce28f3d562c54d61255b6a32917a5193f6963c02f3c3",
+    "Image_87.jpg": "4c3202f1eaca9f9f06dbfee72358f5c9dd9840092ce72fc61e82f02715d3a4a4",
+    "Image_98.jpg": "34efc4b25e2fef48f8bd554e19975551a117d169e1a585da55c8a3393bcee71b"
+  },
+  "scope": "No source photos included. Human inspection: thumb, index and little finger. Subject IDs unavailable."
+}

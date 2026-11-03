@@ -1,0 +1,78 @@
+{
+  "gpu": "NVIDIA GeForce RTX 5070",
+  "cases": [
+    {
+      "slot": 0,
+      "content": "mona_lisa",
+      "psnr": 16.35742721371796,
+      "ssim": 0.13967390317747716,
+      "teacher_ms": 10.723007678985596,
+      "student_reference_ms": 4.431136131286621,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 0,
+      "content": "pearl_earring",
+      "psnr": 17.095868900780676,
+      "ssim": 0.1567712553609684,
+      "teacher_ms": 10.660255908966064,
+      "student_reference_ms": 4.4269280433654785,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 2,
+      "content": "mona_lisa",
+      "psnr": 15.133183402996144,
+      "ssim": 0.3101746249082361,
+      "teacher_ms": 10.493504047393799,
+      "student_reference_ms": 4.3931519985198975,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 2,
+      "content": "pearl_earring",
+      "psnr": 14.51785373297364,
+      "ssim": 0.2576219263932499,
+      "teacher_ms": 10.658783912658691,
+      "student_reference_ms": 4.392159938812256,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 3,
+      "content": "mona_lisa",
+      "psnr": 9.679396147365932,
+      "ssim": -0.003952054903043787,
+      "teacher_ms": 10.496671676635742,
+      "student_reference_ms": 4.39352011680603,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 3,
+      "content": "pearl_earring",
+      "psnr": 10.308740915364108,
+      "ssim": -0.004810850028478383,
+      "teacher_ms": 10.686240196228027,
+      "student_reference_ms": 4.4916157722473145,
+      "teacher_parameters": 269763
+    },
+    {
+      "slot": 4,
+      "content": "mona_lisa",
+      "psnr": 16.86372358455109,
+      "ssim": 0.2747772262099468,
+      "teacher_ms": 9.694271564483643,
+      "student_reference_ms": 4.372927904129028,
+      "teacher_parameters": 269473
+    },
+    {
+      "slot": 4,
+      "content": "pearl_earring",
+      "psnr": 16.38494722012986,
+      "ssim": 0.2744612132545075,
+      "teacher_ms": 10.18996810913086,
+      "student_reference_ms": 4.624927997589111,
+      "teacher_parameters": 269473
+    }
+  ],
+  "scope": "Two portraits, batch=1 720p GPU compute. Three warmups and median of 12 CUDA event intervals per case. RGB SSIM (11x11 Gaussian sigma 1.5) and PSNR on portrait area only. Teacher output is the reference."
+}

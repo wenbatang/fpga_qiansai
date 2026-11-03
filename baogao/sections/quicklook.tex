@@ -19,14 +19,15 @@
 \vfill
 \begin{tabular}{rl}
 赛题方向 & AI赋能的“实时绘画”风格化视频渲染\\[5pt]
-实现平台 & Ti60F225I3 DemoBoard V4 / SC431HAI\\[5pt]
-工程版本 & \sig{camera_art_ten_paint}\\[5pt]
+参赛赛道 & 易灵思赛道\\[5pt]
+团队名称 & babyblue\\[5pt]
+团队编号 & 49327\\[5pt]
 报告日期 & 2026年11月3日
 \end{tabular}
 \end{center}
 \vspace*{.7cm}
 \clearpage
-\noindent{\fontsize{20pt}{28pt}\selectfont\bfseries\textcolor{navy}{项目速览}}\par
+\noindent{\fontsize{20pt}{28pt}\selectfont\bfseries\textcolor{navy}{项目速览（一）}}\par
 \noindent{\large 摄像头采集 → FPGA风格化 → HDMI呈现}\par
 \smallskip
 
@@ -52,3 +53,20 @@
 \smallskip\noindent\textbf{交互方式：}KEY0切换视图，KEY1/KEY2切换风格，KEY3开关UI；在原图/对比界面识别手势0--9，持续四秒确认，原图确认后自动进入风格图。
 
 \smallskip\noindent\textbf{成果范围：}当前bit完成CAD、定点与模块验证；20组名画输出为真实模型预测。免录入通用手势、外部在线权重下载以及持续整机30fps实测仍是后续工作。
+
+\clearpage
+\noindent{\fontsize{20pt}{28pt}\selectfont\bfseries\textcolor{navy}{项目速览（二）}}\par
+\noindent{\large 两幅画看懂训练和交互}\par\medskip
+同一幅输入可以呈现不同笔触。每个风格单独训练396个卷积系数，板上用同一套计算电路依次装载十组参数。下图从左至右分别为两幅原画和各自的预测结果。
+\begin{figure}[H]\centering
+\includegraphics[width=.86\linewidth]{assets/comparisons/style_00_pairs.png}
+\caption{梵高风格的整数模型输出。面部和头巾位置得以保留，方向性短笔触改变局部明暗。}
+\end{figure}
+\noindent\textbf{画面怎样生成}\quad
+训练时，内容特征约束人物与物体的位置，绘画参考的特征相关性和局部梯度约束颜色与笔触。部署时，四个膨胀残差块逐像素预测RGB增量，与原始像素相加得到风格画。纹理取决于邻域，感受野为31×31。
+\par\medskip\noindent\textbf{现场怎样看}\quad
+KEY0依次切换原图、风格图和左原右风格。KEY1、KEY2前后选择风格。观察同一物体横跨分界线，可以同时比较轮廓、颜色与细纹。KEY3开关青框和文字，便于拍摄干净的HDMI画面。
+\par\medskip\noindent\textbf{怎样识别一次有效切换}\quad
+在原图或对比中保持一个手势，G给出候选，P累计完整秒数。确认后S显示实际前台槽号，原图自动转为风格图。观察稳定运行的I可读到每秒新推理帧数，H60给出显示刷新配置。
+\par\medskip\noindent\textbf{性能怎样验收}\quad
+赛题基础要求为640×480采集30fps，风格推理稳定15fps以上。当前处理尺寸为1280×720，完整帧CNN/DMA仿真为25.585ms。第三部分逐项给出赛题门槛、已有证据及待填的板上测量值。

@@ -1,0 +1,227 @@
+{
+  "result": "NOT_READY",
+  "reasons": [
+    "insufficient independent class support",
+    "per-class recall below 80% or missing",
+    "test accuracy below 90%",
+    "non-target false accept above 2%",
+    "external digit 7 recall below 80% or missing"
+  ],
+  "support": {
+    "train": [
+      46,
+      240,
+      191,
+      141,
+      216,
+      345,
+      221,
+      22,
+      230,
+      209
+    ],
+    "val": [
+      28,
+      18,
+      21,
+      22,
+      28,
+      34,
+      15,
+      0,
+      20,
+      23
+    ],
+    "test": [
+      8,
+      43,
+      42,
+      37,
+      31,
+      56,
+      40,
+      0,
+      43,
+      41
+    ]
+  },
+  "additional_training_sha256": {
+    "masks.npz": "889a578f5f9c2e94ce7e5cf204435ca1aedb05c3df2739f1cdfa2e65821a93d2",
+    "clean_love.npz": "fc32c64dc8c18edc6c06a335eb03641234a58506d97594fc68c0a2502be6f226"
+  },
+  "selected_on_validation_step": 400,
+  "margin_in_1_over_32": 48,
+  "validation_macro_recall_with_negative_gate": 0.4495707080958573,
+  "test_accuracy": 0.8417618270799347,
+  "negative_false_accept": [
+    16,
+    272
+  ],
+  "per_digit_recall": [
+    0.0,
+    0.9534883720930233,
+    0.5476190476190477,
+    0.918918918918919,
+    0.22580645161290322,
+    0.9464285714285714,
+    0.9,
+    null,
+    0.9767441860465116,
+    0.5853658536585366
+  ],
+  "confusion": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      8
+    ],
+    [
+      0,
+      41,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      23,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      19
+    ],
+    [
+      0,
+      0,
+      0,
+      34,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      7,
+      0,
+      0,
+      0,
+      0,
+      0,
+      24
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      53,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      36,
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      42,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      24,
+      17
+    ],
+    [
+      2,
+      1,
+      0,
+      0,
+      0,
+      10,
+      2,
+      1,
+      0,
+      0,
+      256
+    ]
+  ],
+  "external_digit7": {
+    "attempts": 1,
+    "correct": 0,
+    "reject": 1,
+    "wrong": 0,
+    "note": "Original HaGRID 7 excluded from this training. One sample, no generalization claim."
+  },
+  "train_source_sha256": "8c863c6f5d2ed771c2770b7299f526569c74ff609e0a5c13c9f2182026d21a27",
+  "quantized_weight_count": 6496,
+  "scope": "Integer software classifier over production C features extracted from masked RGB565 against a controlled background. No on-board result."
+}
