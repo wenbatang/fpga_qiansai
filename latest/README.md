@@ -52,4 +52,4 @@ python train_styles.py --run reproduce_painterly --steps 12000
 
 [架构入口](architecture.html) · [详细模块说明](elinx/projects/camera_art_ten_paint/docs/project.md) · [技术报告](report.pdf)
 
-报告已按最新要求扩展为41页：团队封面＋两页项目速览，并加入赛题对标和实拍预留，详述采集、DDR/AXI、CNN、显示/CDC、RISC-V、手势及训练量化。原版bit、模型与生产工程未因报告修订发生变化。
+技术报告第2部分按整体介绍、风格原理、硬件组成、软件与模块设计展开。第3部分收录赛题指标对照、十风格的两组名画预测与实拍预留。

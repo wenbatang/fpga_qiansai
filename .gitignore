@@ -235,3 +235,6 @@ dist/
 !/baogao/assets/field/U0[12].jpg
 !/baogao/assets/field/U0[12].png
 !/baogao/assets/comparisons/teacher_benchmark.json
+
+!/baogao/sections/hardware_parts.tex
+!/baogao/sections/video_modules.tex

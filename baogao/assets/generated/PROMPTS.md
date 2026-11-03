@@ -21,3 +21,5 @@ Use case: infographic-diagram. High resolution white background landscape scient
 - system：移除CNN直达HDMI箭头，保留CNN与DDR双向和DDR至HDMI；显示控制改为原图/风格/对比，避免暗示运行时改时序。
 - training：学生输入为RGB3通道、隐藏6通道，风格由独立参数选择；不拼接风格图。纹理能量标注为8×8局部平均梯度幅值，量化框简写权重＋偏置＋右移。均由内置imagegen编辑，保留白底。
 - training_log.pdf/png来自12000行真实训练CSV，由matplotlib绘制，未使用图像生成模型制造曲线。
+
+- style_principle.png 为第二部分的绘画原理示意。生成指令要求白底横排三栏：A 同一场景及轮廓，B 笔触与对称通道共现矩阵，C 局部笔触与水平、垂直两个方向的强度变化。文字说明由LaTeX排版。使用内置图像生成工具，接口未返回可核验的“GPT Image 2.5”型号。
