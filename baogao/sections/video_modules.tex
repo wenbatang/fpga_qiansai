@@ -78,6 +78,27 @@ KEY0在原图、风格图、左原右风格三种视图间循环，KEY1和KEY2�
 
 当请求视图与前台一致，且处于原图或对比模式时，系统允许手势采样。采样器从原图左侧640×640的青框区域取样。采样器在横纵方向每10个像素取一点，得到64×64 RGB565快照。只有4096个采样点及好帧帧尾均已到达，处理器才可读取。快照附带序号和界面状态标识，同一张快照只用于一次判定。此旁路占8\,KiB，可以在主视频保持720p时独立使用。
 
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\footnotesize,arr/.style={-{Stealth[length=2mm]},teal,thick}]
+\fill[pale] (0,0) rectangle (4,2.25);
+\fill[orange!13] (2,0) rectangle (4,2.25);
+\draw[navy] (0,0) rectangle (4,2.25);\draw[navy!60] (2,0)--(2,2.25);
+\draw[teal,thick] (0,.125) rectangle (2,2.125);
+\node[align=center] at (1,1.13){原图\\青框区域\\$640\times640$};
+\node[align=center] at (3,1.13){风格图};
+\node at (2,-.30){左右对比视图 $1280\times720$};
+
+\node[draw=teal,align=center,minimum height=1.58cm,minimum width=2.15cm,fill=teal!6] (roi) at (6.45,1.15){原图快照\\$64\times64$\\RGB565，8\,KiB};
+\draw[arr] (1,2.125)--(1,2.70)-|(roi.north);
+\node[above] at (3.9,2.70){取自原图};
+\node at (6.45,-.30){每10行、10列各取一点};
+\draw[arr] (7.6,1.15)--(8.55,1.15);
+\node[draw=navy!70,rounded corners=2pt,align=center,minimum height=1.6cm,minimum width=2.80cm] at (10.05,1.15){梯度方向 64维\\局部灰度 64维\\轮廓密度 64维};
+\node at (10.05,-.30){与个人模板匹配};
+\end{tikzpicture}
+\caption{手势快照与主视频共用摄像头输入。青框位于对比视图的原图一侧，缩小的快照送RISC-V分类，风格网络继续处理完整720p图像。}\label{fig:gesture-branch}
+\end{figure}
+
 首次使用个人手势时，按住KEY1与KEY2约一秒进入学习，在空框内采三张背景，再为每类手势各录四张。处理器先补偿整体亮度变化，再对背景差分结果保留最大连通区域，用亮度的第5和第95百分位规范化手形。每张样本提取192维特征，包括64维梯度方向、64维局部灰度及64维轮廓密度。软件比较正向和镜像的模板距离，并以最优距离及其与次优类别的间隔拒绝歧义。模板存于RAM，重新配置后须重新录入。
 
 \begin{table}[H]\centering\small

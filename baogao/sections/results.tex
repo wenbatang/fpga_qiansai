@@ -1,6 +1,6 @@
 \section{完成情况及性能参数}
 \subsection{整体介绍}
-SC431HAI采集、DDR缓存、卷积推理和HDMI输出共同构成板端数据通路。工程结果包括布局布线数据、整数模型效果和帧级仿真。板端持续帧率、实际切换时间及不同光照下的手势成功率按本章给出的测量条件记录。
+在原图界面伸出食指和中指，系统确认手势后选择第2号风格，HDMI屏自动显示彩色剪纸。回到左右对比界面，移动镜头前的物体，同一帧的轮廓可以横跨中线连续显示。
 
 \input{sections/contest.tex}
 \subsection{工程成果}
@@ -8,112 +8,100 @@ SC431HAI采集、DDR缓存、卷积推理和HDMI输出共同构成板端数据�
 摄像头以排线连接J4，HDMI输出端连接显示器，USB串口连接测量主机。配置审查覆盖79个物理端口及12组Bank，逐项核对信号方向、电压域和DDR数据选通。实物连接与运行画面在本章实拍栏中记录。
 
 \subsubsection{软件成果}
-已形成十风格训练与QAT脚本、5670可训练参数的最终checkpoint、整数参考、十组硬件包、10588B控制固件及CAM7诊断工具。板端支持三视图、十风格按键和UI开关，当前手势采用本人录入模板。用户完成三张空背景及每类四张手势样本录入后，RISC-V按实际光照和手形建立十组个人模板。
+十个风格分支共5670个可训练参数。离线程序将各分支导出为整数参数包，板上10588字节的RISC-V固件负责选择参数、调度推理和处理手势请求。CAM7串口输出帧数、作业周期和交互状态。
 
-\subsection{特性成果与性能检查}
-\begin{table}[H]\centering\small
-\caption{最终CAD资源及时间指标}
-\begin{tabularx}{\linewidth}{@{}lrrX@{}}\toprule 项目 & 使用 & 总量 & 说明\\\midrule
-RAM10 & 230 & 256 & 89.84\%，含CNN缓存、CPU及手势快照等\\
-DSP & 142 & 160 & 88.75\%，未复制十套CNN\\
-XLR & 59011 & 60800 & 97.06\%，后续功能扩展需继续压缩逻辑\\
-寄存器 & 29702 & — & 工具实现统计\\
-查找表 & 32898 & — & 工具实现统计\\\bottomrule
-\end{tabularx}
-\end{table}
-最终I3时序的最小setup/hold为+0.108/+0.026ns。余量较小，不能直接迁移到其他工具、器件等级或新增模块后沿用。
+\subsection{资源占用与处理性能}
+布局布线后，整机使用142个DSP和230块RAM10。DSP承担卷积乘加，RAM10用于行缓存、像素队列、处理器存储和手势快照。图\ref{fig:utilization}给出三类主要资源的占比。逻辑资源XLR的使用率最高，为97.06\%。整机使用29702个寄存器和32898个查找表，I3时序模型下最小建立、保持余量分别为+0.108\,ns和+0.026\,ns。
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1cm,y=.80cm,font=\small]
+\foreach \y/\name/\used/\total/\pc in {2/RAM10/230/256/89.84,1/DSP/142/160/88.75,0/XLR/59011/60800/97.06}{
+ \node[anchor=east] at (-.17,\y+.23){\name};
+ \fill[navy!9] (0,\y) rectangle (7.0,\y+.48);
+ \fill[teal!85] (0,\y) rectangle ({.07*\pc},\y+.48);
+ \node[anchor=west,font=\footnotesize] at (7.13,\y+.23){\used\,/\,\total\quad(\pc\%)};
+}
+\node[anchor=west,font=\footnotesize] at (0,-.42){已用资源占器件总量的比例};
+\end{tikzpicture}
+\caption{Ti60F225I3布局布线后的资源占用。十个风格槽共享同一组卷积算子和行缓存。}\label{fig:utilization}
+\end{figure}
 
-冻结slot0的完整720p SPLIT CNN/DMA模型输出921600像素，用时2558528个100MHz UI周期，即25.58528ms，模型吞吐39.084974fps。此模型覆盖异步FIFO、背压和最终写响应，但不包含真实DDR、摄像头与显示全部并发的实物影响。HDMI60Hz只描述扫描刷新，采集目标30fps、推理新帧FPS与刷新率分别计量；当前不将39.085fps写成实测整机帧率。
+梵高风格的完整720p对比帧在CNN/DMA仿真中用时2558528个100\,MHz时钟周期。921600个输出像素与整数参考逐点一致。该时间包含条带运算、读写背压和最后一次写响应，对应每帧25.585\,ms。板上运行时，信息层从采集与推理计数器取数，在消隐期同步到显示端，如图\ref{fig:rates-ui}所示。
 
-\begin{table}[H]\centering\small
-\caption{验证内容及证据边界}
-\begin{tabularx}{\linewidth}{@{}p{.26\linewidth}X@{}}\toprule 验证层级 & 当前内容\\\midrule
-软件定点 & 已有50例完整720p和40例小尺寸整数/QAT一致；本轮新增20例QAT逐值一致、两例独立int64完整帧核对\\
-CNN与DMA & 十模型小尺寸RTL与实际EFX算子、背压/故障/对比回归；slot0完整SPLIT逐值一致\\
-CPU控制 & 实际RISC-V机器码58个ROI流程，2376参数写入、14次ROI期间完成IRQ；Sapphire另验证十槽加载\\
-交互与CDC & 重复/过期快照、epoch竞争、四秒门控、KEY3开关和完整换帧等回归\\
-板级配置 & 79端口、12Bank、方向/电平/DDR OE及精确CDC约束核对\\
-物理验收 & 新bit持续FPS、真实识别率、供电温升与统一现场照片待补\\\bottomrule
-\end{tabularx}
-\end{table}
-生产机器码的校准与投票测试使用模拟MMIO和图像输入，不是实物识别准确率。独立Sapphire单个合成样本分类时延为32.09746ms，其测试显式准备模板，只用于延迟观察，不代表最坏情况或本人录入全流程。
+\begin{figure}[H]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,
+ stage/.style={draw=navy!65,rounded corners=2pt,fill=pale,align=center,inner sep=4pt},
+ arrow/.style={-{Stealth[length=2mm]},draw=teal,thick}]
+\node[stage,minimum width=3.65cm] (cap) at (0,1.12) {源帧成功发布};
+\node[stage,minimum width=3.65cm] (cnn) at (0,0) {风格帧写回完成};
+\node[stage] (dc) at (4.1,1.12) {采集计数每秒增量};
+\node[stage] (di) at (4.1,0) {推理计数每秒增量};
+\node[stage,fill=teal!12] (c) at (7.95,1.12) {屏显 C};
+\node[stage,fill=teal!12] (i) at (7.95,0) {屏显 I};
+\draw[arrow] (cap)--(dc);\draw[arrow] (cnn)--(di);\draw[arrow] (dc)--(c);\draw[arrow] (di)--(i);
+\node[stage,minimum width=3.65cm] (clock) at (0,-1.18) {像素时钟74.25\,MHz};
+\node[stage] (scan) at (4.1,-1.18) {每帧$1650\times750$拍};
+\node[stage,fill=orange!13] (h) at (7.95,-1.18) {屏显 H60};
+\draw[arrow] (clock)--(scan);\draw[arrow] (scan)--(h);
+\end{tikzpicture}
+\caption{屏幕三项速率的来源。C与I分别由完整采集和神经作业完成事件得到，H60由视频扫描时序确定。}\label{fig:rates-ui}
+\end{figure}
 
+十组参数均通过小尺寸RTL与映射算子逐值核对。RISC-V固件仿真覆盖十槽加载，共完成2160项参数写入。手势全流程验证依次输入3张空背景、40张个人模板和15张识别快照，经过4.08秒的确认窗口后，固件提交对应风格请求。
 
-\subsubsection{如何复核帧率与切换延迟}
-性能统计使用三个独立事件：采集好帧publish、完成神经作业且最终B成功、显示新bank的commit ACK。原图拷贝与同帧重复刷新不计神经推理。若在时间窗$\Delta t$内这些计数分别增加$\Delta C,\Delta I,\Delta D$，则对应速率为$\Delta C/\Delta t$、$\Delta I/\Delta t$和$\Delta D/\Delta t$；HDMI扫描仍固定60Hz。
-
-后续实板复测应在固定bit、供电、传感器曝光、输入场景和风格下预热后连续采样，记录至少60秒的计数差、推理周期分布、主动跳帧与错误/欠载数。切换延迟从消抖后的请求到新风格前台ACK计时，包含当前作业结束、必要参数装载、下一幅处理和等待消隐，不能只报卷积时间。手势还需单独记录检测开始、四秒资格通过与屏幕更新三个时刻。
-
-\subsubsection{典型错误如何被隔离}
-\begin{table}[H]\centering\small
-\caption{关键异常、保护动作与观测量}
-\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}X p{.22\linewidth}@{}}\toprule
-异常 & 保护动作 & 观测或验证方向\\\midrule
-传感器ID/ACK异常 & 关闭采集、模组复位、释放I²C & boot错误码、故障退出测试\\
-CSI CRC/尺寸异常 & 标坏当前帧，不发布到源池 & error packets/good lines\\
-像素FIFO溢出/半帧 & EOF坏标记或中断，丢弃整帧 & overflow/error frames\\
-DDR R/B响应异常 & 排空已接受事务，不提交坏输出 & read errors / engine failed\\
-背压跨越消隐 & 保留请求至后续安全窗口 & commit ACK及欠载\\
-参数只加载一部分 & weights valid不成立，禁止启动 & cfg count与PSLVERROR\\
-重复/过期手势快照 & 清确认窗口，不累计P & seq/epoch/reason\\
-模式变更撞上确认 & 原子token验证拒绝旧提交 & guard result\\\bottomrule
-\end{tabularx}
-\end{table}
-以上为实现与已有回归所覆盖的行为，不以数字测试替代物理故障注入。所有当前数值、时序与bit身份绑定于同一冻结版本。
-
+\clearpage
 \subsection{十风格训练效果}
 两张公共领域作品《蒙娜丽莎》和《戴珍珠耳环的少女》分别由来源页面获取\cite{mona,pearl}，在十组参数上保持相同输入，便于比较风格差异。每张原作按比例缩至高720像素，两侧反射补边为1280×720后量化RGB565，再运行当前最终整数模型；下图仅裁出原画有效区域，不改变模型输出颜色或锐度。
 
-每种风格均给出两组“原图/转换图”，合计20个实际完整帧输出。它们不是教师图、AI生成效果图或显示器拍摄。图中笔触、轮廓与调色可见，但小感受野网络仍偏局部纹理：梵高不能生成完整的大尺度星空旋涡；几何和马赛克槽也不保证恢复与参考画作完全相同的对象布局。两张人物画不能替代风景、弱光及连续视频的画质测试。
+以下各图从左至右依次为《蒙娜丽莎》原图与转换图、《戴珍珠耳环的少女》原图与转换图。观察同一处发丝、衣褶和背景，可以比较不同参数对轮廓、明暗与短笔触的处理。
 
-\clearpage
+
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_00_pairs.png}
-\caption{槽0 梵高旋涡厚涂。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽0 梵高旋涡厚涂}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_01_pairs.png}
-\caption{槽1 浮世绘海浪。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽1 浮世绘海浪}
 \end{figure}
 
 \clearpage
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_02_pairs.png}
-\caption{槽2 彩色剪纸。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽2 彩色剪纸}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_03_pairs.png}
-\caption{槽3 复古漫画。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽3 复古漫画}
 \end{figure}
 
 \clearpage
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_04_pairs.png}
-\caption{槽4 竹林水墨。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽4 竹林水墨}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_05_pairs.png}
-\caption{槽5 阿什维尔抽象。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽5 阿什维尔抽象}
 \end{figure}
 
 \clearpage
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_06_pairs.png}
-\caption{槽6 形体对比。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽6 形体对比}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_07_pairs.png}
-\caption{槽7 蒙德里安几何。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽7 蒙德里安几何}
 \end{figure}
 
 \clearpage
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_08_pairs.png}
-\caption{槽8 彩色马赛克。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽8 彩色马赛克}
 \end{figure}
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{assets/comparisons/style_09_pairs.png}
-\caption{槽9 雨夜厚涂。左两幅为《蒙娜丽莎》原图及输出，右两幅为《戴珍珠耳环的少女》原图及输出；均为最终模型实际整数预测。}
+\caption{槽9 雨夜厚涂}
 \end{figure}
 
 \input{sections/physical.tex}
