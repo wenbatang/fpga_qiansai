@@ -1,48 +1,54 @@
-\noindent{\fontsize{18pt}{25pt}\selectfont\bfseries 芯绘丹青}\par
-\noindent{\large 基于Ti60 FPGA的十风格视频渲染系统}\par
-\noindent\textcolor{teal}{\textbf{项目速览 1/2\quad 系统做什么}}
-\vspace{.4em}
+\thispagestyle{empty}
+\vspace*{1.4cm}
+\begin{center}
+{\fontsize{32pt}{44pt}\selectfont\bfseries\textcolor{navy}{芯绘丹青}}\par
+\vspace{.45cm}
+{\fontsize{17pt}{26pt}\selectfont 端侧实时艺术渲染}\par
+\vspace{.3cm}
+{\large 基于Ti60 FPGA的十风格视频渲染系统}\par
+\vspace{1.15cm}
+{\Large\bfseries 技术报告}\par
+\vspace{1cm}
+\includegraphics[height=4.2cm]{assets/comparisons/mona_lisa_original.png}\hspace{.25cm}
+\includegraphics[height=4.2cm]{assets/comparisons/mona_lisa_00.png}\hspace{.25cm}
+\includegraphics[height=4.2cm]{assets/comparisons/mona_lisa_04.png}\par
+\vspace{.2cm}
+{\small 原图\hspace{2cm}梵高厚涂\hspace{1.8cm}水墨}\par
+\vspace{.25cm}
+{\footnotesize 展示图来自当前学生模型的真实整数预测}\par
+\vfill
+\begin{tabular}{rl}
+赛题方向 & AI赋能的“实时绘画”风格化视频渲染\\[5pt]
+实现平台 & Ti60F225I3 DemoBoard V4 / SC431HAI\\[5pt]
+工程版本 & \sig{camera_art_ten_paint}\\[5pt]
+报告日期 & 2026年11月3日
+\end{tabular}
+\end{center}
+\vspace*{.7cm}
+\clearpage
+\noindent{\fontsize{20pt}{28pt}\selectfont\bfseries\textcolor{navy}{项目速览}}\par
+\noindent{\large 摄像头采集 → FPGA风格化 → HDMI呈现}\par
+\smallskip
 
-\blocktitle{摘要}
-本项目面向端侧实时绘画场景，在易灵思Ti60F225I3平台构建摄像头采集、神经网络风格化与HDMI显示系统。SC431HAI的四通道RAW10数据经解析、Bayer插值和尺寸变换形成1280×720图像，写入外部DDR3；六通道轻量卷积加速器从DDR取帧，完成十种独立参数的风格迁移，再将完整结果交付显示。RISC-V负责摄像头配置、权重装载、作业启动和中断处理。显示支持原图、风格图及左原右风格，按键控制视图、风格和UI。板载手势采用快照、个人模板与四秒确认机制，免本人录入的通用模型仍在研究。
-
-网络包含四组膨胀深度卷积与逐点卷积，保持全分辨率，单风格396个卷积权重；十组参数共用计算硬件。绘画感知、纹理能量与量化感知训练用于兼顾画质和整数部署。当前交付bit的布局布线资源为RAM10 230/256、DSP 142/160，最小setup/hold余量为+0.108/+0.026ns。CNN/DMA模型吞吐为39.085fps，HDMI配置为720p60；持续板上推理FPS尚待量化复测，三者分别报告。本报告给出模块接口、实现方法、实际模型对照和验证边界。
+系统将SC431HAI的1080p RAW10视频转换为1280×720 RGB565，写入DDR3后由六通道卷积加速器处理。十组独立风格参数复用一套硬件，RISC-V负责传感器初始化、参数装载、作业与手势控制。网络各层保持720p，显示支持原图、风格图及同源左右对比。
 
 \begin{figure}[H]\centering
-\includegraphics[width=\linewidth]{assets/generated/system.png}
-\caption{系统框架示意。实线为图像通路，虚线为控制关系；输出先写回DDR，再由显示reader读取。手势当前需要个人模板。}
+\includegraphics[width=.96\linewidth]{assets/generated/system.png}
+\caption{系统总览：数据在DDR中交换，控制经APB传递；板载手势当前使用个人模板。}
+\label{fig:system}
 \end{figure}
-\noindent\textbf{使用方式：}摄像头独立输入，无须PC持续传图；KEY0切换三视图，KEY1/KEY2切换十风格，KEY3显示或隐藏UI。
 
-\clearpage
-\noindent\textcolor{teal}{\textbf{项目速览 2/2\quad 如何实现与验证}}
-
-\blocktitle{一帧图像的完整路径}
-摄像头原始包先完成格式和完整性检查，写入一个空闲源bank。只有好帧EOF和最终DDR写响应均到达后才发布。控制器领取最新完整帧并锁住源bank，按四条带启动CNN；结果全部写回后进入待显示队列，显示器在安全消隐窗口换帧，最后释放旧前台。原图与风格对比由同一作业、同一源帧生成。
-
-\begin{table}[H]\centering\small
-\caption{当前版本的关键数值与证据范围}
-\begin{tabularx}{\linewidth}{@{}p{.31\linewidth}X@{}}\toprule
-项目 & 数值及含义\\\midrule
-输入与风格处理 & 1280×720，RGB565；CNN各层无空间下采样\\
-网络 & C=6，四组DW/PW，膨胀率1/2/4/8，感受野31×31\\
-风格参数 & 10组独立参数；396卷积权重/组，736B对齐包/组\\
-计算与总线时钟 & CNN 166.667MHz，DDR用户接口100MHz\\
-显示 & 74.25MHz像素时钟，1280×720@60Hz\\
-FPGA实现资源 & RAM10 230/256，DSP142/160，XLR59011/60800\\
-最终时序余量 & setup +0.108ns；hold +0.026ns，I3模型\\
-模型处理吞吐 & 39.085fps；slot0完整CNN/DMA模型，非板上实测\\
-新增画质对照 & 2张内容图×10风格；实际完整720p整数模型输出\\
-尚待完成 & 真实持续FPS、通用免录入手势、外部在线下载新权重\\\bottomrule
+\noindent\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}X@{}}\toprule
+核心指标 & 当前实现与证据\\\midrule
+图像与显示 & 全1280×720处理；HDMI标准720p60刷新\\
+轻量网络 & C6 / RF31；396个卷积权重/风格；十风格ROM 7360B\\
+吞吐与资源 & CNN/DMA模型39.085fps；RAM230/256、DSP142/160\\
+时序与边界 & setup/hold余量+0.108/+0.026ns；持续板上FPS待量化复测\\\bottomrule
 \end{tabularx}
-\end{table}
+\medskip
 
-\blocktitle{关键设计选择}
-\begin{enumerate}
-\item \textbf{保留全720p空间细节。}以DW/PW分解和六通道降低计算量，而非把宽高各减半。四条带仅改变调度和行缓存容量，不减少最终输出像素。
-\item \textbf{参数可切换，算子共用。}十组学习参数存于ROM，RISC-V通过受握手保护的配置接口装入当前工作集，避免复制十套CNN。
-\item \textbf{按完整帧交付结果。}源、作业、队列与前台有明确所有权，最终AXI写响应和显示换帧确认共同约束bank释放。
-\end{enumerate}
+\noindent\textbf{一帧流程：}好帧发布 → 锁住源bank → 加载216项参数（需要时）→ 四条带卷积 → 最后DDR写响应 → 安全消隐换帧。三源、三输出槽允许采集、计算和显示重叠。
 
-\blocktitle{成果边界}
-源码、固件、学习参数、bit及验证记录已对应；先前摄像头版本已有用户上板出图反馈，本报告所列新模型bit本轮未代为下载。手势当前保留本人录入，通用模型试训未达标。科研框架图为AI辅助示意，效果图来自实际模型计算；不以示意图或软件输出代替实物照片和实测FPS。
+\smallskip\noindent\textbf{交互方式：}KEY0切换视图，KEY1/KEY2切换风格，KEY3开关UI；在原图/对比界面识别手势0--9，持续四秒确认，原图确认后自动进入风格图。
+
+\smallskip\noindent\textbf{成果范围：}当前bit完成CAD、定点与模块验证；20组名画输出为真实模型预测。免录入通用手势、外部在线权重下载以及持续整机30fps实测仍是后续工作。

@@ -51,3 +51,5 @@ python train_styles.py --run reproduce_painterly --steps 12000
 原签核RAM230/256、DSP142/160，setup/hold +0.108/+0.026ns；slot0完整720p CNN/DMA模型39.085fps，**不是实板持续FPS**。HDMI60Hz、采集FPS和推理FPS分别统计。个人手势真实准确率仍待测；权重目前是从预置ROM运行时装载，外部在线下载新权重为预期功能。
 
 [架构入口](architecture.html) · [详细模块说明](elinx/projects/camera_art_ten_paint/docs/project.md) · [技术报告](report.pdf)
+
+报告已按最新要求扩展为37页：独立封面＋单页项目速览，详述采集、DDR/AXI、CNN、显示/CDC、RISC-V、手势及训练量化。原版bit、模型与生产工程未因报告修订发生变化。

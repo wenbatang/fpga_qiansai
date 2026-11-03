@@ -211,6 +211,7 @@ dist/
 
 # Editable report, required figure assets and reviewed PDF.
 !/baogao/main.tex
+!/baogao/sections/abstract.tex
 !/baogao/sections/quicklook.tex
 !/baogao/sections/overview.tex
 !/baogao/sections/system.tex

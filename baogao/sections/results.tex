@@ -37,6 +37,29 @@ CPU控制 & 实际RISC-V机器码58个ROI流程，2376参数写入、14次ROI期
 \end{table}
 生产机器码的校准与投票测试使用模拟MMIO和图像输入，不是实物识别准确率。独立Sapphire单个合成样本分类时延为32.09746ms，其测试显式准备模板，只用于延迟观察，不代表最坏情况或本人录入全流程。
 
+
+\subsubsection{如何复核帧率与切换延迟}
+性能统计使用三个独立事件：采集好帧publish、完成神经作业且最终B成功、显示新bank的commit ACK。原图拷贝与同帧重复刷新不计神经推理。若在时间窗$\Delta t$内这些计数分别增加$\Delta C,\Delta I,\Delta D$，则对应速率为$\Delta C/\Delta t$、$\Delta I/\Delta t$和$\Delta D/\Delta t$；HDMI扫描仍固定60Hz。
+
+后续实板复测应在固定bit、供电、传感器曝光、输入场景和风格下预热后连续采样，记录至少60秒的计数差、推理周期分布、主动跳帧与错误/欠载数。切换延迟从消抖后的请求到新风格前台ACK计时，包含当前作业结束、必要参数装载、下一幅处理和等待消隐，不能只报卷积时间。手势还需单独记录检测开始、四秒资格通过与屏幕更新三个时刻。
+
+\subsubsection{典型错误如何被隔离}
+\begin{table}[H]\centering\small
+\caption{关键异常、保护动作与观测量}
+\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}X p{.22\linewidth}@{}}\toprule
+异常 & 保护动作 & 观测或验证方向\\\midrule
+传感器ID/ACK异常 & 关闭采集、模组复位、释放I²C & boot错误码、故障退出测试\\
+CSI CRC/尺寸异常 & 标坏当前帧，不发布到源池 & error packets/good lines\\
+像素FIFO溢出/半帧 & EOF坏标记或中断，丢弃整帧 & overflow/error frames\\
+DDR R/B响应异常 & 排空已接受事务，不提交坏输出 & read errors / engine failed\\
+背压跨越消隐 & 保留请求至后续安全窗口 & commit ACK及欠载\\
+参数只加载一部分 & weights valid不成立，禁止启动 & cfg count与PSLVERROR\\
+重复/过期手势快照 & 清确认窗口，不累计P & seq/epoch/reason\\
+模式变更撞上确认 & 原子token验证拒绝旧提交 & guard result\\\bottomrule
+\end{tabularx}
+\end{table}
+以上为实现与已有回归所覆盖的行为，不以数字测试替代物理故障注入。所有当前数值、时序与bit身份绑定于同一冻结版本。报告没有为增加技术细节而修改生产RTL或重新生成另一份bit。
+
 \subsection{十风格训练效果}
 两张公共领域作品《蒙娜丽莎》和《戴珍珠耳环的少女》分别由来源页面获取\cite{mona,pearl}，在十组参数上保持相同输入，便于比较风格差异。每张原作按比例缩至高720像素，两侧反射补边为1280×720后量化RGB565，再运行当前最终整数模型；下图仅裁出原画有效区域，不改变模型输出颜色或锐度。
 
